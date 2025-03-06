@@ -59,18 +59,17 @@ class AuthManager {
         
     }
     
-    /// Sign in user with email and password
+    /// Login user with email and password
     /// - Parameters:   - email: email address
     ///                - password: password
     ///
     @MainActor
-    func login(withEmail email: String, password: String) async {
+    func login(withEmail email: String, password: String) async throws {
         do {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             self.userSession = result.user
         } catch {
-            self.errorMessage = "Failed to sign in with error \(error.localizedDescription)"
-            self.showErrorAlert = true
+            throw NSError(domain: "Failed to sign in with error \(error.localizedDescription)", code: 0)
         }
     }
     
@@ -90,7 +89,7 @@ class AuthManager {
     /// - Returns:      Optional user
     ///
     @MainActor
-    func createUser(withEmail email: String, password: String, name: String) async -> User? {
+    func createUser(withEmail email: String, password: String, name: String) async throws {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
@@ -98,7 +97,10 @@ class AuthManager {
             // Create the vessel in the model context
             let user = User(
                 id: result.user.uid,
-                name: name
+                name: name,
+                email: email,
+                role: .none,
+                isActive: false
             )
             
             // Backup the user to firebase
@@ -108,12 +110,9 @@ class AuthManager {
             
             // Return the user
             self.user = user
-            return user
             
         } catch {
-            self.errorMessage = "Failed to create user with error \(error.localizedDescription)"
-            self.showErrorAlert = true
-            return nil
+            throw NSError(domain: "Failed to create user with error \(error.localizedDescription)", code: 0)
         }
     }
     

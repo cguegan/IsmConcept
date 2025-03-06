@@ -13,6 +13,7 @@ struct User: Codable {
     @DocumentID
     var id: String?
     var name: String
+    var email: String
     var role: UserRole
     var isActive: Bool
     var vesselID: String?
@@ -23,6 +24,7 @@ struct User: Codable {
     init(
         id: String? = nil,
         name: String,
+        email: String,
         role: UserRole = .crew,
         isActive: Bool = false,
         vesselID: String? = nil,
@@ -31,6 +33,7 @@ struct User: Codable {
     ) {
         self.id = id
         self.name = name
+        self.email = email
         self.role = role
         self.isActive = isActive
         self.vesselID = vesselID
@@ -46,6 +49,7 @@ extension User {
     enum CodingKeys: String, CodingKey {
         case id
         case name
+        case email
         case role
         case isActive  = "is_active"
         case vesselID  = "vessel_id"
