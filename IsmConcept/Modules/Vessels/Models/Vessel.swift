@@ -8,29 +8,29 @@
 import Foundation
 import FirebaseFirestore
 
-struct Vessel: Codable {
+struct Vessel: Identifiable, Codable {
     
     @DocumentID
-    var id: String?
-    var name: String
-    var isActive: Bool
-    var imo: String
-    var master: String
-    var loa: Double
-    var beam: Double
-    var draft: Double
-    var gt: Int
-    var year: Int
-    var users: [String]
-    var crew: Int
-    var guests: Int
-    var flag: Flag
-    var homePort: String
-    var location: String
-    var image: String
-    var createdAt: Date?
-    var updatedAt: Date?
-    var backupAt: Date?
+    var id:         String?
+    var name:       String
+    var isActive:   Bool
+    var imo:        String
+    var master:     String
+    var loa:        Double
+    var beam:       Double
+    var draft:      Double
+    var gt:         Int
+    var year:       Int
+    var users:      [String]
+    var crew:       Int
+    var guests:     Int
+    var flag:       Flag
+    var homePort:   String
+    var location:   String
+    var imageUrl:   String
+    var createdAt:  Date?
+    var updatedAt:  Date?
+    var backupAt:   Date?
     
 }
 
@@ -54,7 +54,7 @@ extension Vessel {
         case flag
         case homePort = "home_port"
         case location
-        case image
+        case imageUrl = "image_url"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
         case backupAt = "backup_at"

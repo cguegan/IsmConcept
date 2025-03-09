@@ -21,7 +21,6 @@ class SignupManager {
     
     // MARK: - Methods
     // ———————————————
-    
     func signUp() {
         Task {
             do {

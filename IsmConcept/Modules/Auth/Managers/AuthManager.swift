@@ -12,11 +12,12 @@ import FirebaseFirestore
 import FirebaseStorage
 import SwiftData
 
+@Observable
 class AuthManager {
 
     /// Published properties
-    @Published var userSession: FirebaseAuth.User?
-    @Published var user: User?
+    var userSession: FirebaseAuth.User?
+    var user: User?
     
     /// Shared instance
     static let shared = AuthManager()
@@ -30,7 +31,7 @@ class AuthManager {
     ///
     let db = Firestore.firestore()
     let collectionName = "users"
-    var listener: ListenerRegistration?
+//    var listener: ListenerRegistration?
     
     /// Private initializer
     ///
@@ -65,9 +66,12 @@ class AuthManager {
     ///
     @MainActor
     func login(withEmail email: String, password: String) async throws {
+        print("[ DEBUG ] Logging in with email: \(email)...")
         do {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             self.userSession = result.user
+            print("[ DEBUG ] User logged in successfully with ID: \(result.user.uid)")
+            await self.fetchUser()
         } catch {
             throw NSError(domain: "Failed to sign in with error \(error.localizedDescription)", code: 0)
         }
@@ -94,20 +98,17 @@ class AuthManager {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
             
+            print("[ DEBUG ] Auth User created successfully with ID: \(result.user.uid)")
+            
             // Create the vessel in the model context
-            let user = User(
-                id: result.user.uid,
-                name: name,
-                email: email,
-                role: .none,
-                isActive: false
-            )
+            let user = User( name:     name,
+                             email:    email,
+                             role:     .none,
+                             isActive: false )
             
             // Backup the user to firebase
             try self.add(user)
-            
-            print("DEBUG: User created successfully with ID: \(result.user.uid)")
-            
+                        
             // Return the user
             self.user = user
             
@@ -125,33 +126,33 @@ class AuthManager {
     /// Get the user from Firestore
     /// - Parameter id: The user ID
     ///
-    func fetchUser(withId id: String) async {
+    func fetchUser() async {
+        
+        /// Check if user is authenticated
+        guard let id = self.userSession?.uid else { return }
         
         /// Get the user from Firestore
+        print("[ DEBUG ] Fetching user with ID: \(id)...")
         do {
-            let document = try await dbRef().document(id).getDocument()
-            if let user = try? document.data(as: User.self) {
-                self.user = user
-            } else {
-                self.errorMessage = "User not found."
-                self.showErrorAlert = true
-            }
+            let user = try await dbRef().document(id).getDocument(as: User.self)
+            self.user = user
         } catch {
             self.errorMessage = "Failed to get user with error \(error.localizedDescription)"
             self.showErrorAlert = true
+            print("[ ERROR ] Failed to get user with error \(error.localizedDescription)")
         }
         
     }
 
-    
     /// Add a new user to Firestore database
     /// - Parameter user: The user to add
     /// - Returns: Void
     ///
     func add(_ user: User) throws {
         /// Create the user to Firestore
+        guard let id = self.userSession?.uid else { return }
         do {
-            try dbRef().addDocument(from: user)
+            try dbRef().document(id).setData(from: user)
         } catch {
             throw NSError(domain: "Failed to add user to Firestore.", code: 0)
         }

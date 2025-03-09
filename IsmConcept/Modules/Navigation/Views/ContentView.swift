@@ -11,26 +11,17 @@ import FirebaseAuth
 
 struct ContentView: View {
     
-    
-    
     var body: some View {
         Group {
             if AuthManager.shared.userSession != nil {
-                VStack {
-                    
-                    Spacer()
-                    
-                    Image(systemName: "globe")
-                        .imageScale(.large)
-                        .foregroundStyle(.tint)
-                    Text("\(AuthManager.shared.user?.name ?? "Unknown user") is logged in")
-                    
-                    Spacer()
-                    
-                    Button("Sign Out", action: {
-                        AuthManager.shared.signOut()
-                    })
-                    .buttonStyle(.borderedProminent)
+                if let user = AuthManager.shared.user {
+                    if user.isActive {
+                        SplitView(user: user)
+                    } else {
+                        NonActiveUser()
+                    }
+                } else {
+                    ProgressView()
                 }
             } else {
                 LoginView()
@@ -39,6 +30,10 @@ struct ContentView: View {
 //        .preferredColorScheme(userPreferences.colorScheme)
     }
 }
+
+
+// MARK: - Preview
+// ———————————————
 
 #Preview {
     ContentView()

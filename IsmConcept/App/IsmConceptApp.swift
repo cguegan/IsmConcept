@@ -11,6 +11,8 @@ import FirebaseCore
 @main
 struct IsmConceptApp: App {
     
+    @State private var preferences = PreferencesManager.shared
+    
     init() {
         FirebaseApp.configure()
     }
@@ -18,6 +20,7 @@ struct IsmConceptApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(preferences)
         }
     }
 }

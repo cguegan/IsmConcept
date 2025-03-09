@@ -23,6 +23,9 @@ struct TopLogoView: View {
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
+            /// App Subtitle
+            Text("by Yachting Concept Monaco")
+                
         }
     }
 }
