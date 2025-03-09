@@ -19,6 +19,9 @@ final class VesselStore {
     var error: Error?
     var errorMessage: String?
     
+    /// Shared instance
+    static let shared = VesselStore()
+    
     /// Firestore database reference
     ///
     let db = Firestore.firestore()
@@ -51,6 +54,7 @@ final class VesselStore {
         print("[ DEBUG ] Enabling vessel live sync ...")
         
         listener = db.collection(collectionName)
+            .order(by: "name", descending: false)
             .addSnapshotListener { querySnapshot, error in
                 if let querySnapshot = querySnapshot {
                     self.vessels = querySnapshot.documents.compactMap { document in
@@ -77,6 +81,43 @@ final class VesselStore {
         }
     }
     
+    /// Get a vessel from Firestore
+    /// - Parameter id: The vessel ID
+    /// - Returns: The vessel
+    /// - Note: This method is async and will return the vessel if found
+    ///
+    func get(withID id: String) async -> Vessel? {
+        do {
+            let document = try await db.collection(collectionName).document(id).getDocument()
+            let vessel =  try document.data(as: Vessel.self)
+            print("[ DEBUG ] Got vessel with name: \(vessel.name)")
+            return vessel
+        } catch {
+            print("[ ERROR ] Failed to get vessel with error: \(error.localizedDescription)")
+            self.error = error
+            self.errorMessage = error.localizedDescription
+        }
+        return nil
+    }
+    
+    /// Fetch all vessels from Firestore
+    /// - Returns: An array of vessels
+    ///
+    func fetchVessels() async -> [Vessel] {
+        do {
+            let querySnapshot = try await db.collection(collectionName).getDocuments()
+            vessels = querySnapshot.documents.compactMap { document in
+                return try? document.data(as: Vessel.self)
+            }
+            return vessels
+        } catch {
+            print("[ ERROR ] Failed to fetch vessels with error: \(error.localizedDescription)")
+            self.error = error
+            self.errorMessage = error.localizedDescription
+        }
+        return []
+    }
+    
     /// Delete a vessel from Firestore
     /// - Parameter vessel: The vessel to delete
     /// - Returns: Void
@@ -87,7 +128,7 @@ final class VesselStore {
         guard let id = vessel.id else { return }
         
         /// Delete vessel picture  from firebase storage
-//        deleteImage(for: vessel)
+        //        deleteImage(for: vessel)
         
         /// Delete the user
         db.collection(collectionName).document(id).delete()
@@ -117,6 +158,29 @@ final class VesselStore {
             self.errorMessage = error.localizedDescription
         }
         
+    }
+    
+    /// Get users for a specific vessel
+    ///
+    func getUsers(for vessel: Vessel) async -> [User]  {
+        
+        /// Check if vessel has an ID
+        guard let id = vessel.id else { return [] }
+                
+        /// Set users dbRef
+        let usersRef = db.collection("users")
+        
+        /// Get the users
+        do {
+            let querySnapshot = try await usersRef.whereField("vessel_id", isEqualTo: id).getDocuments()
+            let users = querySnapshot.documents.compactMap { document in
+                return try? document.data(as: User.self)
+            }
+            return users
+        } catch {
+            print("[ ERROR ] Failed to get users with error: \(error.localizedDescription)")
+        }
+        return []
     }
     
     

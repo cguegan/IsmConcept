@@ -12,7 +12,7 @@ enum Flag: String, CaseIterable, Codable {
     case cisr = "Cayman Islands"
     case fr   = "French"
     case mi   = "Marshall Islands"
-    case tm   = "Transport Malta"
+    case tm   = "Malta"
     case bvi  = "British Virgin Islands"
     case lux  = "Luxembourg"
     case uk   = "United Kingdom"

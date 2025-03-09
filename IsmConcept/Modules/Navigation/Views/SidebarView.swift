@@ -35,7 +35,9 @@ struct SidebarView: View {
             /// User profile
             ///
             NavigationLink(value: Module.profile) {
-                UserSideView(user: user)
+                NavigationLink(value: Module.profile) {
+                    UserSideView(user: user)
+                }
             }
             Divider()
             
@@ -77,21 +79,23 @@ struct SidebarView: View {
             
             /// Is admin
             ///
+                
             if user.role.rawValue < 10 {
                 Section(isExpanded: $isExpandedAdmin) {
                     
                     NavigationLink(value: Module.vessels) {
-                        Label("Manage Yachts", systemImage: "ferry")
+                        Label("Yachts", systemImage: "ferry")
                     }
                     
                     NavigationLink(value: Module.users) {
-                        Label("Manage Users", systemImage: "person.2")
+                        Label("Users", systemImage: "person.2")
                     }
                     
                 } header: {
                     Text("Admin")
                 }
             }
+            
         }
         .listStyle(.sidebar)
         .navigationTitle("ISM Concept")

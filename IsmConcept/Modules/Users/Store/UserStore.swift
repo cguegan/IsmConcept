@@ -124,10 +124,14 @@ final class UserStore {
     
     /// Upload a photos picker user to Firebase Storage
     /// - Parameters:
-    ///     - image: The image to upload as PhotosPickerItem
-    ///     - user: The user to associate the image with
+    ///     - image:     The image to upload as PhotosPickerItem
+    ///     - user:        The user to associate the image with
     ///
     func uploadImage(_ image: PhotosPickerItem, for user: User) {
+        
+        /// Check if the image is valid
+        print("[ DEBUG ] Uploading image ...")
+        
         /// Load the image data
         image.loadTransferable(type: Data.self) { result in
             switch result {
@@ -135,6 +139,7 @@ final class UserStore {
                 if let imageData = imageData,
                    let uiImage = UIImage(data: imageData) {
                     self.uploadImage(uiImage, for: user)
+                    print("[ DEBUG ] Image uploaded successfully.")
                 } else {
                     print("[ ERROR ] No supported content type found.")
                 }
@@ -146,8 +151,8 @@ final class UserStore {
     
     /// Upload an image to Firebase Storage
     /// - Parameters:
-    ///     - image: The image to upload in UIImage format
-    ///     - user: The user to associate the image with
+    ///     - image:    The image to upload in UIImage format
+    ///     - user:       The user to associate the image with
     ///
     func uploadImage(_ image: UIImage, for user: User) {
         

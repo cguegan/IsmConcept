@@ -32,6 +32,16 @@ class SignupManager {
         }
     }
     
+    func signUp(for vessel: Vessel) async -> User? {
+        do {
+            return try await AuthManager.shared.createUser(for: vessel, withEmail: email, password: password, name: name)
+        } catch {
+            errorMessage = error.localizedDescription
+            showAlert = true
+            return nil
+        }
+    }
+    
     
     // MARK: - Form validation
     // ————————————————————————
@@ -56,16 +66,16 @@ class SignupManager {
     // MARK: - Password Validation
     // ———————————————————————————
     
-    private var checkMinChar: Bool {
+    var checkMinChar: Bool {
         return password.count >= 8
     }
-    private var checkLetter: Bool {
+    var checkLetter: Bool {
         return password.rangeOfCharacter(from: .letters) != nil
     }
-    private var checkSpecialChar: Bool {
+    var checkSpecialChar: Bool {
         return password.rangeOfCharacter(from: CharacterSet(charactersIn: "[{!@#$%^&*}]")) != nil
     }
-    private var checkNumber: Bool {
+    var checkNumber: Bool {
         return password.rangeOfCharacter(from: .decimalDigits) != nil
     }
     var isPasswordValid: Bool {
@@ -86,6 +96,7 @@ class SignupManager {
         }
     }
     var isConfirmPasswordValid: Bool {
+        if confirmPassword.isEmpty { return false }
         return confirmPassword == password
     }
     

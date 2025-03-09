@@ -22,7 +22,7 @@ struct VesselAddSheet: View {
             Form {
                 Section(header: Text("Vessel Information")) {
                     
-                    /// Full Name
+                    /// Vessel Name
                     HStack {
                         Text("Name").foregroundStyle(.secondary)
                         TextField("Name", text: $vessel.name)

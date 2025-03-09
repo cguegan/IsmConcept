@@ -20,10 +20,10 @@ struct VesselsListView: View {
         @Bindable var store = store
         NavigationStack {
             List {
-                ForEach($store.vessels) { $vessel in
-//                    NavigationLink(destination: UserDetailView(user: user).environment(store)) {
+                ForEach(store.vessels) { vessel in
+                    NavigationLink(destination: VesselEditView(vessel: vessel).environment(store)) {
                         VesselListRow(vessel: vessel).environment(store)
-//                    }
+                    }
                 }
             }
             .navigationTitle("Yachts")
@@ -47,9 +47,9 @@ struct VesselsListView: View {
 // MARK: - Preview
 // ———————————————
 
-#Preview {
-    @Previewable var store = VesselStore()
-    //store.vessels = Vessel.samples
-    VesselsListView()
-        .environment(VesselStore())
-}
+//#Preview {
+//    @Previewable var store = VesselStore()
+//    //store.vessels = Vessel.samples
+//    VesselsListView()
+//        .environment(VesselStore())
+//}

@@ -12,15 +12,15 @@ extension User {
         .init( name:     "Christophe Guégan",
                email:    "cguegan@gmail.com",
                role:     UserRole.admin,
-               vesselID: "Yachting Concept Monaco" ),
+               vesselID: Vessel.samples[0].id ),
         .init( name:     "John Doe",
                email:    "johndoe@example.com",
                role:     UserRole.crew,
-               vesselID: "Windsor" ),
+               vesselID: Vessel.samples[1].id ),
         .init( name:     "Jane Doe",
                email:    "jane@example.com",
                role:     UserRole.crew,
-               vesselID: "Windsor" )
+               vesselID: Vessel.samples[2].id )
     ]
 }
 

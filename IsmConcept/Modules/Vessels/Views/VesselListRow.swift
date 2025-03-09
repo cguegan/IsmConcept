@@ -19,7 +19,7 @@ struct VesselListRow: View {
     var body: some View {
         HStack(alignment: .top) {
             
-            Image(systemName: "ferry")
+            Image(systemName: vessel.type.icon)
                 .imageScale(.large)
                 .foregroundColor(vessel.isActive ? .accentColor : .secondary)
             

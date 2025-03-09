@@ -21,7 +21,7 @@ struct UsersListView: View {
         NavigationStack {
             List {
                 ForEach($store.users) { $user in
-                    NavigationLink(destination: UserDetailView(user: user).environment(store)) {
+                    NavigationLink(destination: UserEditView(user: user).environment(store)) {
                         UserListRow(user: user).environment(store)
                     }
                 }

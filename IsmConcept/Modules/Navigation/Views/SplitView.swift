@@ -13,7 +13,7 @@ struct SplitView: View {
     @Environment(PreferencesManager.self) var preferences
     
     /// Given Properties
-    let user: User
+    @State var user: User
     
     /// State Properties
     @State var navigation = NavigationManager()
@@ -26,6 +26,9 @@ struct SplitView: View {
                 .environment(navigation)
         } detail: {
             switch navigation.selectedModule {
+                case .profile:
+                    UserEditView(user: user)
+                        .environment(UserStore())
                 case .home:
                     CompanyView()
 //                case .checklists(let department):
@@ -40,7 +43,6 @@ struct SplitView: View {
                 default:
                     UnderConstructionView()
                 }
-            
         }
         .navigationSplitViewStyle(.balanced)
     }

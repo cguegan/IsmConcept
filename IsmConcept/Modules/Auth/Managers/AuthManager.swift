@@ -18,6 +18,7 @@ class AuthManager {
     /// Published properties
     var userSession: FirebaseAuth.User?
     var user: User?
+    var vessel: Vessel?
     
     /// Shared instance
     static let shared = AuthManager()
@@ -72,6 +73,7 @@ class AuthManager {
             self.userSession = result.user
             print("[ DEBUG ] User logged in successfully with ID: \(result.user.uid)")
             await self.fetchUser()
+            await self.fetchVessel()
         } catch {
             throw NSError(domain: "Failed to sign in with error \(error.localizedDescription)", code: 0)
         }
@@ -117,6 +119,38 @@ class AuthManager {
         }
     }
     
+    /// Create user for a vessel
+    /// - Parameters:   - vessel: The vessel to create the user for
+    ///                - email: email address
+    ///                - password: password
+    ///                - name: user name
+    /// - Returns: Optional user
+    ///
+    @MainActor
+    func createUser(for vessel: Vessel, withEmail email: String, password: String, name: String) async throws -> User? {
+        do {
+            let result = try await Auth.auth().createUser(withEmail: email, password: password)
+            
+            print("[ DEBUG ] Auth User created successfully with ID: \(result.user.uid)")
+            
+            // Create the vessel in the model context
+            let user = User( id:       result.user.uid,
+                             name:     name,
+                             email:    email,
+                             role:     .crew,
+                             isActive: true,
+                             vesselID: vessel.id,
+                             vessel:   vessel.name )
+            
+            // Backup the user to firebase
+            try self.add(user)
+            return user
+            
+        } catch {
+            throw NSError(domain: "Failed to create user with error \(error.localizedDescription)", code: 0)
+        }
+    }
+    
     /// Reset the user password
     /// - Returns: Void
     func resetPassword() {
@@ -124,7 +158,6 @@ class AuthManager {
     }
     
     /// Get the user from Firestore
-    /// - Parameter id: The user ID
     ///
     func fetchUser() async {
         
@@ -143,14 +176,22 @@ class AuthManager {
         }
         
     }
+    
+    /// Get the vessel of the current user
+    ///
+    func fetchVessel() async {
+        if let vesselID = self.user?.vesselID {
+            print("[ DEBUG ] Fetched vessel with id: \(vesselID)")
+            self.vessel = await VesselStore.shared.get(withID: vesselID)
+        }
+    }
 
     /// Add a new user to Firestore database
     /// - Parameter user: The user to add
     /// - Returns: Void
     ///
     func add(_ user: User) throws {
-        /// Create the user to Firestore
-        guard let id = self.userSession?.uid else { return }
+        guard let id = user.id else { return }
         do {
             try dbRef().document(id).setData(from: user)
         } catch {

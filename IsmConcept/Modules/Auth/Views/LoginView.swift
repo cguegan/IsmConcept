@@ -56,7 +56,6 @@ extension LoginView {
                         disabled: !manager.isFormValid,
                         action: { manager.login() })
             
-            signupButton
         }
     }
     

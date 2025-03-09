@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF18868E2D7DE7470008848D /* User+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18868D2D7DE7470008848D /* User+Extensions.swift */; };
+		EF1886902D7E11130008848D /* UserVesselPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18868F2D7E11130008848D /* UserVesselPicker.swift */; };
 		EF2C23152D7C52FA0067C899 /* UserSideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C23142D7C52FA0067C899 /* UserSideView.swift */; };
 		EF2C23172D7C5E600067C899 /* User+Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C23162D7C5E600067C899 /* User+Samples.swift */; };
 		EF2C231D2D7CC2090067C899 /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C231C2D7CC2090067C899 /* UserStore.swift */; };
 		EF2C23202D7CC37B0067C899 /* UserListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C231E2D7CC37B0067C899 /* UserListRow.swift */; };
 		EF2C23212D7CC37B0067C899 /* UsersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C231F2D7CC37B0067C899 /* UsersListView.swift */; };
 		EF2C23232D7CC8460067C899 /* Image+FittedToHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C23222D7CC8460067C899 /* Image+FittedToHeight.swift */; };
-		EF2C23292D7CE1080067C899 /* UserDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C23282D7CE1080067C899 /* UserDetailView.swift */; };
+		EF2C23292D7CE1080067C899 /* UserEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C23282D7CE1080067C899 /* UserEditView.swift */; };
 		EF2C232C2D7D07B50067C899 /* Binding+Unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C232B2D7D07B50067C899 /* Binding+Unwrap.swift */; };
 		EF2C23362D7D13680067C899 /* VesselStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C23352D7D13680067C899 /* VesselStore.swift */; };
 		EF2C23382D7D15EA0067C899 /* VesselsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C23372D7D15EA0067C899 /* VesselsListView.swift */; };
@@ -37,6 +39,11 @@
 		EF4ED7CA2D7B565100DA39C1 /* Checklisft+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4ED7C42D7B565100DA39C1 /* Checklisft+Mock.swift */; };
 		EF4ED7CC2D7B584F00DA39C1 /* LoremIpsum.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4ED7CB2D7B584F00DA39C1 /* LoremIpsum.swift */; };
 		EF4ED7CE2D7B58A500DA39C1 /* ItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4ED7CD2D7B58A500DA39C1 /* ItemType.swift */; };
+		EF9C83892D7D98AD000252CE /* VesselEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C83882D7D98AD000252CE /* VesselEditView.swift */; };
+		EF9C838B2D7D9E4F000252CE /* YachtType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C838A2D7D9E4F000252CE /* YachtType.swift */; };
+		EF9C838D2D7DBAE6000252CE /* AddUserSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C838C2D7DBAE6000252CE /* AddUserSheet.swift */; };
+		EF9C83912D7DD812000252CE /* UserAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C83902D7DD812000252CE /* UserAvatar.swift */; };
+		EF9C83932D7DDCF7000252CE /* LargeUserAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C83922D7DDCF7000252CE /* LargeUserAvatar.swift */; };
 		EFA0F5772D7860BC00C71E79 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFA0F5712D7860BC00C71E79 /* Preview Assets.xcassets */; };
 		EFA0F5782D7860BC00C71E79 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFA0F5732D7860BC00C71E79 /* Assets.xcassets */; };
 		EFA0F5792D7860BC00C71E79 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA0F5742D7860BC00C71E79 /* ContentView.swift */; };
@@ -66,13 +73,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EF18868D2D7DE7470008848D /* User+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+Extensions.swift"; sourceTree = "<group>"; };
+		EF18868F2D7E11130008848D /* UserVesselPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVesselPicker.swift; sourceTree = "<group>"; };
 		EF2C23142D7C52FA0067C899 /* UserSideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSideView.swift; sourceTree = "<group>"; };
 		EF2C23162D7C5E600067C899 /* User+Samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+Samples.swift"; sourceTree = "<group>"; };
 		EF2C231C2D7CC2090067C899 /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
 		EF2C231E2D7CC37B0067C899 /* UserListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListRow.swift; sourceTree = "<group>"; };
 		EF2C231F2D7CC37B0067C899 /* UsersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersListView.swift; sourceTree = "<group>"; };
 		EF2C23222D7CC8460067C899 /* Image+FittedToHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+FittedToHeight.swift"; sourceTree = "<group>"; };
-		EF2C23282D7CE1080067C899 /* UserDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailView.swift; sourceTree = "<group>"; };
+		EF2C23282D7CE1080067C899 /* UserEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditView.swift; sourceTree = "<group>"; };
 		EF2C232B2D7D07B50067C899 /* Binding+Unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Unwrap.swift"; sourceTree = "<group>"; };
 		EF2C23352D7D13680067C899 /* VesselStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VesselStore.swift; sourceTree = "<group>"; };
 		EF2C23372D7D15EA0067C899 /* VesselsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VesselsListView.swift; sourceTree = "<group>"; };
@@ -96,6 +105,11 @@
 		EF4ED7C62D7B565100DA39C1 /* ExecutedChecklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExecutedChecklist.swift; sourceTree = "<group>"; };
 		EF4ED7CB2D7B584F00DA39C1 /* LoremIpsum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoremIpsum.swift; sourceTree = "<group>"; };
 		EF4ED7CD2D7B58A500DA39C1 /* ItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemType.swift; sourceTree = "<group>"; };
+		EF9C83882D7D98AD000252CE /* VesselEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VesselEditView.swift; sourceTree = "<group>"; };
+		EF9C838A2D7D9E4F000252CE /* YachtType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YachtType.swift; sourceTree = "<group>"; };
+		EF9C838C2D7DBAE6000252CE /* AddUserSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserSheet.swift; sourceTree = "<group>"; };
+		EF9C83902D7DD812000252CE /* UserAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatar.swift; sourceTree = "<group>"; };
+		EF9C83922D7DDCF7000252CE /* LargeUserAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeUserAvatar.swift; sourceTree = "<group>"; };
 		EFA0F5712D7860BC00C71E79 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EFA0F5732D7860BC00C71E79 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EFA0F5742D7860BC00C71E79 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -151,7 +165,8 @@
 			children = (
 				EF2C231F2D7CC37B0067C899 /* UsersListView.swift */,
 				EF2C231E2D7CC37B0067C899 /* UserListRow.swift */,
-				EF2C23282D7CE1080067C899 /* UserDetailView.swift */,
+				EF2C23282D7CE1080067C899 /* UserEditView.swift */,
+				EF18868F2D7E11130008848D /* UserVesselPicker.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -168,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				EFA0F5882D78615100C71E79 /* User.swift */,
+				EF18868D2D7DE7470008848D /* User+Extensions.swift */,
 				EF2C23162D7C5E600067C899 /* User+Samples.swift */,
 				EFA0F59B2D78651100C71E79 /* UserRole.swift */,
 			);
@@ -199,6 +215,7 @@
 				EF2C23372D7D15EA0067C899 /* VesselsListView.swift */,
 				EF2C23392D7D163B0067C899 /* VesselListRow.swift */,
 				EF2C233D2D7D1AE50067C899 /* VesselAddSheet.swift */,
+				EF9C83882D7D98AD000252CE /* VesselEditView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -215,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				EFA0F58A2D7861BB00C71E79 /* Vessel.swift */,
+				EF9C838A2D7D9E4F000252CE /* YachtType.swift */,
 				EF2C233B2D7D16DD0067C899 /* Vessel+Samples.swift */,
 				EFA0F58C2D7862C500C71E79 /* Flag.swift */,
 			);
@@ -306,6 +324,8 @@
 			isa = PBXGroup;
 			children = (
 				EF4ED7CD2D7B58A500DA39C1 /* ItemType.swift */,
+				EF9C83902D7DD812000252CE /* UserAvatar.swift */,
+				EF9C83922D7DDCF7000252CE /* LargeUserAvatar.swift */,
 				EF4ED7CB2D7B584F00DA39C1 /* LoremIpsum.swift */,
 			);
 			path = Componants;
@@ -391,6 +411,7 @@
 			children = (
 				EFA0F5A32D78868B00C71E79 /* LoginView.swift */,
 				EFA0F5A42D78868B00C71E79 /* SignupView.swift */,
+				EF9C838C2D7DBAE6000252CE /* AddUserSheet.swift */,
 				EFDF6A792D78F74C008457CE /* TopLogoView.swift */,
 				EFDF6A7B2D78F966008457CE /* EmailField.swift */,
 				EFDF6A732D78F306008457CE /* PasswordField.swift */,
@@ -548,8 +569,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF18868E2D7DE7470008848D /* User+Extensions.swift in Sources */,
 				EF2C23172D7C5E600067C899 /* User+Samples.swift in Sources */,
 				EFDF6A7E2D78FA89008457CE /* LoginFocusField.swift in Sources */,
+				EF9C83892D7D98AD000252CE /* VesselEditView.swift in Sources */,
 				EFDF6A802D7904CB008457CE /* LoginButton.swift in Sources */,
 				EFA0F59C2D78651100C71E79 /* UserRole.swift in Sources */,
 				EF4ED7AD2D7B44A500DA39C1 /* PreferencesManager.swift in Sources */,
@@ -563,12 +586,15 @@
 				EFA0F5A62D78868B00C71E79 /* LoginView.swift in Sources */,
 				EF4ED7B12D7B47EC00DA39C1 /* NavigationManager.swift in Sources */,
 				EFA0F58B2D7861BB00C71E79 /* Vessel.swift in Sources */,
+				EF9C838D2D7DBAE6000252CE /* AddUserSheet.swift in Sources */,
+				EF9C83912D7DD812000252CE /* UserAvatar.swift in Sources */,
 				EF2C233A2D7D163B0067C899 /* VesselListRow.swift in Sources */,
 				EFA0F58D2D7862C500C71E79 /* Flag.swift in Sources */,
-				EF2C23292D7CE1080067C899 /* UserDetailView.swift in Sources */,
+				EF2C23292D7CE1080067C899 /* UserEditView.swift in Sources */,
 				EF4ED7CC2D7B584F00DA39C1 /* LoremIpsum.swift in Sources */,
 				EF4ED7BB2D7B4B7500DA39C1 /* RemoteConfigService.swift in Sources */,
 				EF2C23152D7C52FA0067C899 /* UserSideView.swift in Sources */,
+				EF9C83932D7DDCF7000252CE /* LargeUserAvatar.swift in Sources */,
 				EF4ED7BC2D7B4B7500DA39C1 /* CompanyView.swift in Sources */,
 				EF4ED7CE2D7B58A500DA39C1 /* ItemType.swift in Sources */,
 				EFDF6A762D78F32B008457CE /* LoginManager.swift in Sources */,
@@ -586,11 +612,13 @@
 				EFDF6A7A2D78F74C008457CE /* TopLogoView.swift in Sources */,
 				EF4ED7A92D7B435C00DA39C1 /* SplitView.swift in Sources */,
 				EF2C233C2D7D16DD0067C899 /* Vessel+Samples.swift in Sources */,
+				EF1886902D7E11130008848D /* UserVesselPicker.swift in Sources */,
 				EFDF6A7C2D78F966008457CE /* EmailField.swift in Sources */,
 				EF4ED7AB2D7B43B900DA39C1 /* SidebarView.swift in Sources */,
 				EFA0F59E2D7866F700C71E79 /* AuthManager.swift in Sources */,
 				EF2C23202D7CC37B0067C899 /* UserListRow.swift in Sources */,
 				EF2C23212D7CC37B0067C899 /* UsersListView.swift in Sources */,
+				EF9C838B2D7D9E4F000252CE /* YachtType.swift in Sources */,
 				EFDF6A782D78F54E008457CE /* SignupManager.swift in Sources */,
 				EF2C232C2D7D07B50067C899 /* Binding+Unwrap.swift in Sources */,
 				EF2C23232D7CC8460067C899 /* Image+FittedToHeight.swift in Sources */,

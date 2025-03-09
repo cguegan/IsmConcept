@@ -17,8 +17,7 @@ struct UserListRow: View {
     
     /// Main Body
     var body: some View {
-        HStack(alignment: .firstTextBaseline) {
-            
+        HStack(alignment: .top) {
             Image(systemName: "photo")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
@@ -28,10 +27,14 @@ struct UserListRow: View {
                     .font(.headline)
                 
                 Text(user.role.description)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .lineLimit(1)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
             }
+            
+            Spacer()
+            Text(user.vessel ?? "").padding(.top, 8)
+            
         }
         .swipeActions(edge: .trailing) {
             Button(role: .destructive) {
