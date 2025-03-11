@@ -199,7 +199,8 @@ extension AddUserSheet {
     
     private func createUser() {
         Task {
-            if let user = await manager.signUpWithVessel(for: vessel) {
+            await manager.signUpWithVessel(for: vessel)
+            if let user = AuthService.shared.currentUser {
                 vessel.users.append(user)
                 store.update(vessel)
                 dismiss()

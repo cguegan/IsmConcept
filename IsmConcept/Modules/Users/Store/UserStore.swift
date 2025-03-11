@@ -50,9 +50,9 @@ final class UserStore {
         
         print("[ DEBUG ] Enabling user live sync ...")
         
-        let role = AuthManager.shared.user.role.rawValue
+        //let role = AuthManager.shared.user.role.rawValue
         
-        listener = db.collection(collectionName).whereField("role", isGreaterThan: role)
+        listener = db.collection(collectionName) //.whereField("role", isGreaterThan: role)
             .addSnapshotListener { querySnapshot, error in
                 if let querySnapshot = querySnapshot {
                     self.users = querySnapshot.documents.compactMap { document in

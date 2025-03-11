@@ -18,12 +18,12 @@ struct UserSideView: View {
                 .padding(.leading, 12)
 
             VStack(alignment: .leading) {
-                Text(user.name)
+                Text(user.displayName)
                     .font(.headline)
                 
                 Text(user.vessel ?? "No vessel")
 
-                Text(user.role.description)
+                Text(user.role.rawValue)
                     .foregroundColor(.secondary)
             }
                     

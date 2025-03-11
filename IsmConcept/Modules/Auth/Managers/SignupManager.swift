@@ -27,7 +27,7 @@ class SignupManager {
     func signUp() {
         Task {
             do {
-                try await AuthManager.shared.createUser(withEmail: email, password: password, name: name)
+                try await AuthService.shared.signup(email: email, password: password, displayName: name)
             } catch {
                 errorMessage = error.localizedDescription
                 showAlert = true
@@ -37,13 +37,13 @@ class SignupManager {
     
     /// Sign up the user with a specific vessel
     ///
-    func signUpWithVessel(for vessel: Vessel) async -> User? {
+    func signUpWithVessel(for vessel: Vessel) async {
         do {
-            return try await AuthManager.shared.createUser(for: vessel, withEmail: email, password: password, name: name)
+            try await AuthService.shared.signup(email: email, password: password, displayName: name, vesselId: vessel.id)
         } catch {
             errorMessage = error.localizedDescription
             showAlert = true
-            return nil
+            return
         }
     }
     

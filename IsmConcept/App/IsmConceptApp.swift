@@ -13,10 +13,12 @@ struct IsmConceptApp: App {
     
     /// State Properties
     @State var preferences = PreferencesManager.shared
+    @State private var authService: AuthService
 
     /// Initialization
     init() {
         FirebaseApp.configure()
+        self.authService = AuthService()
     }
     
     /// Main Body
@@ -24,6 +26,7 @@ struct IsmConceptApp: App {
         WindowGroup {
             ContentView()
                 .environment(PreferencesManager())
+                .environment(AuthService())
         }
     }
     

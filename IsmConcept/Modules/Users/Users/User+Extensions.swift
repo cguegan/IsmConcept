@@ -12,7 +12,7 @@ extension User {
     /// Returns the initials of the user's name
     func initials() -> String? {
         let formatter = PersonNameComponentsFormatter()
-        if let components = formatter.personNameComponents(from: name) {
+        if let components = formatter.personNameComponents(from: displayName) {
             formatter.style = .abbreviated
             return formatter.string(from: components)
         }

@@ -18,6 +18,8 @@ struct UserEditView: View {
     @State var user: User
     @State private var avatarItem: PhotosPickerItem?
     @State private var avatarImage: Image?
+    
+    
 
     /// Main Body
     var body: some View {
@@ -37,11 +39,11 @@ struct UserEditView: View {
                     }
                     .padding(.bottom, 20)
                     
-                    Text(user.name)
+                    Text(user.displayName)
                         .font(.title)
                         .fontWeight(.bold)
                     
-                    Text(user.role.description)
+                    Text(user.role.rawValue)
                     
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -66,10 +68,11 @@ struct UserEditView: View {
                     /// Full Name
                     HStack {
                         Text("Full Name").foregroundStyle(.secondary)
-                        TextField("Full Name", text: $user.name)
+                        TextField("Full Name", text: $user.displayName)
                             .frame(maxWidth: .infinity)
                             .multilineTextAlignment(.trailing)
                     }
+                    
                     /// Phone
                     HStack {
                         Text("Phone").foregroundStyle(.secondary)
@@ -80,7 +83,7 @@ struct UserEditView: View {
                     
                     /// Vessel
                     ///
-                    if AuthManager.shared.user.role.rawValue < 10 {
+                    if user.role.level < 10 {
                         NavigationLink {
                             UserVesselPicker(user: $user)
                         } label: {
@@ -94,26 +97,26 @@ struct UserEditView: View {
                         }
                     }
                     
-                    NavigationLink {
-                        VesselEditView(vessel: AuthManager.shared.vessel)
-                    } label: {
-                        HStack {
-                            Text("Yacht").foregroundStyle(.secondary)
-                            Spacer()
-                            Text(AuthManager.shared.vessel.name)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-                                .multilineTextAlignment(.trailing)
-                        }
-                    }
+//                    NavigationLink {
+//                        VesselEditView(vessel: AuthService.shared.vessel)
+//                    } label: {
+//                        HStack {
+//                            Text("Yacht").foregroundStyle(.secondary)
+//                            Spacer()
+//                            Text(AuthService.shared.vessel.name)
+//                                .frame(maxWidth: .infinity, alignment: .trailing)
+//                                .multilineTextAlignment(.trailing)
+//                        }
+//                    }
                     
                     /// Role
-                    if AuthManager.shared.user.role.rawValue < 10 {
+                    if user.role.level < 10 {
                         HStack {
                             Text("Role").foregroundStyle(.secondary)
                             Spacer()
                             Picker("Role", selection: $user.role) {
                                 ForEach(UserRole.allCases, id: \.self) {
-                                    Text($0.description).tag($0)
+                                    Text($0.rawValue).tag($0)
                                 }
                             }
                             .labelsHidden()
@@ -121,37 +124,37 @@ struct UserEditView: View {
                     }
                     
                     /// Cannot unactive self  if user is admin
-                    if user.role == .admin,
-                       user.id != AuthManager.shared.user.id {
-                        HStack {
-                            Text("is Active").foregroundStyle(.secondary)
-                            Spacer()
-                            Toggle(isOn: $user.isActive) {}
-                        }
-                    }
+//                    if user.role == .admin,
+//                       user.id != AuthService.shared.user.id {
+//                        HStack {
+//                            Text("is Active").foregroundStyle(.secondary)
+//                            Spacer()
+//                            Toggle(isOn: $user.isActive) {}
+//                        }
+//                    }
                 }
                 
                 Section(header: Text("Danger Zone")) {
                     /// Cannot delete self
-                    if user.id != AuthManager.shared.user.id {
-                        Button {
-                            print("Delete User")
-                        } label: {
-                            Label("Delete User", systemImage: "trash")
-                        }
-                    }
+//                    if user.id != AuthService.shared.user.id {
+//                        Button {
+//                            print("Delete User")
+//                        } label: {
+//                            Label("Delete User", systemImage: "trash")
+//                        }
+//                    }
                     
-                    Button {
-                        print("Change Password")
-                    } label: {
-                        Label("Change Password", systemImage: "lock")
-                    }
+//                    Button {
+//                        print("Change Password")
+//                    } label: {
+//                        Label("Change Password", systemImage: "lock")
+//                    }
                     
-                    Button {
-                        AuthManager.shared.signOut()
-                    } label: {
-                        Label("Logout", systemImage: "arrowshape.turn.up.backward")
-                    }
+//                    Button {
+//                        AuthService.shared.signOut()
+//                    } label: {
+//                        Label("Logout", systemImage: "arrowshape.turn.up.backward")
+//                    }
                 }
                 
             }

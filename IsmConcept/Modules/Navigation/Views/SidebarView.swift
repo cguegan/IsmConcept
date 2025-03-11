@@ -32,7 +32,7 @@ struct SidebarView: View {
             /// User profile
             ///
             NavigationLink(value: Module.profile) {
-                UserSideView(user: AuthManager.shared.user)
+//                UserSideView(user: AuthService.shared.user)
             }
             
             Divider()
@@ -75,21 +75,21 @@ struct SidebarView: View {
             
             /// Is admin
             ///
-            if AuthManager.shared.user.role.rawValue < 10 {
-                Section(isExpanded: $isExpandedAdmin) {
-                    
-                    NavigationLink(value: Module.vessels) {
-                        Label("Yachts", systemImage: "ferry")
-                    }
-                    
-                    NavigationLink(value: Module.users) {
-                        Label("Users", systemImage: "person.2")
-                    }
-                    
-                } header: {
-                    Text("Admin")
-                }
-            }
+//            if AuthService.shared.user.role.level < 10 {
+//                Section(isExpanded: $isExpandedAdmin) {
+//                    
+//                    NavigationLink(value: Module.vessels) {
+//                        Label("Yachts", systemImage: "ferry")
+//                    }
+//                    
+//                    NavigationLink(value: Module.users) {
+//                        Label("Users", systemImage: "person.2")
+//                    }
+//                    
+//                } header: {
+//                    Text("Admin")
+//                }
+//            }
             
         }
         .listStyle(.sidebar)

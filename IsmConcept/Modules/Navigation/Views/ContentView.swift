@@ -13,6 +13,7 @@ struct ContentView: View {
     
     /// Environment Objects
     @Environment(PreferencesManager.self) var preferences
+    @Environment(AuthService.self) var authService
     
     /// State properties
     @State var userStore   = UserStore()
@@ -22,17 +23,12 @@ struct ContentView: View {
     @MainActor
     var body: some View {
         Group {
-            switch AuthManager.shared.loginStatus {
-                case .loggedOut:
-                    LoginView()
-                case .active:
-                    SplitView()
-                        .environment(UserStore())
-                        .environment(VesselStore())
-                case .inactive:
-                    NonActiveUser()
-                case .checking:
-                    ProgressView()
+            if authService.isLoading {
+                LoadingView()
+            } else if !authService.isAuthenticated {
+                LoginView()
+            } else if let user = authService.currentUser {
+                SplitView()
             }
         }
         .preferredColorScheme(preferences.colorScheme)

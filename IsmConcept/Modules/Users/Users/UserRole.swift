@@ -7,18 +7,18 @@
 
 import Foundation
 
-enum UserRole: Int, CaseIterable, Codable {
+enum UserRole: String, CaseIterable, Codable {
     
-    case admin    = 1
-    case director = 5
-    case editor   = 6
-    case manager  = 7
-    case captain  = 10
-    case officer  = 15
-    case crew     = 20
-    case surveyor = 100
-    case guest    = 200
-    case none     = 1000
+    case admin    = "admin"
+    case director = "director"
+    case editor   = "editor"
+    case manager  = "manager"
+    case captain  = "captain"
+    case officer  = "officer"
+    case crew     = "crew"
+    case surveyor = "surveyor"
+    case guest    = "guest"
+    case none     = "none"
     
     var level: Int {
         switch self {
@@ -35,19 +35,19 @@ enum UserRole: Int, CaseIterable, Codable {
         }
     }
     
-    var description: String {
-        switch self {
-            case .admin:    return "Administrator"
-            case .director: return "Director"
-            case .editor:   return "Editor"
-            case .manager:  return "Manager"
-            case .captain:  return "Captain"
-            case .officer:  return "Officer"
-            case .crew:     return "Crew"
-            case .surveyor: return "Surveyor"
-            case .guest:    return "Guest"
-            case .none:     return "None"
-        }
+    var canEditVesselInfo: Bool {
+        return self == .captain || self == .admin
     }
     
+    var canEditChecklists: Bool {
+        return level >= UserRole.officer.level
+    }
+    
+    var canViewAllVessels: Bool {
+        return self == .admin
+    }
+    
+    static func < (lhs: UserRole, rhs: UserRole) -> Bool {
+        return lhs.level < rhs.level
+    }
 }

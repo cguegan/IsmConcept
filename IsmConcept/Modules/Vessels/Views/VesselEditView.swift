@@ -175,18 +175,19 @@ struct VesselEditView: View {
             
             /// Users
             Section(header: Text("Users")) {
-                if !vessel.users.isEmpty {
-                    ForEach(self.$vessel.users) { $user in
-                        HStack {
-                            Text(user.name).bold()
-                            Spacer()
-                            Text(user.role.description).foregroundStyle(.secondary)
-                        }
-                    }
-                } else {
-                    Text("No users have been assigned to this vessel.")
-                        .foregroundColor(.secondary)
-                }
+//                if !vessel.users.isEmpty {
+//                    ForEach(self.$vessel.users) { $user in
+//                        HStack {
+//                            Text(user.displayName).bold()
+//                            Spacer()
+//                            Text(user.role.description).foregroundStyle(.secondary)
+//                        }
+//                    }
+//                } else {
+//                    Text("No users have been assigned to this vessel.")
+//                        .foregroundColor(.secondary)
+//                }
+//
                 /// Add User Button
                 Button {
                     print("[ DEBUG ] Add User")

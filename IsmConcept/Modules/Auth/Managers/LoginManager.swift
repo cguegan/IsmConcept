@@ -24,7 +24,7 @@ class LoginManager {
     func login() {
         Task {
             do {
-                try await AuthManager.shared.login(withEmail: email, password: password)
+                try await AuthService.shared.login(email: email, password: password)
             } catch {
                 errorMessage = error.localizedDescription
                 showAlert = true

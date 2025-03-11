@@ -10,33 +10,36 @@ import FirebaseFirestore
 
 struct UserVesselPicker: View {
     
+    /// Environment properties
     @Environment(\.dismiss) var dismiss
     
+    /// State properties
     @State var vessels: [Vessel] = []
     @Binding var user: User
     
+    /// Main body
     var body: some View {
         
         List {
             ForEach($vessels) { $vessel in
                 Button {
-                    print("Vessel selected: \(vessel.name)")
-                    // Update the user
-                    user.vesselID = vessel.id!
-                    user.vessel   = vessel.name
-                    print("[ DEBUG ] User updated: \(vessel.id!) - \(vessel.name)")
-                    dismiss()
+//                    print("Vessel selected: \(vessel.name)")
+//                    // Update the user
+//                    user.vesselId = vessel.id!
+//                    user.vessel   = vessel.name
+//                    print("[ DEBUG ] User updated: \(vessel.id!) - \(vessel.name)")
+//                    dismiss()
                 } label: {
-                    HStack {
-                        Label("\(vessel.name)", systemImage: "\(vessel.type.icon)")
-                            .foregroundColor(.primary)
-                        
-                        Spacer()
-                        if vessel.id == user.vesselID {
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.accentColor)
-                        }
-                    }
+//                    HStack {
+//                        Label("\(vessel.name)", systemImage: "\(vessel.type.icon)")
+//                            .foregroundColor(.primary)
+//                        
+//                        Spacer()
+//                        if vessel.id == user.vesselID {
+//                            Image(systemName: "checkmark")
+//                                .foregroundColor(.accentColor)
+//                        }
+//                    }
                 }
             }
         }

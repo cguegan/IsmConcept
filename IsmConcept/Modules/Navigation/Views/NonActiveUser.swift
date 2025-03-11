@@ -9,16 +9,19 @@ import SwiftUI
 
 struct NonActiveUser: View {
     var body: some View {
-        VStack {
+        VStack(alignment: .center) {
             Spacer()
             TopLogoView()
                 .padding(.bottom)
             
-            Text("Hello \(AuthManager.shared.user.name)")
+            Text("Hello \(AuthService.shared.currentUser?.displayName ?? "unknown")")
+                
             Text("Your account is not yet active.\nPlease contact support.")
             Spacer()
             Button("Sign Out", action: {
-                AuthManager.shared.signOut()
+                Task {
+                    try? await AuthService.shared.signOut()
+                }
             })
             .buttonStyle(.borderedProminent)
         }

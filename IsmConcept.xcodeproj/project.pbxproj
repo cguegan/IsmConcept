@@ -41,6 +41,7 @@
 		EF4ED7CA2D7B565100DA39C1 /* Checklisft+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4ED7C42D7B565100DA39C1 /* Checklisft+Mock.swift */; };
 		EF4ED7CC2D7B584F00DA39C1 /* LoremIpsum.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4ED7CB2D7B584F00DA39C1 /* LoremIpsum.swift */; };
 		EF4ED7CE2D7B58A500DA39C1 /* ItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4ED7CD2D7B58A500DA39C1 /* ItemType.swift */; };
+		EF87B3D42D80A67600A95625 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF87B3D32D80A67600A95625 /* LoadingView.swift */; };
 		EF9C83892D7D98AD000252CE /* VesselEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C83882D7D98AD000252CE /* VesselEditView.swift */; };
 		EF9C838B2D7D9E4F000252CE /* YachtType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C838A2D7D9E4F000252CE /* YachtType.swift */; };
 		EF9C838D2D7DBAE6000252CE /* AddUserSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C838C2D7DBAE6000252CE /* AddUserSheet.swift */; };
@@ -60,10 +61,12 @@
 		EFA0F5982D78644000C71E79 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = EFA0F5972D78644000C71E79 /* FirebaseRemoteConfig */; };
 		EFA0F59A2D78644000C71E79 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = EFA0F5992D78644000C71E79 /* FirebaseStorage */; };
 		EFA0F59C2D78651100C71E79 /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA0F59B2D78651100C71E79 /* UserRole.swift */; };
-		EFA0F59E2D7866F700C71E79 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA0F59D2D7866F700C71E79 /* AuthManager.swift */; };
+		EFA0F59E2D7866F700C71E79 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA0F59D2D7866F700C71E79 /* AuthService.swift */; };
 		EFA0F5A52D78868B00C71E79 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA0F5A42D78868B00C71E79 /* SignupView.swift */; };
 		EFA0F5A62D78868B00C71E79 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA0F5A32D78868B00C71E79 /* LoginView.swift */; };
 		EFA0F5AA2D78930300C71E79 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EFA0F5A92D78930300C71E79 /* GoogleService-Info.plist */; };
+		EFBDFB7B2D80310200FB8922 /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBDFB7A2D80310200FB8922 /* DatabaseError.swift */; };
+		EFBDFB7D2D80311C00FB8922 /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBDFB7C2D80311C00FB8922 /* AuthError.swift */; };
 		EFDF6A742D78F306008457CE /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A732D78F306008457CE /* PasswordField.swift */; };
 		EFDF6A762D78F32B008457CE /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A752D78F32B008457CE /* LoginManager.swift */; };
 		EFDF6A782D78F54E008457CE /* SignupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A772D78F54E008457CE /* SignupManager.swift */; };
@@ -109,6 +112,7 @@
 		EF4ED7C62D7B565100DA39C1 /* ExecutedChecklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExecutedChecklist.swift; sourceTree = "<group>"; };
 		EF4ED7CB2D7B584F00DA39C1 /* LoremIpsum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoremIpsum.swift; sourceTree = "<group>"; };
 		EF4ED7CD2D7B58A500DA39C1 /* ItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemType.swift; sourceTree = "<group>"; };
+		EF87B3D32D80A67600A95625 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		EF9C83882D7D98AD000252CE /* VesselEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VesselEditView.swift; sourceTree = "<group>"; };
 		EF9C838A2D7D9E4F000252CE /* YachtType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YachtType.swift; sourceTree = "<group>"; };
 		EF9C838C2D7DBAE6000252CE /* AddUserSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserSheet.swift; sourceTree = "<group>"; };
@@ -122,10 +126,12 @@
 		EFA0F58A2D7861BB00C71E79 /* Vessel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vessel.swift; sourceTree = "<group>"; };
 		EFA0F58C2D7862C500C71E79 /* Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flag.swift; sourceTree = "<group>"; };
 		EFA0F59B2D78651100C71E79 /* UserRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRole.swift; sourceTree = "<group>"; };
-		EFA0F59D2D7866F700C71E79 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		EFA0F59D2D7866F700C71E79 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		EFA0F5A32D78868B00C71E79 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		EFA0F5A42D78868B00C71E79 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		EFA0F5A92D78930300C71E79 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EFBDFB7A2D80310200FB8922 /* DatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseError.swift; sourceTree = "<group>"; };
+		EFBDFB7C2D80311C00FB8922 /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		EFD12FBF2D785F4800DD25BC /* IsmConcept.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IsmConcept.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFDF6A732D78F306008457CE /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
 		EFDF6A752D78F32B008457CE /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
@@ -375,6 +381,7 @@
 				EFA0F5742D7860BC00C71E79 /* ContentView.swift */,
 				EF4ED7A62D7B419F00DA39C1 /* NonActiveUser.swift */,
 				EF4ED7A82D7B435C00DA39C1 /* SplitView.swift */,
+				EF87B3D32D80A67600A95625 /* LoadingView.swift */,
 				EF4ED7AA2D7B43B900DA39C1 /* SidebarView.swift */,
 				EF2C23142D7C52FA0067C899 /* UserSideView.swift */,
 				EF4ED7B42D7B4B3300DA39C1 /* UnderConstructionView.swift */,
@@ -429,7 +436,7 @@
 		EFA0F5862D78613B00C71E79 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				EFA0F59D2D7866F700C71E79 /* AuthManager.swift */,
+				EFA0F59D2D7866F700C71E79 /* AuthService.swift */,
 				EFDF6A752D78F32B008457CE /* LoginManager.swift */,
 				EFDF6A772D78F54E008457CE /* SignupManager.swift */,
 			);
@@ -439,6 +446,8 @@
 		EFA0F5872D78614400C71E79 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				EFBDFB7A2D80310200FB8922 /* DatabaseError.swift */,
+				EFBDFB7C2D80311C00FB8922 /* AuthError.swift */,
 				EFDF6A7D2D78FA89008457CE /* LoginFocusField.swift */,
 				EF1886912D7EC8CC0008848D /* LoginStatus.swift */,
 			);
@@ -583,6 +592,7 @@
 				EFA0F59C2D78651100C71E79 /* UserRole.swift in Sources */,
 				EF4ED7AD2D7B44A500DA39C1 /* PreferencesManager.swift in Sources */,
 				EFA0F5792D7860BC00C71E79 /* ContentView.swift in Sources */,
+				EF87B3D42D80A67600A95625 /* LoadingView.swift in Sources */,
 				EF4ED7B32D7B4AFD00DA39C1 /* Module.swift in Sources */,
 				EF4ED7A72D7B419F00DA39C1 /* NonActiveUser.swift in Sources */,
 				EFA0F5A52D78868B00C71E79 /* SignupView.swift in Sources */,
@@ -592,8 +602,10 @@
 				EFA0F5A62D78868B00C71E79 /* LoginView.swift in Sources */,
 				EF4ED7B12D7B47EC00DA39C1 /* NavigationManager.swift in Sources */,
 				EF1886922D7EC8CC0008848D /* LoginStatus.swift in Sources */,
+				EFBDFB7B2D80310200FB8922 /* DatabaseError.swift in Sources */,
 				EFA0F58B2D7861BB00C71E79 /* Vessel.swift in Sources */,
 				EF9C838D2D7DBAE6000252CE /* AddUserSheet.swift in Sources */,
+				EFBDFB7D2D80311C00FB8922 /* AuthError.swift in Sources */,
 				EF9C83912D7DD812000252CE /* UserAvatar.swift in Sources */,
 				EF2C233A2D7D163B0067C899 /* VesselListRow.swift in Sources */,
 				EFA0F58D2D7862C500C71E79 /* Flag.swift in Sources */,
@@ -623,7 +635,7 @@
 				EF1886902D7E11130008848D /* UserVesselPicker.swift in Sources */,
 				EFDF6A7C2D78F966008457CE /* EmailField.swift in Sources */,
 				EF4ED7AB2D7B43B900DA39C1 /* SidebarView.swift in Sources */,
-				EFA0F59E2D7866F700C71E79 /* AuthManager.swift in Sources */,
+				EFA0F59E2D7866F700C71E79 /* AuthService.swift in Sources */,
 				EF2C23202D7CC37B0067C899 /* UserListRow.swift in Sources */,
 				EF2C23212D7CC37B0067C899 /* UsersListView.swift in Sources */,
 				EF9C838B2D7D9E4F000252CE /* YachtType.swift in Sources */,

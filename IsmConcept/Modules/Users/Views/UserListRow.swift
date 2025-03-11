@@ -23,10 +23,10 @@ struct UserListRow: View {
                 .foregroundColor(.accentColor)
             
             VStack(alignment: .leading) {
-                Text(user.name)
+                Text(user.displayName)
                     .font(.headline)
                 
-                Text(user.role.description)
+                Text(user.role.rawValue)
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .lineLimit(1)

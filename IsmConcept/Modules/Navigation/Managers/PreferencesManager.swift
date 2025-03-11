@@ -26,20 +26,11 @@ class PreferencesManager {
         adminMode    = sharedDefault.bool(forKey: "user_admin_mode")
         allowEditing = sharedDefault.bool(forKey: "user_allow_editing")
         colorScheme  = appearance.theme
-        self.loadCurrentUser()
     }
     
     public static let sharedDefault = UserDefaults(suiteName: "silex.net.ismConcept")
     public static let shared = PreferencesManager()
     private let storage = Storage()
-    
-    /// Loads the current user
-    ///
-    func loadCurrentUser() {
-        Task {
-            await AuthManager.shared.fetchUser()
-        }
-    }
     
     /// Published properties
     ///
