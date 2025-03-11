@@ -12,7 +12,6 @@ import FirebaseFirestore
 import FirebaseStorage
 import PhotosUI
 
-
 @Observable
 final class UserStore {
 
@@ -51,7 +50,9 @@ final class UserStore {
         
         print("[ DEBUG ] Enabling user live sync ...")
         
-        listener = db.collection(collectionName)
+        let role = AuthManager.shared.user.role.rawValue
+        
+        listener = db.collection(collectionName).whereField("role", isGreaterThan: role)
             .addSnapshotListener { querySnapshot, error in
                 if let querySnapshot = querySnapshot {
                     self.users = querySnapshot.documents.compactMap { document in
@@ -127,7 +128,7 @@ final class UserStore {
     ///     - image:     The image to upload as PhotosPickerItem
     ///     - user:        The user to associate the image with
     ///
-    func uploadImage(_ image: PhotosPickerItem, for user: User) {
+    func uploadFromPicker(_ image: PhotosPickerItem, for user: User) {
         
         /// Check if the image is valid
         print("[ DEBUG ] Uploading image ...")
@@ -157,7 +158,7 @@ final class UserStore {
     func uploadImage(_ image: UIImage, for user: User) {
         
         /// Create a reference to the image in Firebase Storage
-        let storagePath = storageRef.child("images/\(user.id ?? UUID().uuidString).jpg")
+        let storagePath = storageRef.child("\(collectionName)/\(user.id ?? UUID().uuidString).jpg")
         let resizedImage = image.aspectFittedToHeight(512)
         let data = resizedImage.jpegData(compressionQuality: 0.5)
         

@@ -19,9 +19,6 @@ struct SidebarView: View {
     @AppStorage("is_expanded_ism")        var isExpandedIsm: Bool = false
     @AppStorage("is_expanded_admin")      var isExpandedAdmin: Bool = false
     
-    /// Given properties
-    let user: User
-
     /// State properties
     @State private var showAddChecklist = false
 
@@ -35,10 +32,9 @@ struct SidebarView: View {
             /// User profile
             ///
             NavigationLink(value: Module.profile) {
-                NavigationLink(value: Module.profile) {
-                    UserSideView(user: user)
-                }
+                UserSideView(user: AuthManager.shared.user)
             }
+            
             Divider()
             
             /// Home screen
@@ -79,8 +75,7 @@ struct SidebarView: View {
             
             /// Is admin
             ///
-                
-            if user.role.rawValue < 10 {
+            if AuthManager.shared.user.role.rawValue < 10 {
                 Section(isExpanded: $isExpandedAdmin) {
                     
                     NavigationLink(value: Module.vessels) {
@@ -107,7 +102,7 @@ struct SidebarView: View {
 // ———————————————
 
 #Preview {
-    SidebarView(user: User.samples[0])
+    SidebarView()
         .environment(NavigationManager())
         .environment(PreferencesManager())
 }

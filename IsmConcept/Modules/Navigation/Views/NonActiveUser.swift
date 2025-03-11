@@ -14,7 +14,7 @@ struct NonActiveUser: View {
             TopLogoView()
                 .padding(.bottom)
             
-            Text("Hello \(AuthManager.shared.user?.name ?? "Unknown user")")
+            Text("Hello \(AuthManager.shared.user.name)")
             Text("Your account is not yet active.\nPlease contact support.")
             Spacer()
             Button("Sign Out", action: {

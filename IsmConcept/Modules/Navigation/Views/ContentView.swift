@@ -11,23 +11,31 @@ import FirebaseAuth
 
 struct ContentView: View {
     
+    /// Environment Objects
+    @Environment(PreferencesManager.self) var preferences
+    
+    /// State properties
+    @State var userStore   = UserStore()
+    @State var vesselStore = VesselStore()
+    
+    /// Main Body
+    @MainActor
     var body: some View {
         Group {
-            if AuthManager.shared.userSession != nil {
-                if let user = AuthManager.shared.user {
-                    if user.isActive {
-                        SplitView(user: user)
-                    } else {
-                        NonActiveUser()
-                    }
-                } else {
+            switch AuthManager.shared.loginStatus {
+                case .loggedOut:
+                    LoginView()
+                case .active:
+                    SplitView()
+                        .environment(UserStore())
+                        .environment(VesselStore())
+                case .inactive:
+                    NonActiveUser()
+                case .checking:
                     ProgressView()
-                }
-            } else {
-                LoginView()
             }
         }
-//        .preferredColorScheme(userPreferences.colorScheme)
+        .preferredColorScheme(preferences.colorScheme)
     }
 }
 
@@ -37,4 +45,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environment(PreferencesManager())
 }

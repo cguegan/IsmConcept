@@ -18,5 +18,8 @@ enum Flag: String, CaseIterable, Codable {
     case uk   = "United Kingdom"
     case it   = "Italy"
     case sp   = "Spain"
+    case mc   = "Monaco"
     
 }
+
+

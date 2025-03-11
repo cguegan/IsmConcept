@@ -11,27 +11,76 @@ import FirebaseFirestore
 struct Vessel: Identifiable, Codable {
     
     @DocumentID
-    var id:        String?
-    var name:      String
-    var isActive:  Bool
-    var imo:       String
-    var master:    String
-    var type:      VesselType
-    var loa:       Double
-    var beam:      Double
-    var draft:     Double
-    var gt:        Int
-    var year:      Int
-    var users:     [User] = []
-    var crew:      Int
-    var guests:    Int
-    var flag:      Flag
-    var homePort:  String
-    var location:  String
-    var imageUrl:  String
-    var createdAt: Date?
-    var updatedAt: Date?
-    var backupAt:  Date?
+    var id:         String?
+    var name:       String
+    var isActive:   Bool
+    var imo:        String
+    var master:     String
+    var type:       VesselType
+    var loa:        Double
+    var beam:       Double
+    var draft:      Double
+    var gt:         Int
+    var year:       Int
+    var users:      [User] = []
+    var crew:       Int
+    var guests:     Int
+    var flag:       Flag
+    var classification: Classification
+    var homePort:   String
+    var location:   String
+    var imageUrl:   String
+    var createdAt:  Date?
+    var updatedAt:  Date?
+    var backupAt:   Date?
+    
+    init(
+        id: String? = nil,
+        name: String,
+        isActive: Bool   = false,
+        imo: String      = "",
+        master: String   = "",
+        type: VesselType = .company,
+        loa: Double      = 0.0,
+        beam: Double     = 0.0,
+        draft: Double    = 0.0,
+        gt: Int          = 0,
+        year: Int        = 0,
+        users: [User]    = [],
+        crew: Int        = 0,
+        guests: Int      = 0,
+        flag: Flag       = .mc,
+        classification: Classification = .bv,
+        homePort: String = "",
+        location: String = "",
+        imageUrl: String = "",
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil,
+        backupAt: Date?  = nil
+    ) {
+        self.id = id
+        self.name = name
+        self.isActive = isActive
+        self.imo = imo
+        self.master = master
+        self.type = type
+        self.loa = loa
+        self.beam = beam
+        self.draft = draft
+        self.gt = gt
+        self.year = year
+        self.users = users
+        self.crew = crew
+        self.guests = guests
+        self.flag = flag
+        self.classification = classification
+        self.homePort = homePort
+        self.location = location
+        self.imageUrl = imageUrl
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.backupAt = backupAt
+    }
     
 }
 
@@ -54,6 +103,7 @@ extension Vessel {
         case crew
         case guests
         case flag
+        case classification
         case homePort = "home_port"
         case location
         case imageUrl = "image_url"

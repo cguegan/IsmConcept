@@ -12,9 +12,6 @@ struct SplitView: View {
     /// Environment Properties
     @Environment(PreferencesManager.self) var preferences
     
-    /// Given Properties
-    @State var user: User
-    
     /// State Properties
     @State var navigation = NavigationManager()
     @State var visibility: NavigationSplitViewVisibility = .all
@@ -22,13 +19,13 @@ struct SplitView: View {
     /// Main Body
     var body: some View {
         NavigationSplitView(columnVisibility: $visibility) {
-            SidebarView(user: user)
+            SidebarView()
                 .environment(navigation)
+
         } detail: {
             switch navigation.selectedModule {
                 case .profile:
-                    UserEditView(user: user)
-                        .environment(UserStore())
+                    UserEditView(user: AuthManager.shared.user)
                 case .home:
                     CompanyView()
 //                case .checklists(let department):
@@ -53,6 +50,6 @@ struct SplitView: View {
 // ———————————————
 
 #Preview {
-    SplitView(user: User.samples[0])
+    SplitView()
         .environment(PreferencesManager())
 }

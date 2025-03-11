@@ -199,7 +199,7 @@ extension AddUserSheet {
     
     private func createUser() {
         Task {
-            if let user = await manager.signUp(for: vessel) {
+            if let user = await manager.signUpWithVessel(for: vessel) {
                 vessel.users.append(user)
                 store.update(vessel)
                 dismiss()

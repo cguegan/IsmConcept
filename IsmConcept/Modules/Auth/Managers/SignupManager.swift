@@ -21,6 +21,9 @@ class SignupManager {
     
     // MARK: - Methods
     // ———————————————
+    
+    /// Sign up the user without a specific vessel
+    ///
     func signUp() {
         Task {
             do {
@@ -32,7 +35,9 @@ class SignupManager {
         }
     }
     
-    func signUp(for vessel: Vessel) async -> User? {
+    /// Sign up the user with a specific vessel
+    ///
+    func signUpWithVessel(for vessel: Vessel) async -> User? {
         do {
             return try await AuthManager.shared.createUser(for: vessel, withEmail: email, password: password, name: name)
         } catch {

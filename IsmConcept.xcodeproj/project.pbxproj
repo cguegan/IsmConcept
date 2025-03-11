@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		EF18868E2D7DE7470008848D /* User+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18868D2D7DE7470008848D /* User+Extensions.swift */; };
 		EF1886902D7E11130008848D /* UserVesselPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18868F2D7E11130008848D /* UserVesselPicker.swift */; };
+		EF1886922D7EC8CC0008848D /* LoginStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1886912D7EC8CC0008848D /* LoginStatus.swift */; };
+		EF1DDEDB2D7F55E500DB25D6 /* Classification.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DDEDA2D7F55E500DB25D6 /* Classification.swift */; };
 		EF2C23152D7C52FA0067C899 /* UserSideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C23142D7C52FA0067C899 /* UserSideView.swift */; };
 		EF2C23172D7C5E600067C899 /* User+Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C23162D7C5E600067C899 /* User+Samples.swift */; };
 		EF2C231D2D7CC2090067C899 /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C231C2D7CC2090067C899 /* UserStore.swift */; };
@@ -75,6 +77,8 @@
 /* Begin PBXFileReference section */
 		EF18868D2D7DE7470008848D /* User+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+Extensions.swift"; sourceTree = "<group>"; };
 		EF18868F2D7E11130008848D /* UserVesselPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVesselPicker.swift; sourceTree = "<group>"; };
+		EF1886912D7EC8CC0008848D /* LoginStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStatus.swift; sourceTree = "<group>"; };
+		EF1DDEDA2D7F55E500DB25D6 /* Classification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Classification.swift; sourceTree = "<group>"; };
 		EF2C23142D7C52FA0067C899 /* UserSideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSideView.swift; sourceTree = "<group>"; };
 		EF2C23162D7C5E600067C899 /* User+Samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+Samples.swift"; sourceTree = "<group>"; };
 		EF2C231C2D7CC2090067C899 /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
@@ -235,6 +239,7 @@
 				EF9C838A2D7D9E4F000252CE /* YachtType.swift */,
 				EF2C233B2D7D16DD0067C899 /* Vessel+Samples.swift */,
 				EFA0F58C2D7862C500C71E79 /* Flag.swift */,
+				EF1DDEDA2D7F55E500DB25D6 /* Classification.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -435,6 +440,7 @@
 			isa = PBXGroup;
 			children = (
 				EFDF6A7D2D78FA89008457CE /* LoginFocusField.swift */,
+				EF1886912D7EC8CC0008848D /* LoginStatus.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -585,6 +591,7 @@
 				EF2C23382D7D15EA0067C899 /* VesselsListView.swift in Sources */,
 				EFA0F5A62D78868B00C71E79 /* LoginView.swift in Sources */,
 				EF4ED7B12D7B47EC00DA39C1 /* NavigationManager.swift in Sources */,
+				EF1886922D7EC8CC0008848D /* LoginStatus.swift in Sources */,
 				EFA0F58B2D7861BB00C71E79 /* Vessel.swift in Sources */,
 				EF9C838D2D7DBAE6000252CE /* AddUserSheet.swift in Sources */,
 				EF9C83912D7DD812000252CE /* UserAvatar.swift in Sources */,
@@ -612,6 +619,7 @@
 				EFDF6A7A2D78F74C008457CE /* TopLogoView.swift in Sources */,
 				EF4ED7A92D7B435C00DA39C1 /* SplitView.swift in Sources */,
 				EF2C233C2D7D16DD0067C899 /* Vessel+Samples.swift in Sources */,
+				EF1DDEDB2D7F55E500DB25D6 /* Classification.swift in Sources */,
 				EF1886902D7E11130008848D /* UserVesselPicker.swift in Sources */,
 				EFDF6A7C2D78F966008457CE /* EmailField.swift in Sources */,
 				EF4ED7AB2D7B43B900DA39C1 /* SidebarView.swift in Sources */,

@@ -10,7 +10,7 @@ import SwiftUI
 struct UsersListView: View {
     
     /// Environment Properpties
-    @State var store = UserStore()
+    @Environment(UserStore.self) var store
 
     /// State Properpties
     @State private var showingAddUserView = false
