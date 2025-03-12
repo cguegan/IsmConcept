@@ -13,19 +13,22 @@ import FirebaseStorage
 
 @Observable
 class AuthService {
+    
+    /// Singleton instance
+    static let shared = AuthService()
+    
+    /// Current user
     private(set) var currentUser: User?
     private(set) var isAuthenticated = false
     private(set) var isLoading = true
     
+    /// Firestore database reference
     private let db = Firestore.firestore()
     private var authStateHandler: AuthStateDidChangeListenerHandle?
     private var collectionName = "users"
     
-    static let shared = AuthService()
-
-    /// Initialization
-    ///
-    init() {
+    /// Private initializer to ensure singleton pattern
+    private init() {
         setupAuthStateListener()
     }
     
@@ -46,6 +49,7 @@ class AuthService {
             
             Task { @MainActor in
                 if let user = user {
+                    print("[ DEBUG ] User \(user.email ?? "") authenticated")
                     do {
                         try await self.fetchUserData(userId: user.uid)
                     } catch {
@@ -54,6 +58,7 @@ class AuthService {
                         print("Failed to fetch user data: \(error)")
                     }
                 } else {
+                    print("[ DEBUG ] User logged out")
                     self.isAuthenticated = false
                     self.currentUser = nil
                 }
@@ -83,9 +88,9 @@ class AuthService {
             self.isAuthenticated = true
             
             // Update last login time
-            try? await db.collection(collectionName).document(userId).updateData([
-                "lastLogin": Timestamp(date: Date())
-            ])
+//            try? await db.collection(collectionName).document(userId).updateData([
+//                "lastLogin": Timestamp(date: Date())
+//            ])
         } catch {
             throw self.handleFirebaseError(error)
         }
@@ -94,22 +99,33 @@ class AuthService {
     /// Login a user
     /// - Parameters: email: The user email
     ///               password: The user password
-    /// - Throws: AuthError
+    /// - Throws:     AuthError
     ///
     func login(email: String, password: String) async throws {
+        print("[ DEBUG ] Attempting to login user with email: \(email)")
         do {
+            // First, sign in with Firebase Auth
             let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
+            let user = authResult.user
+            print("[ DEBUG ] Firebase Auth sign-in successful for user: \(user.email ?? "")")
             
-            // Wait for the auth state listener to update currentUser
-            let deadline = Date().addingTimeInterval(2)
-            while currentUser == nil && Date() < deadline {
-                try await Task.sleep(nanoseconds: 100_000_000) // 0.1 second
+            // Instead of waiting for the listener, directly fetch user data
+            await MainActor.run {
+                self.isLoading = true
             }
             
-            guard currentUser != nil else {
+            // Directly fetch user data instead of relying solely on the listener
+            try await fetchUserData(userId: user.uid)
+            
+            // Double-check authentication status
+            if !isAuthenticated || currentUser == nil {
+                print("[ DEBUG ] User authentication failed after successful sign-in")
                 throw AuthError.userNotFound
             }
+            
+            print("[ DEBUG ] Login completed successfully")
         } catch {
+            print("[ DEBUG ] Login error: \(error.localizedDescription)")
             throw handleFirebaseAuthError(error)
         }
     }
@@ -120,7 +136,7 @@ class AuthService {
     ///               displayName: The user display name
     ///               role: The user role: default is .crew
     ///               vesselId: The user vessel ID
-    ///    Throws: AuthError
+    ///    Throws:            AuthError
     ///
     func signup(email: String, password: String, displayName: String, role: UserRole = .crew, vesselId: String? = nil) async throws {
         do {

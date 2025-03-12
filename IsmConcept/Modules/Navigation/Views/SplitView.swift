@@ -16,6 +16,8 @@ struct SplitView: View {
     @State var navigation = NavigationManager()
     @State var visibility: NavigationSplitViewVisibility = .all
     
+    var user: User
+    
     /// Main Body
     var body: some View {
         NavigationSplitView(columnVisibility: $visibility) {
@@ -50,6 +52,6 @@ struct SplitView: View {
 // ———————————————
 
 #Preview {
-    SplitView()
+    SplitView(user: User.samples[0])
         .environment(PreferencesManager())
 }

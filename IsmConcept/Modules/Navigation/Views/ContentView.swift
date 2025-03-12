@@ -13,11 +13,11 @@ struct ContentView: View {
     
     /// Environment Objects
     @Environment(PreferencesManager.self) var preferences
-    @Environment(AuthService.self) var authService
     
     /// State properties
-    @State var userStore   = UserStore()
-    @State var vesselStore = VesselStore()
+    @State private var authService = AuthService.shared
+    @State private var userStore   = UserStore()
+    @State private var vesselStore = VesselStore()
     
     /// Main Body
     @MainActor
@@ -28,9 +28,11 @@ struct ContentView: View {
             } else if !authService.isAuthenticated {
                 LoginView()
             } else if let user = authService.currentUser {
-                SplitView()
+                SplitView(user: user)
             }
         }
+        .environment(userStore)
+        .environment(vesselStore)
         .preferredColorScheme(preferences.colorScheme)
     }
 }
