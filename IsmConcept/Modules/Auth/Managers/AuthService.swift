@@ -7,33 +7,35 @@
 
 import Foundation
 import Firebase
+import FirebaseCore
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 
+enum AuthState {
+    case loading
+    case signedIn
+    case signedOut
+}
+
 @Observable
 class AuthService {
     
-    /// Singleton instance
-    static let shared = AuthService()
-    
     /// Current user
-    private(set) var currentUser: User?
-    private(set) var isAuthenticated = false
-    private(set) var isLoading = true
+    private(set) var currentUser: FirebaseAuth.User?
+    private(set) var user: IsmConcept.User?
+    private(set) var authState = AuthState.signedOut
+    private(set) var error: Error?
     
     /// Firestore database reference
     private let db = Firestore.firestore()
     private var authStateHandler: AuthStateDidChangeListenerHandle?
     private var collectionName = "users"
     
-    /// Private initializer to ensure singleton pattern
-    private init() {
+    init() {
         setupAuthStateListener()
     }
     
-    /// De-Init
-    ///
     deinit {
         if let handler = authStateHandler {
             Auth.auth().removeStateDidChangeListener(handler)
@@ -45,54 +47,29 @@ class AuthService {
     /// 
     private func setupAuthStateListener() {
         authStateHandler = Auth.auth().addStateDidChangeListener { [weak self] (_, user) in
-            guard let self = self else { return }
+            
+            guard let self = self else {
+                print("[ ERROR ] AuthService deallocated")
+                return
+            }
+            
+            print("[ DEBUG ] Auth state changed: \(user?.uid ?? "No user")")
             
             Task { @MainActor in
                 if let user = user {
-                    print("[ DEBUG ] User \(user.email ?? "") authenticated")
                     do {
                         try await self.fetchUserData(userId: user.uid)
+                        self.authState = .signedIn
                     } catch {
-                        self.isAuthenticated = false
+                        self.authState = .signedOut
                         self.currentUser = nil
-                        print("Failed to fetch user data: \(error)")
+                        print("[ ERROR ] Failed to fetch user data: \(error)")
                     }
                 } else {
-                    print("[ DEBUG ] User logged out")
-                    self.isAuthenticated = false
+                    self.authState = .signedOut
                     self.currentUser = nil
                 }
-                self.isLoading = false
             }
-        }
-    }
-    
-    /// Fetch user data from Firestore
-    /// - Parameters: userId: The user ID
-    /// - Throws: DatabaseError
-    ///
-    @MainActor
-    private func fetchUserData(userId: String) async throws {
-        do {
-            let documentSnapshot = try await db.collection(collectionName).document(userId).getDocument()
-            
-            guard documentSnapshot.exists else {
-                throw DatabaseError.documentNotFound
-            }
-            
-            guard let userData = try? documentSnapshot.data(as: User.self) else {
-                throw DatabaseError.decodingError
-            }
-            
-            self.currentUser = userData
-            self.isAuthenticated = true
-            
-            // Update last login time
-//            try? await db.collection(collectionName).document(userId).updateData([
-//                "lastLogin": Timestamp(date: Date())
-//            ])
-        } catch {
-            throw self.handleFirebaseError(error)
         }
     }
     
@@ -101,34 +78,57 @@ class AuthService {
     ///               password: The user password
     /// - Throws:     AuthError
     ///
-    func login(email: String, password: String) async throws {
-        print("[ DEBUG ] Attempting to login user with email: \(email)")
+    @MainActor
+    func signIn(email: String, password: String) async throws {
         do {
-            // First, sign in with Firebase Auth
-            let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
-            let user = authResult.user
-            print("[ DEBUG ] Firebase Auth sign-in successful for user: \(user.email ?? "")")
+            let currentUser = try await Auth.auth().signIn(withEmail: email, password: password).user
             
-            // Instead of waiting for the listener, directly fetch user data
-            await MainActor.run {
-                self.isLoading = true
-            }
-            
-            // Directly fetch user data instead of relying solely on the listener
-            try await fetchUserData(userId: user.uid)
-            
-            // Double-check authentication status
-            if !isAuthenticated || currentUser == nil {
-                print("[ DEBUG ] User authentication failed after successful sign-in")
+            guard currentUser != nil else {
+                print("[ ERROR ] User not found")
                 throw AuthError.userNotFound
             }
-            
-            print("[ DEBUG ] Login completed successfully")
         } catch {
-            print("[ DEBUG ] Login error: \(error.localizedDescription)")
+            print("[ ERROR ] Failed to sign in user: \(error)")
             throw handleFirebaseAuthError(error)
         }
     }
+    
+    
+    /// Fetch user data from Firestore
+    /// - Parameters: userId: The user ID
+    /// - Throws: DatabaseError
+    ///
+    @MainActor
+    private func fetchUserData(userId: String) async throws {
+        do {
+            let documentSnapshot = try await db.collection("users").document(userId).getDocument()
+            
+            guard documentSnapshot.exists else {
+                print("[ ERROR ] User not found")
+                throw DatabaseError.documentNotFound
+            }
+            
+            guard let user = try? documentSnapshot.data(as: User.self) else {
+                print("[ ERROR ] Failed to decode user data")
+                throw DatabaseError.decodingError
+            }
+            
+            self.user = user
+            self.authState = .signedIn
+            
+            // Update last login time
+            Task {
+                try? await db.collection(collectionName)
+                             .document(userId)
+                             .updateData(["lastLogin": Date()])
+            }
+        } catch {
+            print("[ ERROR ] Failed to fetch user data: \(error)")
+            throw self.handleFirebaseError(error)
+        }
+    }
+    
+
     
     /// Signup a new user
     /// - Parameters: email: The user email
@@ -163,11 +163,25 @@ class AuthService {
     /// Sign out the current user
     /// - Throws: AuthError
     ///
+    @MainActor
     func signOut() async throws {
         do {
+            self.authState = .loading
+            
+            print("[ DEBUG ] Signing out user")
+            
             try Auth.auth().signOut()
+            
+            self.currentUser = nil
+            self.authState = .signedOut
+            self.error = nil
+            self.authState = .signedOut
+
         } catch {
-            throw handleFirebaseAuthError(error)
+            let authError = handleFirebaseAuthError(error)
+            self.error = authError
+            self.authState = .signedOut
+            throw authError
         }
     }
     
@@ -178,6 +192,9 @@ class AuthService {
     private func handleFirebaseAuthError(_ error: Error) -> AuthError {
         let nsError = error as NSError
         
+        let errorMessage = "[ ERROR ] Firebase Auth error: \(error.localizedDescription)"
+        print(errorMessage)
+        
         switch nsError.code {
         case AuthErrorCode.userNotFound.rawValue:
             return .userNotFound
@@ -185,6 +202,8 @@ class AuthService {
             return .invalidCredentials
         case AuthErrorCode.networkError.rawValue:
             return .networkError
+        case AuthErrorCode.tooManyRequests.rawValue:
+            return .tooManyAttempts
         default:
             return .unknown(error.localizedDescription)
         }
@@ -195,17 +214,21 @@ class AuthService {
     /// - Returns: DatabaseError
     private func handleFirebaseError(_ error: Error) -> Error {
         let nsError = error as NSError
+        print("[ DEBUG ] Handling Firebase error: \(error)")
         
+        let databaseError: DatabaseError
         switch nsError.code {
         case FirestoreErrorCode.notFound.rawValue:
-            return DatabaseError.documentNotFound
+            databaseError = .documentNotFound
         case FirestoreErrorCode.permissionDenied.rawValue:
-            return DatabaseError.permissionDenied
+            databaseError = .permissionDenied
         case FirestoreErrorCode.unavailable.rawValue:
-            return DatabaseError.networkError
+            databaseError = .networkError
         default:
-            return DatabaseError.unknown(error.localizedDescription)
+            databaseError = .unknown(error.localizedDescription)
         }
+        
+        return AuthError.databaseError(databaseError)
     }
     
 }

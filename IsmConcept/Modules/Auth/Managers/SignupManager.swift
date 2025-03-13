@@ -24,10 +24,10 @@ class SignupManager {
     
     /// Sign up the user without a specific vessel
     ///
-    func signUp() {
+    func signUp(authService: AuthService) async {
         Task {
             do {
-                try await AuthService.shared.signup(email: email, password: password, displayName: name)
+                try await authService.signup(email: email, password: password, displayName: name)
             } catch {
                 errorMessage = error.localizedDescription
                 showAlert = true
@@ -37,9 +37,9 @@ class SignupManager {
     
     /// Sign up the user with a specific vessel
     ///
-    func signUpWithVessel(for vessel: Vessel) async {
+    func signUpWithVessel(for vessel: Vessel, authService: AuthService) async {
         do {
-            try await AuthService.shared.signup(email: email, password: password, displayName: name, vesselId: vessel.id)
+            try await authService.signup(email: email, password: password, displayName: name, vesselId: vessel.id)
         } catch {
             errorMessage = error.localizedDescription
             showAlert = true

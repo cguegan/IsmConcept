@@ -11,6 +11,7 @@ struct UsersListView: View {
     
     /// Environment Properpties
     @Environment(UserStore.self) var store
+    @Environment(AuthService.self) var authService
 
     /// State Properpties
     @State private var showingAddUserView = false
@@ -21,7 +22,7 @@ struct UsersListView: View {
         NavigationStack {
             List {
                 ForEach($store.users) { $user in
-                    NavigationLink(destination: UserEditView(user: user).environment(store)) {
+                    NavigationLink(destination: UserEditView(user: user)) {
                         UserListRow(user: user).environment(store)
                     }
                 }
@@ -38,4 +39,5 @@ struct UsersListView: View {
 #Preview {
     UsersListView()
         .environment(UserStore())
+        .environment(AuthService())
 }

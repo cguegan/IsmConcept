@@ -12,6 +12,7 @@ struct SidebarView: View {
     /// Environment Properties
     @Environment(NavigationManager.self)  var navigation
     @Environment(PreferencesManager.self) var preferences
+    @Environment(UserStore.self) var userStore
 
     /// AppStorage for expanded sections of the sidebar
     @AppStorage("is_expanded_checklists") var isExpandedChecklists: Bool = false
@@ -32,7 +33,7 @@ struct SidebarView: View {
             /// User profile
             ///
             NavigationLink(value: Module.profile) {
-//                UserSideView(user: AuthService.shared.user)
+                UserSideView()
             }
             
             Divider()
@@ -75,21 +76,21 @@ struct SidebarView: View {
             
             /// Is admin
             ///
-//            if AuthService.shared.user.role.level < 10 {
-//                Section(isExpanded: $isExpandedAdmin) {
-//                    
-//                    NavigationLink(value: Module.vessels) {
-//                        Label("Yachts", systemImage: "ferry")
-//                    }
-//                    
-//                    NavigationLink(value: Module.users) {
-//                        Label("Users", systemImage: "person.2")
-//                    }
-//                    
-//                } header: {
-//                    Text("Admin")
-//                }
-//            }
+            if userStore.currentUser.isAdmin() {
+                Section(isExpanded: $isExpandedAdmin) {
+                    
+                    NavigationLink(value: Module.vessels) {
+                        Label("Yachts", systemImage: "ferry")
+                    }
+                    
+                    NavigationLink(value: Module.users) {
+                        Label("Users", systemImage: "person.2")
+                    }
+                    
+                } header: {
+                    Text("Admin")
+                }
+            }
             
         }
         .listStyle(.sidebar)

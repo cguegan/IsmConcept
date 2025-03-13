@@ -1,5 +1,5 @@
 //
-//  LoginManager.swift
+//  SignInManager.swift
 //  IsmConcept
 //
 //  Created by Christophe Guégan on 05/03/2025.
@@ -9,7 +9,7 @@ import Foundation
 import Observation
 
 @Observable
-class LoginManager {
+class SignInManager {
     
     var email: String = ""
     var password: String = ""
@@ -21,10 +21,10 @@ class LoginManager {
     // ———————————————
 
     /// Login using Auth
-    func login() {
+    func signIn(authService: AuthService) async {
         Task {
             do {
-                try await AuthService.shared.login(email: email, password: password)
+                try await authService.signIn( email: email, password: password )
             } catch {
                 errorMessage = error.localizedDescription
                 showAlert = true

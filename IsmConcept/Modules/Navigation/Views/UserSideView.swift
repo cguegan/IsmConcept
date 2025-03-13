@@ -9,28 +9,33 @@ import SwiftUI
 
 struct UserSideView: View {
     
-    let user: User
-    
+    @Environment(AuthService.self) private var authService
+
     var body: some View {
-        HStack(alignment: .top) {
-            UserAvatar(user: user)
-                .padding(.trailing)
-                .padding(.leading, 12)
-
-            VStack(alignment: .leading) {
-                Text(user.displayName)
-                    .font(.headline)
+        if let user = authService.user {
+            HStack(alignment: .top) {
+                UserAvatar(user: user)
+                    .padding(.trailing)
+                    .padding(.leading, 12)
                 
-                Text(user.vessel ?? "No vessel")
-
-                Text(user.role.rawValue)
-                    .foregroundColor(.secondary)
-            }
+                VStack(alignment: .leading) {
+                    Text(user.displayName)
+                        .font(.headline)
                     
+                    Text(user.vessel ?? "No vessel")
+                    
+                    Text(user.role.rawValue)
+                        .foregroundColor(.secondary)
+                }
+            }
+        }
+        else {
+            Text("No User")
         }
     }
 }
 
 #Preview {
-    UserSideView(user: User.samples[0])
+    UserSideView()
+        .environment(AuthService())
 }

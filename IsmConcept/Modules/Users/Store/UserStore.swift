@@ -9,6 +9,7 @@ import Foundation
 import Observation
 import SwiftUI
 import FirebaseFirestore
+import FirebaseAuth
 import FirebaseStorage
 import PhotosUI
 
@@ -18,6 +19,15 @@ final class UserStore {
     var users: [User] = []
     var error: Error?
     var errorMessage: String?
+    
+    var currentUser: User {
+        guard let authUser = Auth.auth().currentUser else { return User(email: "", displayName: "", role: .none) }
+        if let user = users.first(where: { $0.id == authUser.uid }) {
+            return user
+        } else {
+            return User(email: "", displayName: "", role: .none)
+        }
+    }
     
     /// Firestore database reference
     ///

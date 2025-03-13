@@ -13,7 +13,7 @@ struct SignupView: View {
     
     /// Environment Objects
     @Environment(\.dismiss) var dismiss
-    //@Environment(UserPreferences.self) var userPreferences
+    @Environment(AuthService.self) var authService
 
     /// State manager
     @State private var manager = SignupManager()
@@ -50,11 +50,9 @@ extension SignupView {
             Spacer()
             TopLogoView()
             topTitleView
-            loginForm
+            signupForm
             Spacer()
-            LoginButton( title: "Signup",
-                         disabled: !manager.isFormValid,
-                         action: { manager.signUp() })
+            signupButton
             backtoLoginButton
         }
     }
@@ -72,7 +70,7 @@ extension SignupView {
     
     /// Signup Form
     ///
-    private var loginForm: some View {
+    private var signupForm: some View {
         VStack {
             EmailField( email: $manager.email,
                         isValid: manager.isEmailValid,
@@ -119,9 +117,11 @@ extension SignupView {
     /// Signup Button
     ///
     private var signupButton: some View {
-        Button(action: {
-            //createUser()
-        }, label: {
+        Button {
+            Task {
+                await manager.signUp(authService: authService)
+            }
+        } label: {
             HStack {
                 Text("Signup")
                 Spacer()
@@ -129,7 +129,7 @@ extension SignupView {
             }
             .frame(maxWidth: .infinity)
             .padding(12)
-        })
+        }
         .buttonStyle(.borderedProminent)
         .padding()
         .disabled(!manager.isFormValid)
@@ -167,4 +167,5 @@ extension SignupView {
 
 #Preview {
     SignupView()
+        .environment(AuthService())
 }

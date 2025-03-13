@@ -10,14 +10,13 @@ import SwiftUI
 struct SplitView: View {
     
     /// Environment Properties
-    @Environment(PreferencesManager.self) var preferences
-    
+    @Environment(PreferencesManager.self) private var preferences
+    @Environment(AuthService.self) private var authService
+
     /// State Properties
     @State var navigation = NavigationManager()
     @State var visibility: NavigationSplitViewVisibility = .all
-    
-    var user: User
-    
+        
     /// Main Body
     var body: some View {
         NavigationSplitView(columnVisibility: $visibility) {
@@ -26,8 +25,8 @@ struct SplitView: View {
 
         } detail: {
             switch navigation.selectedModule {
-//                case .profile:
-//                    UserEditView(user: AuthService.shared.user)
+                case .profile:
+                    UserEditView(user: authService.user)
                 case .home:
                     CompanyView()
 //                case .checklists(let department):
@@ -52,6 +51,7 @@ struct SplitView: View {
 // ———————————————
 
 #Preview {
-    SplitView(user: User.samples[0])
+    SplitView()
         .environment(PreferencesManager())
+        .environment(AuthService())
 }

@@ -68,12 +68,11 @@
 		EFBDFB7B2D80310200FB8922 /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBDFB7A2D80310200FB8922 /* DatabaseError.swift */; };
 		EFBDFB7D2D80311C00FB8922 /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBDFB7C2D80311C00FB8922 /* AuthError.swift */; };
 		EFDF6A742D78F306008457CE /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A732D78F306008457CE /* PasswordField.swift */; };
-		EFDF6A762D78F32B008457CE /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A752D78F32B008457CE /* LoginManager.swift */; };
+		EFDF6A762D78F32B008457CE /* SignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A752D78F32B008457CE /* SignInManager.swift */; };
 		EFDF6A782D78F54E008457CE /* SignupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A772D78F54E008457CE /* SignupManager.swift */; };
 		EFDF6A7A2D78F74C008457CE /* TopLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A792D78F74C008457CE /* TopLogoView.swift */; };
 		EFDF6A7C2D78F966008457CE /* EmailField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A7B2D78F966008457CE /* EmailField.swift */; };
 		EFDF6A7E2D78FA89008457CE /* LoginFocusField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A7D2D78FA89008457CE /* LoginFocusField.swift */; };
-		EFDF6A802D7904CB008457CE /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A7F2D7904CB008457CE /* LoginButton.swift */; };
 		EFDF6A822D790ED2008457CE /* FullNameField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A812D790ED2008457CE /* FullNameField.swift */; };
 /* End PBXBuildFile section */
 
@@ -134,12 +133,11 @@
 		EFBDFB7C2D80311C00FB8922 /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		EFD12FBF2D785F4800DD25BC /* IsmConcept.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IsmConcept.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFDF6A732D78F306008457CE /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
-		EFDF6A752D78F32B008457CE /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
+		EFDF6A752D78F32B008457CE /* SignInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInManager.swift; sourceTree = "<group>"; };
 		EFDF6A772D78F54E008457CE /* SignupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupManager.swift; sourceTree = "<group>"; };
 		EFDF6A792D78F74C008457CE /* TopLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLogoView.swift; sourceTree = "<group>"; };
 		EFDF6A7B2D78F966008457CE /* EmailField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailField.swift; sourceTree = "<group>"; };
 		EFDF6A7D2D78FA89008457CE /* LoginFocusField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFocusField.swift; sourceTree = "<group>"; };
-		EFDF6A7F2D7904CB008457CE /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		EFDF6A812D790ED2008457CE /* FullNameField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullNameField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -428,7 +426,6 @@
 				EFDF6A7B2D78F966008457CE /* EmailField.swift */,
 				EFDF6A732D78F306008457CE /* PasswordField.swift */,
 				EFDF6A812D790ED2008457CE /* FullNameField.swift */,
-				EFDF6A7F2D7904CB008457CE /* LoginButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -437,7 +434,7 @@
 			isa = PBXGroup;
 			children = (
 				EFA0F59D2D7866F700C71E79 /* AuthService.swift */,
-				EFDF6A752D78F32B008457CE /* LoginManager.swift */,
+				EFDF6A752D78F32B008457CE /* SignInManager.swift */,
 				EFDF6A772D78F54E008457CE /* SignupManager.swift */,
 			);
 			path = Managers;
@@ -588,7 +585,6 @@
 				EF2C23172D7C5E600067C899 /* User+Samples.swift in Sources */,
 				EFDF6A7E2D78FA89008457CE /* LoginFocusField.swift in Sources */,
 				EF9C83892D7D98AD000252CE /* VesselEditView.swift in Sources */,
-				EFDF6A802D7904CB008457CE /* LoginButton.swift in Sources */,
 				EFA0F59C2D78651100C71E79 /* UserRole.swift in Sources */,
 				EF4ED7AD2D7B44A500DA39C1 /* PreferencesManager.swift in Sources */,
 				EFA0F5792D7860BC00C71E79 /* ContentView.swift in Sources */,
@@ -616,7 +612,7 @@
 				EF9C83932D7DDCF7000252CE /* LargeUserAvatar.swift in Sources */,
 				EF4ED7BC2D7B4B7500DA39C1 /* CompanyView.swift in Sources */,
 				EF4ED7CE2D7B58A500DA39C1 /* ItemType.swift in Sources */,
-				EFDF6A762D78F32B008457CE /* LoginManager.swift in Sources */,
+				EFDF6A762D78F32B008457CE /* SignInManager.swift in Sources */,
 				EFA0F57A2D7860BC00C71E79 /* IsmConceptApp.swift in Sources */,
 				EFA0F5892D78615100C71E79 /* User.swift in Sources */,
 				EF4ED7AF2D7B470D00DA39C1 /* Scheme.swift in Sources */,

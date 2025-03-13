@@ -21,7 +21,7 @@ class PreferencesManager {
     }
     
     init() {
-        let            sharedDefault = UserDefaults.standard
+        let sharedDefault = UserDefaults.standard
         isNightMode  = sharedDefault.bool(forKey: "app_night_vision")
         adminMode    = sharedDefault.bool(forKey: "user_admin_mode")
         allowEditing = sharedDefault.bool(forKey: "user_allow_editing")

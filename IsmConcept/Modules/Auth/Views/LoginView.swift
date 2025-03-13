@@ -11,10 +11,11 @@ import FirebaseAuth
 
 struct LoginView: View {
     
-    /// State manager
-    @State private var manager = LoginManager()
-    
+    /// Environment Objects
+    @Environment(AuthService.self) var authService
+
     /// State Properties
+    @State private var manager = SignInManager()
     @State private var showSignupView: Bool = false
         
     /// Focus Fields
@@ -52,10 +53,7 @@ extension LoginView {
             topTitleView
             loginForm
             Spacer()
-            LoginButton(title: "Login",
-                        disabled: !manager.isFormValid,
-                        action: { manager.login() })
-            
+            loginButton
         }
     }
     
@@ -96,6 +94,26 @@ extension LoginView {
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .padding()
     }
+    
+    /// Login Button
+    private var loginButton: some View {
+        Button {
+            Task {
+                await manager.signIn(authService: authService)
+            }
+        } label: {
+            HStack {
+                Text("Login")
+                Spacer()
+                Image(systemName: "arrow.right")
+            }
+            .frame(maxWidth: .infinity)
+            .padding(12)
+        }
+        .buttonStyle(.borderedProminent)
+        .padding()
+        .disabled(!manager.isFormValid)
+    }
             
     /// Signup Button
     ///
@@ -128,4 +146,5 @@ extension LoginView {
 
 #Preview {
     LoginView()
+        .environment(AuthService())
 }

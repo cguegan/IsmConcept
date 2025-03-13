@@ -12,8 +12,9 @@ import FirebaseAuth
 struct AddUserSheet: View {
     
     /// Environment Objects
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     @Environment(VesselStore.self) private var store
+    @Environment(AuthService.self) private var authService
 
     /// State manager
     @State private var manager = SignupManager()
@@ -58,14 +59,11 @@ extension AddUserSheet {
     private var loginStackView: some View {
         VStack {
             Spacer()
-//            TopLogoView()
             topTextView
             loginForm
             loginStrengthView
             Spacer()
-            LoginButton( title: "Create User",
-                         disabled: !manager.isFormValid,
-                         action: { self.createUser() })
+            signupButton
         }
     }
     
@@ -126,6 +124,29 @@ extension AddUserSheet {
         .padding()
     }
     
+    /// Signup Button
+    ///
+    private var signupButton: some View {
+        Button {
+            Task {
+                await manager.signUp(authService: authService)
+            }
+        } label: {
+            HStack {
+                Text("Signup")
+                Spacer()
+                Image(systemName: "arrow.right")
+            }
+            .frame(maxWidth: .infinity)
+            .padding(12)
+        }
+        .buttonStyle(.borderedProminent)
+        .padding()
+        .disabled(!manager.isFormValid)
+    }
+    
+    /// Login Strength View
+    ///
     private var loginStrengthView: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
@@ -199,8 +220,9 @@ extension AddUserSheet {
     
     private func createUser() {
         Task {
-            await manager.signUpWithVessel(for: vessel)
-            if let user = AuthService.shared.currentUser {
+            // TODO: - BUG HERE !!!
+            await manager.signUpWithVessel(for: vessel, authService: authService)
+            if let user = authService.user {
                 vessel.users.append(user)
                 store.update(vessel)
                 dismiss()
@@ -217,4 +239,5 @@ extension AddUserSheet {
 #Preview {
     AddUserSheet(vessel: .constant(Vessel.samples[0]))
         .environment(VesselStore())
+        .environment(AuthService())
 }

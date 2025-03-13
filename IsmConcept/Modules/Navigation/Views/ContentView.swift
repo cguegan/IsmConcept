@@ -13,9 +13,9 @@ struct ContentView: View {
     
     /// Environment Objects
     @Environment(PreferencesManager.self) var preferences
+    @Environment(AuthService.self) var authService
     
     /// State properties
-    @State private var authService = AuthService.shared
     @State private var userStore   = UserStore()
     @State private var vesselStore = VesselStore()
     
@@ -23,12 +23,13 @@ struct ContentView: View {
     @MainActor
     var body: some View {
         Group {
-            if authService.isLoading {
+            switch authService.authState {
+            case .loading:
                 LoadingView()
-            } else if !authService.isAuthenticated {
+            case .signedIn:
+                SplitView()
+            case .signedOut:
                 LoginView()
-            } else if let user = authService.currentUser {
-                SplitView(user: user)
             }
         }
         .environment(userStore)
@@ -44,4 +45,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environment(PreferencesManager())
+        .environment(AuthService())
 }
