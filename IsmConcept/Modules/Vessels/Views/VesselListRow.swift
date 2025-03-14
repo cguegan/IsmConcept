@@ -11,6 +11,7 @@ struct VesselListRow: View {
     
     /// Environment Properties
     @Environment(VesselStore.self) private var store
+    @Environment(UserStore.self) private var userStore
     
     /// Given Properties
     var vessel: Vessel
@@ -34,12 +35,15 @@ struct VesselListRow: View {
             }
         }
         .swipeActions(edge: .trailing) {
-            Button(role: .destructive) {
-                withAnimation {
-                    store.remove(vessel)
+            /// Only Admin can delete a vessel
+            if userStore.currentUser.canAddOrDeleteVessels() {
+                Button(role: .destructive) {
+                    withAnimation {
+                        store.remove(vessel)
+                    }
+                } label: {
+                    Label("Delete", systemImage: "trash")
                 }
-            } label: {
-                Label("Delete", systemImage: "trash")
             }
         }
     }

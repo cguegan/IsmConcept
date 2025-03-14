@@ -139,5 +139,16 @@ extension User {
         
         return false
     }
+    
+    /// a User can add of delete a vessel
+    /// - if he is an admin
+    /// - if he is director
+    func canAddOrDeleteVessels() -> Bool {
+        if self.role.level < 6 {
+            return true
+        } else {
+            return false
+        }
+    }
 }
 

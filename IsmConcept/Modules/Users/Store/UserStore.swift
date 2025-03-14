@@ -20,6 +20,7 @@ final class UserStore {
     var error: Error?
     var errorMessage: String?
     
+    /// Current User
     var currentUser: User {
         guard let authUser = Auth.auth().currentUser else { return User(email: "", displayName: "", role: .none) }
         if let user = users.first(where: { $0.id == authUser.uid }) {
@@ -28,6 +29,12 @@ final class UserStore {
             return User(email: "", displayName: "", role: .none)
         }
     }
+    
+    func setCurrentUser(_ user: User) {
+        let index = users.firstIndex(where: { $0.id == user.id })
+        self.users[index!] = user
+    }
+        
     
     /// Firestore database reference
     ///

@@ -34,20 +34,4 @@ enum UserRole: String, CaseIterable, Codable {
             case .none:     return 1000
         }
     }
-    
-    var canEditVesselInfo: Bool {
-        return self == .captain || self == .admin
-    }
-    
-    var canEditChecklists: Bool {
-        return level >= UserRole.officer.level
-    }
-    
-    var canViewAllVessels: Bool {
-        return self == .admin
-    }
-    
-    static func < (lhs: UserRole, rhs: UserRole) -> Bool {
-        return lhs.level < rhs.level
-    }
 }

@@ -210,10 +210,6 @@ struct VesselEditView: View {
                 }
             }
         }
-        .task {
-            vessel.users = await store.getUsers(for: vessel)
-            store.update(vessel)
-        }
     }
 }
 

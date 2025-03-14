@@ -10,7 +10,8 @@ import SwiftUI
 struct VesselsListView: View {
     
     /// Environment Properpties
-    @State var store = VesselStore()
+    @Environment(UserStore.self) private var userStore
+    @Environment(VesselStore.self) private var store
 
     /// State Properpties
     @State private var showingAddVesselView = false
@@ -20,9 +21,10 @@ struct VesselsListView: View {
         @Bindable var store = store
         NavigationStack {
             List {
+                Text("Number of Vessels: \(store.vessels.count)")
                 ForEach(store.vessels) { vessel in
-                    NavigationLink(destination: VesselEditView(vessel: vessel).environment(store)) {
-                        VesselListRow(vessel: vessel).environment(store)
+                    NavigationLink(destination: VesselEditView(vessel: vessel)) {
+                        VesselListRow(vessel: vessel)
                     }
                 }
             }
@@ -31,11 +33,13 @@ struct VesselsListView: View {
                 VesselAddSheet().environment(store)
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showingAddVesselView.toggle()
-                    }) {
-                        Image(systemName: "plus.circle")
+                if userStore.currentUser.canAddOrDeleteVessels() {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            showingAddVesselView.toggle()
+                        }) {
+                            Image(systemName: "plus.circle")
+                        }
                     }
                 }
             }
@@ -47,9 +51,9 @@ struct VesselsListView: View {
 // MARK: - Preview
 // ———————————————
 
-//#Preview {
-//    @Previewable var store = VesselStore()
-//    //store.vessels = Vessel.samples
-//    VesselsListView()
-//        .environment(VesselStore())
-//}
+#Preview {
+    @Previewable var store = VesselStore()
+    //store.vessels = Vessel.samples
+    VesselsListView()
+        .environment(VesselStore())
+}

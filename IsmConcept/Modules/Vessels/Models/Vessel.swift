@@ -22,7 +22,7 @@ struct Vessel: Identifiable, Codable {
     var draft:      Double
     var gt:         Int
     var year:       Int
-    var users:      [User] = []
+    var users:      [String] = []
     var crew:       Int
     var guests:     Int
     var flag:       Flag
@@ -46,7 +46,7 @@ struct Vessel: Identifiable, Codable {
         draft: Double    = 0.0,
         gt: Int          = 0,
         year: Int        = 0,
-        users: [User]    = [],
+        users: [String]  = [],
         crew: Int        = 0,
         guests: Int      = 0,
         flag: Flag       = .mc,

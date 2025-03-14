@@ -190,6 +190,7 @@ struct UserEditView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
                     userStore.update(user)
+                    userStore.setCurrentUser(user)
                     dismiss()
                 }
             }

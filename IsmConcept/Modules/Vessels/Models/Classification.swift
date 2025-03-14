@@ -14,6 +14,7 @@ enum Classification: String, CaseIterable, Codable {
     case abs  = "ABS"
     case rina = "RINA"
     case dnv  = "DNV"
+    case none = "None"
     
     var description: String {
         switch self {
@@ -27,6 +28,8 @@ enum Classification: String, CaseIterable, Codable {
             return "Registro Italiano Navale"
         case .dnv:
             return "Det Norske Veritas"
+        case .none:
+            return "N/A"
         }
     }
     

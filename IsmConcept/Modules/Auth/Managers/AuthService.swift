@@ -24,7 +24,7 @@ class AuthService {
     /// Current user
     private(set) var currentUser: FirebaseAuth.User?
     private(set) var user: IsmConcept.User?
-    private(set) var authState = AuthState.signedOut
+    private(set) var authState = AuthState.loading
     private(set) var error: Error?
     
     /// Firestore database reference

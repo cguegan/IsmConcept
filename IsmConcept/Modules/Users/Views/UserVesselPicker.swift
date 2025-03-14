@@ -12,50 +12,44 @@ struct UserVesselPicker: View {
     
     /// Environment properties
     @Environment(\.dismiss) var dismiss
+    @Environment(VesselStore.self) var vesselStore
     
     /// State properties
-    @State var vessels: [Vessel] = []
     @Binding var user: User
     
     /// Main body
     var body: some View {
-        
+        @Bindable var vesselStore = vesselStore
         List {
-            ForEach($vessels) { $vessel in
+            ForEach($vesselStore.vessels) { $vessel in
                 Button {
-//                    print("Vessel selected: \(vessel.name)")
-//                    // Update the user
-//                    user.vesselId = vessel.id!
-//                    user.vessel   = vessel.name
-//                    print("[ DEBUG ] User updated: \(vessel.id!) - \(vessel.name)")
-//                    dismiss()
+                    print("Vessel selected: \(vessel.name)")
+                    
+                    // Update the user
+                    user.vesselId = vessel.id!
+                    print("[ DEBUG ] User updated: \(vessel.id!) - \(vessel.name)")
+                    
+                    // Update the vessel
+                    vesselStore.addUser(user, to: vessel)
+                    
+                    // Dismiss the view
+                    dismiss()
                 } label: {
-//                    HStack {
-//                        Label("\(vessel.name)", systemImage: "\(vessel.type.icon)")
-//                            .foregroundColor(.primary)
-//                        
-//                        Spacer()
-//                        if vessel.id == user.vesselID {
-//                            Image(systemName: "checkmark")
-//                                .foregroundColor(.accentColor)
-//                        }
-//                    }
+                    HStack {
+                        Label("\(vessel.name)", systemImage: "\(vessel.type.icon)")
+                            .foregroundColor(.primary)
+                        
+                        Spacer()
+                        if vessel.id == user.vesselId {
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.accentColor)
+                        }
+                    }
                 }
             }
         }
         .navigationTitle("Select the vessel")
         .navigationBarTitleDisplayMode(.inline)
-        .task{
-            let db = Firestore.firestore().collection("vessels")
-            do {
-                let querySnapshot = try await db.getDocuments()
-                self.vessels = querySnapshot.documents.compactMap { document in
-                    return try? document.data(as: Vessel.self)
-                }
-            } catch {
-                print("Error getting vessels: \(error)")
-            }
-        }
     }
 }
 

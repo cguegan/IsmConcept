@@ -12,6 +12,7 @@ struct SplitView: View {
     /// Environment Properties
     @Environment(PreferencesManager.self) private var preferences
     @Environment(AuthService.self) private var authService
+    @Environment(UserStore.self) private var userStore
 
     /// State Properties
     @State var navigation = NavigationManager()
@@ -26,7 +27,7 @@ struct SplitView: View {
         } detail: {
             switch navigation.selectedModule {
                 case .profile:
-                    UserEditView(user: authService.user)
+                UserEditView(user: userStore.currentUser)
                 case .home:
                     CompanyView()
 //                case .checklists(let department):

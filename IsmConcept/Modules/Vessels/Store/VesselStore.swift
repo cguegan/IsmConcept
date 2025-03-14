@@ -9,6 +9,7 @@ import Foundation
 import Observation
 import SwiftUI
 import FirebaseFirestore
+import FirebaseAuth
 import FirebaseStorage
 import PhotosUI
 
@@ -19,8 +20,19 @@ final class VesselStore {
     var error: Error?
     var errorMessage: String?
     
-    /// Shared instance
-    static let shared = VesselStore()
+    /// Current Vessel
+//    var currentVessel: Vessel {
+//        guard let authUser = Auth.auth().currentUser else { return Vessel.blank }
+//        if let user = users.first(where: { $0.id == authUser.uid }) {
+//            if let vessel = vessels.first(where: { $0.id == user.vesselId }) {
+//                return vessel
+//            } else {
+//                return Vessel.blank
+//            }
+//        } else {
+//            return Vessel.blank
+//        }
+//    }
     
     /// Firestore database reference
     ///
@@ -57,6 +69,7 @@ final class VesselStore {
             .order(by: "name", descending: false)
             .addSnapshotListener { querySnapshot, error in
                 if let querySnapshot = querySnapshot {
+                    print("[ DEBUG ] Got \(querySnapshot.documents.count) vessels")
                     self.vessels = querySnapshot.documents.compactMap { document in
                         return try? document.data(as: Vessel.self)
                     }
@@ -183,5 +196,26 @@ final class VesselStore {
         return []
     }
     
-    
+    /// addUser
+    ///
+    func addUser(_ user: User, to vessel: Vessel) {
+        if let userId = user.id,
+           let vesselId = vessel.id {
+            
+            /// Add the user to the new vessel
+            if let index = vessels.firstIndex(where: { $0.id == vesselId }) {
+                if !vessels[index].users.contains(userId) {
+                    vessels[index].users.append(userId)
+                }
+            }
+            
+            /// Remove user from the old vessel
+            if let index = vessels.firstIndex(where: { $0.id == user.vesselId }) {
+                if let index = vessels[index].users.firstIndex(where: { $0 == userId }) {
+                    vessels[index].users.remove(at: index)
+                }
+            }
+            
+        }
+    }
 }

@@ -11,7 +11,6 @@ struct UsersListView: View {
     
     /// Environment Properpties
     @Environment(UserStore.self) var store
-    @Environment(AuthService.self) var authService
 
     /// State Properpties
     @State private var showingAddUserView = false

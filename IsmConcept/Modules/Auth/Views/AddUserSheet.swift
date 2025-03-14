@@ -222,8 +222,8 @@ extension AddUserSheet {
         Task {
             // TODO: - BUG HERE !!!
             await manager.signUpWithVessel(for: vessel, authService: authService)
-            if let user = authService.user {
-                vessel.users.append(user)
+            if let userId = authService.currentUser?.uid {
+                vessel.users.append(userId)
                 store.update(vessel)
                 dismiss()
             }
