@@ -35,7 +35,7 @@ struct UserEditView: View {
             VStack(alignment: .center) {
                 
                 PhotosPicker(selection: $avatarItem, matching: .images) {
-                    LargeUserAvatar(user: user)
+                    Avatar(user: user, size: .large)
                 }
                 .onChange(of: avatarItem) {
                     if let image = avatarItem {
@@ -45,13 +45,12 @@ struct UserEditView: View {
                         print("Failed")
                     }
                 }
-                .padding(.bottom, 20)
                 
                 Text(user.displayName)
                     .font(.title)
                     .fontWeight(.bold)
                 
-                Text(user.role.rawValue)
+                Text(user.role.description)
                 
             }
             .frame(maxWidth: .infinity, alignment: .center)

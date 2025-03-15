@@ -23,7 +23,7 @@ struct ContentView: View {
     @MainActor
     var body: some View {
         Group {
-            switch authService.authState {
+            switch AppManager.shared.state {
             case .loading:
                 LoadingView()
             case .signedIn:

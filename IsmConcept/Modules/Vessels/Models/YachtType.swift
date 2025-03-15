@@ -11,6 +11,7 @@ enum VesselType: String, Codable, CaseIterable, Identifiable {
     case motor
     case sailing
     case company
+    case none
     
     var id: Self { self }
     
@@ -19,6 +20,7 @@ enum VesselType: String, Codable, CaseIterable, Identifiable {
             case .motor:   return "Motor Yacht"
             case .sailing: return "Sailing Yacht"
             case .company: return "Yachting Concept Monaco"
+            case .none:    return "Null"
         }
     }
     
@@ -27,6 +29,7 @@ enum VesselType: String, Codable, CaseIterable, Identifiable {
             case .motor:   return "MY"
             case .sailing: return "SY"
             case .company: return "YCM"
+            case .none:    return "N/A"
         }
     }
     
@@ -35,6 +38,7 @@ enum VesselType: String, Codable, CaseIterable, Identifiable {
             case .motor:   return "ferry"
             case .sailing: return "sailboat"
             case .company: return "text.book.closed"
+            case .none:    return "xmark"
         }
     }
 }

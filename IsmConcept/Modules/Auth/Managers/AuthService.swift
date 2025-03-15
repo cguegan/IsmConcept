@@ -12,19 +12,12 @@ import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 
-enum AuthState {
-    case loading
-    case signedIn
-    case signedOut
-}
-
 @Observable
 class AuthService {
     
     /// Current user
     private(set) var currentUser: FirebaseAuth.User?
     private(set) var user: IsmConcept.User?
-    private(set) var authState = AuthState.loading
     private(set) var error: Error?
     
     /// Firestore database reference
@@ -32,10 +25,14 @@ class AuthService {
     private var authStateHandler: AuthStateDidChangeListenerHandle?
     private var collectionName = "users"
     
+    /// Initialize the AuthService
+    ///
     init() {
         setupAuthStateListener()
     }
     
+    /// Deinitialize the AuthService
+    ///
     deinit {
         if let handler = authStateHandler {
             Auth.auth().removeStateDidChangeListener(handler)
@@ -48,6 +45,7 @@ class AuthService {
     private func setupAuthStateListener() {
         authStateHandler = Auth.auth().addStateDidChangeListener { [weak self] (_, user) in
             
+            /// Ensure self is not nil
             guard let self = self else {
                 print("[ ERROR ] AuthService deallocated")
                 return
@@ -55,19 +53,18 @@ class AuthService {
             
             print("[ DEBUG ] Auth state changed: \(user?.uid ?? "No user")")
             
+            /// Update the current user
             Task { @MainActor in
                 if let user = user {
                     do {
                         try await self.fetchUserData(userId: user.uid)
-                        self.authState = .signedIn
+                        AppManager.shared.setupUser(self.user)
                     } catch {
-                        self.authState = .signedOut
-                        self.currentUser = nil
+                        AppManager.shared.resetUser()
                         print("[ ERROR ] Failed to fetch user data: \(error)")
                     }
                 } else {
-                    self.authState = .signedOut
-                    self.currentUser = nil
+                    AppManager.shared.resetUser()
                 }
             }
         }
@@ -81,18 +78,12 @@ class AuthService {
     @MainActor
     func signIn(email: String, password: String) async throws {
         do {
-            let currentUser = try await Auth.auth().signIn(withEmail: email, password: password).user
-            
-            guard currentUser != nil else {
-                print("[ ERROR ] User not found")
-                throw AuthError.userNotFound
-            }
+            let _ = try await Auth.auth().signIn(withEmail: email, password: password).user
         } catch {
             print("[ ERROR ] Failed to sign in user: \(error)")
             throw handleFirebaseAuthError(error)
         }
     }
-    
     
     /// Fetch user data from Firestore
     /// - Parameters: userId: The user ID
@@ -114,29 +105,26 @@ class AuthService {
             }
             
             self.user = user
-            self.authState = .signedIn
+            AppManager.shared.setupUser(user)
             
             // Update last login time
-            Task {
-                try? await db.collection(collectionName)
-                             .document(userId)
-                             .updateData(["lastLogin": Date()])
-            }
+            Task { try? await updateLastLogin(userId: userId) }
+            
         } catch {
             print("[ ERROR ] Failed to fetch user data: \(error)")
             throw self.handleFirebaseError(error)
         }
     }
     
-
-    
     /// Signup a new user
-    /// - Parameters: email: The user email
-    ///               password: The user password
-    ///               displayName: The user display name
-    ///               role: The user role: default is .crew
-    ///               vesselId: The user vessel ID
-    ///    Throws:            AuthError
+    /// - Parameters:
+    ///     - email: The user email
+    ///     - password: The user password
+    ///     - displayName: The user display name
+    ///     - role: The user role: default is .crew
+    ///     - vesselId: The user vessel ID
+    /// - Throws: AuthError
+    /// - Note: This method will create the user in Firebase Auth and Firestore database.
     ///
     func signup(email: String, password: String, displayName: String, role: UserRole = .crew, vesselId: String? = nil) async throws {
         do {
@@ -144,17 +132,20 @@ class AuthService {
             let authResult = try await Auth.auth().createUser(withEmail: email, password: password)
             let userId = authResult.user.uid
             
-            // Create the user document in Firestore
+            // Create the user document in Firestore database
             let newUser = User( id: userId,
                                 email: email,
                                 displayName: displayName,
                                 role: role,
                                 vesselId: vesselId,
-                                createdAt: Date() )
+                                createdAt: Date(),
+                                updatedAt: Date(),
+                                lastLogin: Date())
             
             try db.collection(collectionName).document(userId).setData(from: newUser)
             
             // The auth state listener will handle loading the user data
+            
         } catch {
             throw handleFirebaseAuthError(error)
         }
@@ -166,22 +157,35 @@ class AuthService {
     @MainActor
     func signOut() async throws {
         do {
-            self.authState = .loading
-            
+            AppManager.shared.state = .loading
             print("[ DEBUG ] Signing out user")
             
             try Auth.auth().signOut()
             
             self.currentUser = nil
-            self.authState = .signedOut
             self.error = nil
-            self.authState = .signedOut
-
+            AppManager.shared.resetUser()
         } catch {
             let authError = handleFirebaseAuthError(error)
             self.error = authError
-            self.authState = .signedOut
+            AppManager.shared.resetUser()
             throw authError
+        }
+    }
+    
+    /// Update last login
+    /// - Parameters: userId: The user ID
+    /// - Throws: DatabaseError
+    /// - Note: This method will update the last login time for the user
+    ///
+    private func updateLastLogin(userId: String) async throws {
+        do {
+            try await db.collection(collectionName)
+                        .document(userId)
+                        .updateData(["lastLogin": Date()])
+        } catch {
+            print("[ ERROR ] Failed to update last login: \(error)")
+            throw handleFirebaseError(error)
         }
     }
     

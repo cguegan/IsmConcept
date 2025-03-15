@@ -12,7 +12,8 @@ extension User {
         .init( email:       "cguegan@gmail.com",
                displayName: "Christophe Guégan",
                role:        UserRole.admin,
-               vesselId:    Vessel.samples[0].id ),
+               vesselId:    Vessel.samples[0].id,
+               imageUrl:    "https://picsum.photos/id/237/200/300" ),
         .init( email:       "johndoe@example.com",
                displayName: "John Doe",
                role:        UserRole.crew,
@@ -22,5 +23,8 @@ extension User {
                role:        UserRole.crew,
                vesselId:    Vessel.samples[2].id )
     ]
+    
+    static let nullUser = User(email: "", displayName: "", role: .none, isActive: false)
+    
 }
 

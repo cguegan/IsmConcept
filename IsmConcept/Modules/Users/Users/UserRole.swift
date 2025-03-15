@@ -34,4 +34,19 @@ enum UserRole: String, CaseIterable, Codable {
             case .none:     return 1000
         }
     }
+    
+    var description: String {
+        switch self {
+            case .admin:    return "Administrator"
+            case .director: return "Director"
+            case .editor:   return "Editor"
+            case .manager:  return "Manager"
+            case .captain:  return "Captain"
+            case .officer:  return "Officer"
+            case .crew:     return "Crew"
+            case .surveyor: return "Surveyor"
+            case .guest:    return "Guest"
+            case .none:     return "Not set"
+        }
+    }
 }

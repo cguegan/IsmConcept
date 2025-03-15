@@ -74,22 +74,10 @@ extension Vessel {
                 backupAt: Date() )
     ]
     
-    static let blank: Vessel = Vessel( name: "",
-                                       isActive: true,
-                                       imo: "",
-                                       master: "",
-                                       type: .motor,
-                                       loa: 0.0,
-                                       beam: 0.0,
-                                       draft: 0.0,
-                                       gt: 0,
-                                       year: 0,
-                                       users: [],
-                                       crew: 0,
-                                       guests: 0,
-                                       flag: .cisr,
-                                       homePort: "",
-                                       location: "",
-                                       imageUrl: "" )
+    static let nullVessel: Vessel = Vessel( name: "",
+                                            isActive: false,
+                                            imo: "",
+                                            master: "",
+                                            type: .company)
         
 }

@@ -14,18 +14,22 @@ struct UserSideView: View {
 
 
     var body: some View {
+        
+        let user: User = AppManager.shared.user
+        let vessel: Vessel = AppManager.shared.vessel
+        
         HStack(alignment: .top) {
-            UserAvatar(user: userStore.currentUser)
-                .padding(.trailing)
-                .padding(.leading, 12)
+            Avatar(user: user, size: .small)
             
             VStack(alignment: .leading) {
-                Text(userStore.currentUser.displayName)
+                Text(user.displayName)
                     .font(.headline)
                 
-                Text(userStore.currentUser.vessel ?? "No vessel")
+                if !vessel.name.isEmpty {
+                    Text(vessel.name)
+                }
                 
-                Text(userStore.currentUser.role.rawValue.capitalized)
+                Text(user.role.description)
                     .foregroundColor(.secondary)
             }
         }

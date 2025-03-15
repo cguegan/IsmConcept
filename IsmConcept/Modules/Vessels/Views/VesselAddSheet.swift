@@ -14,7 +14,7 @@ struct VesselAddSheet: View {
     @Environment(VesselStore.self) private var store
     
     /// State Properties
-    @State var vessel: Vessel = Vessel.blank
+    @State var vessel: Vessel = Vessel.nullVessel
     
     /// Main Body
     var body: some View {
