@@ -163,7 +163,7 @@ final class VesselStore {
     
     /// Get users for a specific vessel
     ///
-    func getUsers(for vessel: Vessel) async -> [User]  {
+    func fetchUsers(for vessel: Vessel) async -> [User]  {
         
         /// Check if vessel has an ID
         guard let id = vessel.id else { return [] }

@@ -19,7 +19,7 @@ struct VesselEditView: View {
     /// State Properties
     @State private var showAddUser: Bool = false
     @State private var vessel: Vessel = Vessel.nullVessel
-
+    @State private var users: [User] = []
     
     /// Computed Properties
     let numberFormatter: NumberFormatter = {
@@ -27,6 +27,7 @@ struct VesselEditView: View {
         formatter.numberStyle = .decimal
         return formatter
     }()
+
     
     /// Main Body
     var body: some View {
@@ -191,11 +192,11 @@ struct VesselEditView: View {
             /// Users
             Section(header: Text("Crew Members")) {
                 if !vessel.users.isEmpty {
-                    ForEach(self.vessel.users, id: \.self) { userId in
+                    ForEach(self.users) { user in
                         HStack {
-                            Text(userId).bold()
+                            Text(user.displayName).bold()
                             Spacer()
-//                            Text(userId).foregroundStyle(.secondary)
+                            Text(user.role.description).foregroundStyle(.secondary)
                         }
                     }
                 } else {
@@ -229,6 +230,7 @@ struct VesselEditView: View {
             Task {
                 if let vessel = await store.fetch(withID: vesselId) {
                     self.vessel = vessel
+                    self.users = await store.fetchUsers(for: vessel)
                 }
             }
         }
