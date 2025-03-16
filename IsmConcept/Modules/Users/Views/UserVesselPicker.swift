@@ -26,13 +26,13 @@ struct UserVesselPicker: View {
                 Button {
                     print("[ DEBUG ] \(vessel.name) selected")
                     
+                    // Update the vessel
+                    vesselStore.assignUser(user, to: vessel)
+                    
                     // Update the user
                     user.vesselId = vessel.id!
                     user.vesselName = vessel.name
                     userStore.update(user)
-                    
-                    // Update the vessel
-                    vesselStore.assignUser(user, to: vessel)
                     
                     // Dismiss the view
                     dismiss()
