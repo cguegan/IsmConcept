@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Classification: String, CaseIterable, Codable {
+enum Classification: String, CaseIterable, Codable, Identifiable {
     
     case lr   = "LR"
     case bv   = "BV"
@@ -15,6 +15,8 @@ enum Classification: String, CaseIterable, Codable {
     case rina = "RINA"
     case dnv  = "DNV"
     case none = "None"
+    
+    var id: String { self.rawValue }
     
     var description: String {
         switch self {

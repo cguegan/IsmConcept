@@ -11,47 +11,27 @@ struct VesselsListView: View {
     
     /// Environment Properpties
     @Environment(UserStore.self) private var userStore
-    @Environment(VesselStore.self) private var store
+    @Environment(VesselStore.self) private var vesselStore
 
     /// State Properpties
     @State private var showingAddVesselView = false
-
-    var activeVessels: [Vessel] {
-        store.vessels.filter { $0.isActive }
-    }
-    
-    var inactiveVessels: [Vessel] {
-        store.vessels.filter { !$0.isActive }
-    }
     
     /// Main Body
     var body: some View {
-        @Bindable var store = store
+        @Bindable var vesselStore = vesselStore
         NavigationStack {
             List {
-                if !activeVessels.isEmpty {
-                    Section(header: Text("Active Yachts")) {
-                        ForEach(activeVessels) { vessel in
-                            NavigationLink(destination: VesselEditView(vesselId: vessel.id!)) {
-                                VesselListRow(vessel: vessel)
-                            }
-                        }
-                    }
-                }
-                
-                if !inactiveVessels.isEmpty {
-                    Section(header: Text("Inactive Yachts")) {
-                        ForEach(activeVessels) { vessel in
-                            NavigationLink(destination: VesselEditView(vesselId: vessel.id!)) {
-                                VesselListRow(vessel: vessel)
-                            }
+                Section(header: Text("Yachts")) {
+                    ForEach(vesselStore.vessels) { vessel in
+                        NavigationLink(destination: VesselEditView(vesselId: vessel.id!)) {
+                            VesselListRow(vessel: vessel)
                         }
                     }
                 }
             }
             .navigationTitle("Yachts")
             .sheet(isPresented: $showingAddVesselView) {
-                VesselAddSheet().environment(store)
+                VesselAddSheet().environment(vesselStore)
             }
             .toolbar {
                 if AppManager.shared.user.canAddOrDeleteVessels() {

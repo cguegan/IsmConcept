@@ -78,6 +78,18 @@ struct VesselEditView: View {
                         .textInputAutocapitalization(.words)
                 }
                 
+                /// Class
+                HStack {
+                    Text("Class").foregroundStyle(.secondary)
+                    Spacer()
+                    Picker("Class", selection: $vessel.classComp) {
+                        ForEach(Classification.allCases) { classComp in
+                            Text(classComp.rawValue).tag(classComp)
+                        }
+                    }
+                    .labelsHidden()
+                }
+                
                 /// Flag
                 HStack {
                     Text("Flag").foregroundStyle(.secondary)
@@ -177,7 +189,7 @@ struct VesselEditView: View {
             }
             
             /// Users
-            Section(header: Text("Users")) {
+            Section(header: Text("Crew Members")) {
                 if !vessel.users.isEmpty {
                     ForEach(self.vessel.users, id: \.self) { userId in
                         HStack {
