@@ -11,9 +11,10 @@ import FirebaseFirestore
 struct UserVesselPicker: View {
     
     /// Environment properties
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss)        var dismiss
+    @Environment(UserStore.self)   var userStore
     @Environment(VesselStore.self) var vesselStore
-    
+
     /// State properties
     @Binding var user: User
     
@@ -23,17 +24,19 @@ struct UserVesselPicker: View {
         List {
             ForEach($vesselStore.vessels) { $vessel in
                 Button {
-                    print("Vessel selected: \(vessel.name)")
+                    print("[ DEBUG ] \(vessel.name) selected")
                     
                     // Update the user
                     user.vesselId = vessel.id!
-                    print("[ DEBUG ] User updated: \(vessel.id!) - \(vessel.name)")
+                    user.vesselName = vessel.name
+                    userStore.update(user)
                     
                     // Update the vessel
-                    vesselStore.addUser(user, to: vessel)
+                    vesselStore.assignUser(user, to: vessel)
                     
                     // Dismiss the view
                     dismiss()
+                    
                 } label: {
                     HStack {
                         Label("\(vessel.name)", systemImage: "\(vessel.type.icon)")

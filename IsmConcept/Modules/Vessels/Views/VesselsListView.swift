@@ -16,15 +16,36 @@ struct VesselsListView: View {
     /// State Properpties
     @State private var showingAddVesselView = false
 
+    var activeVessels: [Vessel] {
+        store.vessels.filter { $0.isActive }
+    }
+    
+    var inactiveVessels: [Vessel] {
+        store.vessels.filter { !$0.isActive }
+    }
+    
     /// Main Body
     var body: some View {
         @Bindable var store = store
         NavigationStack {
             List {
-                Text("Number of Vessels: \(store.vessels.count)")
-                ForEach(store.vessels) { vessel in
-                    NavigationLink(destination: VesselEditView(vessel: vessel)) {
-                        VesselListRow(vessel: vessel)
+                if !activeVessels.isEmpty {
+                    Section(header: Text("Active Yachts")) {
+                        ForEach(activeVessels) { vessel in
+                            NavigationLink(destination: VesselEditView(vesselId: vessel.id!)) {
+                                VesselListRow(vessel: vessel)
+                            }
+                        }
+                    }
+                }
+                
+                if !inactiveVessels.isEmpty {
+                    Section(header: Text("Inactive Yachts")) {
+                        ForEach(activeVessels) { vessel in
+                            NavigationLink(destination: VesselEditView(vesselId: vessel.id!)) {
+                                VesselListRow(vessel: vessel)
+                            }
+                        }
                     }
                 }
             }
@@ -33,7 +54,7 @@ struct VesselsListView: View {
                 VesselAddSheet().environment(store)
             }
             .toolbar {
-                if userStore.currentUser.canAddOrDeleteVessels() {
+                if AppManager.shared.user.canAddOrDeleteVessels() {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {
                             showingAddVesselView.toggle()

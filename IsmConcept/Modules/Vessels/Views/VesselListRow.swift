@@ -36,7 +36,7 @@ struct VesselListRow: View {
         }
         .swipeActions(edge: .trailing) {
             /// Only Admin can delete a vessel
-            if userStore.currentUser.canAddOrDeleteVessels() {
+            if AppManager.shared.user.canAddOrDeleteVessels() {
                 Button(role: .destructive) {
                     withAnimation {
                         store.remove(vessel)

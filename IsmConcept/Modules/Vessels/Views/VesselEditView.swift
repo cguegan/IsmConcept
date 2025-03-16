@@ -14,10 +14,12 @@ struct VesselEditView: View {
     @Environment(VesselStore.self) private var store
     
     /// Given Property
-    @State var vessel: Vessel
+    @State var vesselId: String
     
     /// State Properties
     @State private var showAddUser: Bool = false
+    @State private var vessel: Vessel = Vessel.nullVessel
+
     
     /// Computed Properties
     let numberFormatter: NumberFormatter = {
@@ -31,7 +33,7 @@ struct VesselEditView: View {
         Form {
             
             /// Vessel Main Information
-            Section(header: Text("Vessel")) {
+            Section(header: Text("Yacht Information")) {
                 
                 /// Vessel Name
                 HStack {
@@ -106,14 +108,15 @@ struct VesselEditView: View {
                         .keyboardType(.decimalPad)
                 }
                 
-                /// Crew Members
+                /// Crew Mumber
                 HStack {
                     Text("Crew Member").foregroundStyle(.secondary)
                     TextField("Crew", value: $vessel.crew, formatter: NumberFormatter())
                         .multilineTextAlignment(.trailing)
                         .keyboardType(.decimalPad)
                 }
-                /// Guests
+                
+                /// Guests Number
                 HStack {
                     Text("Maximum Guests").foregroundStyle(.secondary)
                     TextField("Guest", value: $vessel.guests, formatter: NumberFormatter())
@@ -168,26 +171,26 @@ struct VesselEditView: View {
                         .labelsHidden()
                 }
             } header: {
-                Text("Vessel Status")
+                Text("Yacht Status")
             } footer: {
-                Text("If the vessel is not active, users will not be able to access the current app.")
+                Text("If the yacht is not active, users will not be able to access the current app.")
             }
             
             /// Users
             Section(header: Text("Users")) {
-//                if !vessel.users.isEmpty {
-//                    ForEach(self.$vessel.users) { $user in
-//                        HStack {
-//                            Text(user.displayName).bold()
-//                            Spacer()
-//                            Text(user.role.description).foregroundStyle(.secondary)
-//                        }
-//                    }
-//                } else {
-//                    Text("No users have been assigned to this vessel.")
-//                        .foregroundColor(.secondary)
-//                }
-//
+                if !vessel.users.isEmpty {
+                    ForEach(self.vessel.users, id: \.self) { userId in
+                        HStack {
+                            Text(userId).bold()
+                            Spacer()
+//                            Text(userId).foregroundStyle(.secondary)
+                        }
+                    }
+                } else {
+                    Text("No users have been assigned yet to this vessel.")
+                        .foregroundColor(.secondary)
+                }
+
                 /// Add User Button
                 Button {
                     print("[ DEBUG ] Add User")
@@ -210,6 +213,13 @@ struct VesselEditView: View {
                 }
             }
         }
+        .onAppear {
+            Task {
+                if let vessel = await store.fetch(withID: vesselId) {
+                    self.vessel = vessel
+                }
+            }
+        }
     }
 }
 
@@ -218,6 +228,6 @@ struct VesselEditView: View {
 // ———————————————
 
 #Preview {
-    VesselEditView(vessel: Vessel.samples[0])
+    VesselEditView(vesselId: Vessel.samples[0].id!)
         .environment(VesselStore())
 }

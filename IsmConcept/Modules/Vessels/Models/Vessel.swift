@@ -26,7 +26,7 @@ struct Vessel: Identifiable, Codable {
     var crew:       Int
     var guests:     Int
     var flag:       Flag
-    var classification: Classification
+    var classComp:  Classification
     var homePort:   String
     var location:   String
     var imageUrl:   String
@@ -50,7 +50,7 @@ struct Vessel: Identifiable, Codable {
         crew: Int        = 0,
         guests: Int      = 0,
         flag: Flag       = .mc,
-        classification: Classification = .bv,
+        classComp:      Classification = .none,
         homePort: String = "",
         location: String = "",
         imageUrl: String = "",
@@ -73,7 +73,7 @@ struct Vessel: Identifiable, Codable {
         self.crew = crew
         self.guests = guests
         self.flag = flag
-        self.classification = classification
+        self.classComp = classComp
         self.homePort = homePort
         self.location = location
         self.imageUrl = imageUrl
@@ -90,7 +90,7 @@ extension Vessel {
     enum CodingKeys: String, CodingKey {
         case id
         case name
-        case isActive = "is_active"
+        case isActive  = "is_active"
         case imo
         case master
         case type
@@ -103,13 +103,13 @@ extension Vessel {
         case crew
         case guests
         case flag
-        case classification
-        case homePort = "home_port"
+        case classComp = "class_comp"
+        case homePort  = "home_port"
         case location
-        case imageUrl = "image_url"
+        case imageUrl  = "image_url"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
-        case backupAt = "backup_at"
+        case backupAt  = "backup_at"
     }
     
 }

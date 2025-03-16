@@ -12,7 +12,7 @@ struct UserEditView: View {
     
     /// Environment Properties
     @Environment(\.dismiss) private var dismiss
-    @Environment(PreferencesManager.self) private var preferences
+//    @Environment(PreferencesManager.self) private var preferences
     @Environment(UserStore.self) private var userStore
     @Environment(AuthService.self) private var authService
     
@@ -32,10 +32,11 @@ struct UserEditView: View {
     /// Main Body
     var body: some View {
         List {
+            /// Avatar and User Information
             VStack(alignment: .center) {
                 
                 PhotosPicker(selection: $avatarItem, matching: .images) {
-                    Avatar(user: user, size: .large)
+                    Avatar(user: user, size: .large, withShadow: true)
                 }
                 .onChange(of: avatarItem) {
                     if let image = avatarItem {
@@ -70,7 +71,7 @@ struct UserEditView: View {
                 Text("Email cannot be changed")
             }
             
-            // Editable User Information
+            /// Editable User Information
             Section() {
                 
                 /// Full Name
@@ -93,47 +94,33 @@ struct UserEditView: View {
                 // ——————————————
                 
                 /// Change vessel for the user
-                if userStore.currentUser.isAdmin() {
-                    NavigationLink {
-                        UserVesselPicker(user: $user)
-                    } label: {
-                        HStack {
-                            Text("Yacht").foregroundStyle(.secondary)
-                            Spacer()
-                            Text(user.vessel ?? "Select a vessel")
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-                                .multilineTextAlignment(.trailing)
-                        }
-                    }
-                }
-                
-                /// Edit Vessel
-                if let vesselId = user.vesselId {
-                    if userStore.currentUser.canEditVessel(vesselId) {
+                if AppManager.shared.user.isManager() {
+                    /// Only crew members can be added to a vessel
+                    if user.isCrewMember() {
                         NavigationLink {
-//                            VesselEditView(vessel: preferences.vessel)
-                            Text("Vessel Edit")
+                            UserVesselPicker(user: $user)
                         } label: {
-//                            HStack {
-//                                Text("Yacht").foregroundStyle(.secondary)
-//                                Spacer()
-//                                Text(preferences.vessel.name)
-//                                    .frame(maxWidth: .infinity, alignment: .trailing)
-//                                    .multilineTextAlignment(.trailing)
-//                            }
-                            Text("Vessel Edit")
+                            HStack {
+                                Text("Select a Yacht").foregroundStyle(.secondary)
+                                Spacer()
+                                Text(user.vesselName ?? "Select a vessel")
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                    .multilineTextAlignment(.trailing)
+                            }
                         }
                     }
                 }
                 
-                /// Edit User Role
-                if userStore.currentUser.canEditUser(user) {
+                /// Change user role
+                if AppManager.shared.user.canEditUser(user) {
                     HStack {
                         Text("Role").foregroundStyle(.secondary)
                         Spacer()
                         Picker("Role", selection: $user.role) {
-                            ForEach(UserRole.allCases, id: \.self) {
-                                Text($0.rawValue).tag($0)
+                            ForEach(UserRole.allCases, id: \.self) { role in
+                                if role.level > AppManager.shared.user.role.level {
+                                    Text(role.rawValue).tag(role)
+                                }
                             }
                         }
                         .labelsHidden()
@@ -141,7 +128,7 @@ struct UserEditView: View {
                 }
                 
                 /// Cannot unactive self
-                if userStore.currentUser.canEditUser(user) {
+                if AppManager.shared.user.canEditUser(user) {
                     HStack {
                         Text("is Active").foregroundStyle(.secondary)
                         Spacer()
@@ -151,6 +138,41 @@ struct UserEditView: View {
                 
             } header: {
                 Text("User Information")
+            }
+            
+            /// Edit Yacht Information
+            if  let vessel = user.vessel,
+                let vesselId = user.vesselId,
+                user.canEditVessel(vesselId) {
+                
+                Section() {
+                    Button {
+                        print("Edit \(vessel)")
+                    } label: {
+                        Label("Edit \(vessel)", systemImage: "shippingbox")
+                    }
+                }
+            }
+            
+            /// Date Information
+            Section() {
+                HStack {
+                    Text("Created At").foregroundStyle(.secondary)
+                    Spacer()
+                    Text(user.createdAt?.formatted() ?? "N/A")
+                }
+                
+                HStack {
+                    Text("Updated At").foregroundStyle(.secondary)
+                    Spacer()
+                    Text(user.updatedAt?.formatted() ?? "N/A")
+                }
+                
+                HStack {
+                    Text("Last Login").foregroundStyle(.secondary)
+                    Spacer()
+                    Text(user.lastLogin?.formatted() ?? "N/A")
+                }
             }
             
             Section(header: Text("Danger Zone")) {
@@ -188,9 +210,17 @@ struct UserEditView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
+                    /// Update the user
                     userStore.update(user)
-                    userStore.setCurrentUser(user)
-                    dismiss()
+                    
+                    if user.id == AppManager.shared.user.id {
+                        /// Update the user in the app manager
+                        AppManager.shared.user = user
+                    } else {
+                        /// Dismiss the view
+                        dismiss()
+                    }
+                    
                 }
             }
         }

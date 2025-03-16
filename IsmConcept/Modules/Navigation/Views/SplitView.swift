@@ -27,7 +27,7 @@ struct SplitView: View {
         } detail: {
             switch navigation.selectedModule {
                 case .profile:
-                UserEditView(user: userStore.currentUser)
+                    UserEditView(user: AppManager.shared.user)
                 case .home:
                     CompanyView()
 //                case .checklists(let department):

@@ -24,7 +24,7 @@
 		EF2C233A2D7D163B0067C899 /* VesselListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C23392D7D163B0067C899 /* VesselListRow.swift */; };
 		EF2C233C2D7D16DD0067C899 /* Vessel+Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C233B2D7D16DD0067C899 /* Vessel+Samples.swift */; };
 		EF2C233E2D7D1AE50067C899 /* VesselAddSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C233D2D7D1AE50067C899 /* VesselAddSheet.swift */; };
-		EF4ED7A72D7B419F00DA39C1 /* NonActiveUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4ED7A62D7B419F00DA39C1 /* NonActiveUser.swift */; };
+		EF4ED7A72D7B419F00DA39C1 /* InactiveUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4ED7A62D7B419F00DA39C1 /* InactiveUserView.swift */; };
 		EF4ED7A92D7B435C00DA39C1 /* SplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4ED7A82D7B435C00DA39C1 /* SplitView.swift */; };
 		EF4ED7AB2D7B43B900DA39C1 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4ED7AA2D7B43B900DA39C1 /* SidebarView.swift */; };
 		EF4ED7AD2D7B44A500DA39C1 /* PreferencesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4ED7AC2D7B44A500DA39C1 /* PreferencesManager.swift */; };
@@ -97,7 +97,7 @@
 		EF2C23392D7D163B0067C899 /* VesselListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VesselListRow.swift; sourceTree = "<group>"; };
 		EF2C233B2D7D16DD0067C899 /* Vessel+Samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vessel+Samples.swift"; sourceTree = "<group>"; };
 		EF2C233D2D7D1AE50067C899 /* VesselAddSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VesselAddSheet.swift; sourceTree = "<group>"; };
-		EF4ED7A62D7B419F00DA39C1 /* NonActiveUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonActiveUser.swift; sourceTree = "<group>"; };
+		EF4ED7A62D7B419F00DA39C1 /* InactiveUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InactiveUserView.swift; sourceTree = "<group>"; };
 		EF4ED7A82D7B435C00DA39C1 /* SplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitView.swift; sourceTree = "<group>"; };
 		EF4ED7AA2D7B43B900DA39C1 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		EF4ED7AC2D7B44A500DA39C1 /* PreferencesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesManager.swift; sourceTree = "<group>"; };
@@ -416,7 +416,7 @@
 			isa = PBXGroup;
 			children = (
 				EFA0F5742D7860BC00C71E79 /* ContentView.swift */,
-				EF4ED7A62D7B419F00DA39C1 /* NonActiveUser.swift */,
+				EF4ED7A62D7B419F00DA39C1 /* InactiveUserView.swift */,
 				EF4ED7A82D7B435C00DA39C1 /* SplitView.swift */,
 				EF87B3D32D80A67600A95625 /* LoadingView.swift */,
 				EF4ED7AA2D7B43B900DA39C1 /* SidebarView.swift */,
@@ -634,7 +634,7 @@
 				EFA0F5792D7860BC00C71E79 /* ContentView.swift in Sources */,
 				EF87B3D42D80A67600A95625 /* LoadingView.swift in Sources */,
 				EF4ED7B32D7B4AFD00DA39C1 /* Module.swift in Sources */,
-				EF4ED7A72D7B419F00DA39C1 /* NonActiveUser.swift in Sources */,
+				EF4ED7A72D7B419F00DA39C1 /* InactiveUserView.swift in Sources */,
 				EFA0F5A52D78868B00C71E79 /* SignupView.swift in Sources */,
 				EF2C23362D7D13680067C899 /* VesselStore.swift in Sources */,
 				EFDF6A742D78F306008457CE /* PasswordField.swift in Sources */,

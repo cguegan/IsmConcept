@@ -76,7 +76,7 @@ struct SidebarView: View {
             
             /// Is admin
             ///
-            if userStore.currentUser.isAdmin() {
+            if AppManager.shared.user.isAdmin() {
                 Section(isExpanded: $isExpandedAdmin) {
                     
                     NavigationLink(value: Module.vessels) {

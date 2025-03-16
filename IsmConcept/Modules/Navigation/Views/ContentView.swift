@@ -30,6 +30,8 @@ struct ContentView: View {
                 SplitView()
             case .signedOut:
                 LoginView()
+            case .inactive:
+                InactiveUserView()
             }
         }
         .environment(userStore)

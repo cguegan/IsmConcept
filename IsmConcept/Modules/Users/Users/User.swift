@@ -19,6 +19,7 @@ struct User: Codable, Identifiable {
     var isActive:    Bool
     var vesselId:    String?
     var vessel:      String?
+    var vesselName:  String?
     var imageUrl:    String?
     var createdAt:   Date?
     var updatedAt:   Date?
@@ -66,6 +67,7 @@ extension User {
         case isActive    = "is_active"
         case vesselId    = "vessel_id"
         case vessel
+        case vesselName  = "vessel_name"
         case imageUrl    = "image_url"
         case createdAt   = "created_at"
         case updatedAt   = "updated_at"

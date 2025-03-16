@@ -1,5 +1,5 @@
 //
-//  NonActiveUser.swift
+//  InactiveUserView.swift
 //  IsmConcept
 //
 //  Created by Christophe Guégan on 07/03/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NonActiveUser: View {
+struct InactiveUserView: View {
 
     /// Environment Objects
     @Environment(AuthService.self) var authService
@@ -21,6 +21,7 @@ struct NonActiveUser: View {
             Text("Hello \(authService.user?.displayName ?? "unknown")")
                 
             Text("Your account is not yet active.\nPlease contact support.")
+                .multilineTextAlignment(.center)
             Spacer()
             Button("Sign Out", action: {
                 Task {
@@ -38,6 +39,6 @@ struct NonActiveUser: View {
 // ———————————————
 
 #Preview {
-    NonActiveUser()
+    InactiveUserView()
         .environment(AuthService())
 }

@@ -46,7 +46,6 @@ class AppManager {
     /// - Note: This function is called when the user is set
     ///
     func fetchVessel() {
-        
         /// Firestore database reference
         let db = Firestore.firestore()
         let collectionName = "vessels"
@@ -60,7 +59,7 @@ class AppManager {
                     print("[ DEBUG ] Got vessel with name: \(vessel.name)")
                     self.vessel = vessel
                 } catch {
-                    print("[ ERROR ] Failed to get vessel with error: \(error.localizedDescription)")
+                    print("[ ERROR ] Failed to fetch vessel with error: \(error.localizedDescription)")
                 }
             }
         }

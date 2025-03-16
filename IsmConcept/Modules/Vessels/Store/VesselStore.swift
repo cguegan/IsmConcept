@@ -20,20 +20,6 @@ final class VesselStore {
     var error: Error?
     var errorMessage: String?
     
-    /// Current Vessel
-//    var currentVessel: Vessel {
-//        guard let authUser = Auth.auth().currentUser else { return Vessel.blank }
-//        if let user = users.first(where: { $0.id == authUser.uid }) {
-//            if let vessel = vessels.first(where: { $0.id == user.vesselId }) {
-//                return vessel
-//            } else {
-//                return Vessel.blank
-//            }
-//        } else {
-//            return Vessel.blank
-//        }
-//    }
-    
     /// Firestore database reference
     ///
     let db = Firestore.firestore()
@@ -99,14 +85,14 @@ final class VesselStore {
     /// - Returns: The vessel
     /// - Note: This method is async and will return the vessel if found
     ///
-    func get(withID id: String) async -> Vessel? {
+    func fetch(withID id: String) async -> Vessel? {
         do {
             let document = try await db.collection(collectionName).document(id).getDocument()
             let vessel =  try document.data(as: Vessel.self)
             print("[ DEBUG ] Got vessel with name: \(vessel.name)")
             return vessel
         } catch {
-            print("[ ERROR ] Failed to get vessel with error: \(error.localizedDescription)")
+            print("[ ERROR ] Failed to fetch vessel with error: \(error.localizedDescription)")
             self.error = error
             self.errorMessage = error.localizedDescription
         }
@@ -154,6 +140,8 @@ final class VesselStore {
     ///
     func update(_ vessel: Vessel) {
         
+        print("[ DEBUG ] Updating vessel \(vessel.name)")
+        
         /// Check if document has an ID
         guard let id = vessel.id else { return }
         
@@ -191,31 +179,40 @@ final class VesselStore {
             }
             return users
         } catch {
-            print("[ ERROR ] Failed to get users with error: \(error.localizedDescription)")
+            print("[ ERROR ] Failed to fetch users with error: \(error.localizedDescription)")
         }
         return []
     }
     
-    /// addUser
+    /// Assign a user to the vessel
     ///
-    func addUser(_ user: User, to vessel: Vessel) {
+    func assignUser(_ user: User, to vessel: Vessel) {
+        
+        print("[ DEBUG ] Adding user \(user.displayName) to vessel \(vessel.name) ...")
+        
         if let userId = user.id,
            let vesselId = vessel.id {
             
-            /// Add the user to the new vessel
-            if let index = vessels.firstIndex(where: { $0.id == vesselId }) {
-                if !vessels[index].users.contains(userId) {
-                    vessels[index].users.append(userId)
+            /// Remove user from his old vessel
+            /// 1. Search for the old vessel
+            if let oldVesselIndex = vessels.firstIndex(where: { $0.id == user.vesselId }) {
+                /// 2. Search for the user in the old vessel
+                if let UserIndex = vessels[oldVesselIndex].users.firstIndex(where: { $0 == userId }) {
+                    print("[ DEBUG ] Removing user \(user.displayName) from vessel \(vessels[oldVesselIndex].name)")
+                    vessels[oldVesselIndex].users.remove(at: UserIndex)
+                    update(vessels[oldVesselIndex])
                 }
             }
             
-            /// Remove user from the old vessel
-            if let index = vessels.firstIndex(where: { $0.id == user.vesselId }) {
-                if let index = vessels[index].users.firstIndex(where: { $0 == userId }) {
-                    vessels[index].users.remove(at: index)
-                }
+            /// Add the user to the new vessel
+            if !vessel.users.contains(userId) {
+                var vesselToUpdate = vessel
+                print("[ DEBUG ] Append user \(user.displayName) to vessel \(vesselToUpdate.name)")
+                vesselToUpdate.users.append(userId)
+                update(vesselToUpdate)
             }
             
         }
     }
+    
 }
