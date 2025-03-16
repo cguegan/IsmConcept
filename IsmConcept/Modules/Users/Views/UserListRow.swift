@@ -18,9 +18,8 @@ struct UserListRow: View {
     /// Main Body
     var body: some View {
         HStack(alignment: .top) {
-            Image(systemName: "photo")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
+            
+            Avatar(user: user, size: .small)
             
             VStack(alignment: .leading) {
                 Text(user.displayName)
