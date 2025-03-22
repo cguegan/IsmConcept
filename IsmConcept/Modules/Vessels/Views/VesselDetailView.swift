@@ -35,6 +35,8 @@ struct VesselDetailView: View {
     var body: some View {
         List {
             
+
+            
             /// Vessel Main Information
             Section(header: Text("Yacht Information")) {
                 

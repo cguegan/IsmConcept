@@ -19,11 +19,13 @@ final class VesselStore {
     var vessels: [Vessel] = []
     var error: Error?
     var errorMessage: String?
+    var showErrorAlert: Bool = false
     
     /// Firestore database reference
     ///
     let db = Firestore.firestore()
     let collectionName = "vessels"
+    let logoCollectionName = "logos"
     var listener: ListenerRegistration?
     
     /// Storage of images
@@ -223,6 +225,163 @@ final class VesselStore {
             }
         }
             
+    }
+    
+    
+    // MARK: - Upload Image to Firebase Storage
+    
+    /// Upload a photos picker user to Firebase Storage
+    /// - Parameters:
+    ///     - image:     The image to upload as PhotosPickerItem
+    ///     - vessel:     The vessel to associate the image with
+    ///
+    func uploadFromPicker(_ image: PhotosPickerItem, for vessel: Vessel) {
+        
+        /// Check if the image is valid
+        print("[ DEBUG ] Uploading image ...")
+        
+        /// Load the image data
+        image.loadTransferable(type: Data.self) { result in
+            switch result {
+            case .success(let imageData):
+                if let imageData = imageData,
+                   let uiImage = UIImage(data: imageData) {
+                    self.uploadImage(uiImage, for: vessel)
+                    print("[ DEBUG ] Image uploaded successfully.")
+                } else {
+                    print("[ ERROR ] No supported content type found.")
+                }
+            case .failure(let error):
+                print("[ ERROR ] While loading transferable: \(error.localizedDescription)")
+                self.errorMessage = error.localizedDescription
+                self.showErrorAlert = true
+            }
+        }
+    }
+    
+    /// Upload an image to Firebase Storage
+    /// - Parameters:
+    ///     - image:    The image to upload in UIImage format
+    ///     - vessel:       The vessel to associate the image with
+    ///
+    func uploadImage(_ image: UIImage, for vessel: Vessel) {
+        
+        /// Create a reference to the image in Firebase Storage
+        let storagePath = storageRef.child("\(collectionName)/\(vessel.id ?? UUID().uuidString).jpg")
+        let resizedImage = image.aspectFittedToHeight(512)
+        let data = resizedImage.jpegData(compressionQuality: 0.5)
+        
+        /// Set the metadata
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        
+        /// Upload the image
+        if let data = data {
+            storagePath.putData(data, metadata: metadata) { (metadata, error) in
+                if let error = error {
+                    print("[ ERROR ] Failed to upload image: \(error)")
+                    self.errorMessage = error.localizedDescription
+                    self.showErrorAlert = true
+                } else {
+                    storagePath.downloadURL { (url, error) in
+                        if let url = url {
+                            var vessel = vessel
+                            vessel.imageUrl = url.absoluteString
+                            self.update(vessel)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    /// Delete an image from Firebase Storage
+    /// - Parameters:
+    ///    - imageUrl: The URL of the image to delete
+    ///    - vessel: The vessel to associate the image with
+    ///
+    func deleteImage(for vessel: Vessel) async throws {
+        
+        /// Check if the user has an image URL
+        guard let url = vessel.imageUrl else { return }
+        
+        /// Create a reference to the image in Firebase Storage
+        let storagePath = storage.reference(forURL: url)
+        
+        /// Delete the image
+        do {
+            try await storagePath.delete()
+        } catch {
+            throw error
+        }
+    }
+    
+    
+    // MARK: - Upload Logo to Firebase Storage
+    
+    /// Upload a photos picker user to Firebase Storage
+    /// - Parameters:
+    ///     - image:     The logo to upload as PhotosPickerItem
+    ///     - vessel:     The vessel to associate the logo with
+    ///
+    func uploadLogoFromPicker(_ image: PhotosPickerItem, for vessel: Vessel) {
+        
+        /// Check if the image is valid
+        print("[ DEBUG ] Uploading logo ...")
+        
+        /// Load the image data
+        image.loadTransferable(type: Data.self) { result in
+            switch result {
+            case .success(let imageData):
+                if let imageData = imageData,
+                   let uiImage = UIImage(data: imageData) {
+                    self.uploadLogo(uiImage, for: vessel)
+                    print("[ DEBUG ] logo uploaded successfully.")
+                } else {
+                    print("[ ERROR ] No supported content type found.")
+                }
+            case .failure(let error):
+                print("[ ERROR ] While loading transferable: \(error.localizedDescription)")
+                self.errorMessage = error.localizedDescription
+                self.showErrorAlert = true
+            }
+        }
+    }
+    
+    /// Upload a logo to Firebase Storage
+    /// - Parameters:
+    ///     - image:    The image to upload in UIImage format
+    ///     - vessel:       The vessel to associate the image with
+    ///
+    func uploadLogo(_ image: UIImage, for vessel: Vessel) {
+        
+        /// Create a reference to the image in Firebase Storage
+        let storagePath = storageRef.child("\(logoCollectionName)/\(vessel.id ?? UUID().uuidString).png")
+        let resizedImage = image.aspectFittedToHeight(512)
+        let data = resizedImage.pngData()
+        
+        /// Set the metadata
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/png"
+        
+        /// Upload the image
+        if let data = data {
+            storagePath.putData(data, metadata: metadata) { (metadata, error) in
+                if let error = error {
+                    print("[ ERROR ] Failed to upload logo: \(error)")
+                    self.errorMessage = error.localizedDescription
+                    self.showErrorAlert = true
+                } else {
+                    storagePath.downloadURL { (url, error) in
+                        if let url = url {
+                            var vessel = vessel
+                            vessel.logoUrl = url.absoluteString
+                            self.update(vessel)
+                        }
+                    }
+                }
+            }
+        }
     }
     
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct VesselEditView: View {
     
@@ -15,6 +16,9 @@ struct VesselEditView: View {
     
     /// State Properties
     @State private var vessel: Vessel
+    @State private var pictureItem: PhotosPickerItem?
+    @State private var logoItem: PhotosPickerItem?
+//    @State private var avatarImage: Image?
     @State private var showAddUser: Bool = false
     @State private var users: [User] = []
     @State private var edited: Bool = false
@@ -35,6 +39,30 @@ struct VesselEditView: View {
     /// Main Body
     var body: some View {
         Form {
+            
+            /// Avatar and User Information
+            VStack(alignment: .center) {
+                
+                PhotosPicker(selection: $pictureItem, matching: .images) {
+                    YachtImage(vessel: vessel, size: .large, withShadow: true)
+                }
+                .onChange(of: pictureItem) {
+                    if let image = pictureItem {
+                        print("[ DEBUG ] Image Selected")
+                        store.uploadFromPicker(image, for: vessel)
+                    } else {
+                        print("Failed")
+                    }
+                }
+                
+                Text(vessel.name)
+                    .font(.title)
+                    .fontWeight(.bold)
+                
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .listRowBackground(Color.clear)
+            .scrollContentBackground(.hidden)
             
             /// Vessel Main Information
             Section(header: Text("Yacht Information")) {
@@ -178,6 +206,32 @@ struct VesselEditView: View {
                 }
             }
             
+            /// Logo
+            Section(header: Text("Logo")) {
+                HStack(alignment: .top) {
+                    if let _ = vessel.logoUrl {
+                        Text("Click to change Logo")
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    } else {
+                        Text("Click to add a Logo")
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    
+                    PhotosPicker(selection: $logoItem, matching: .images) {
+                        YachtLogo(vessel: vessel, size: .medium)
+                    }
+                    .onChange(of: logoItem) {
+                        if let image = logoItem {
+                            store.uploadLogoFromPicker(image, for: vessel)
+                        } else {
+                            print("Failed")
+                        }
+                    }
+                }
+            }
+            
             /// Vessel Status
             Section {
                 HStack {
@@ -217,7 +271,6 @@ struct VesselEditView: View {
             }
             
         }
-        .navigationTitle(vessel.name)
         .sheet(isPresented: $showAddUser) {
             AddUserSheet(vessel: $vessel)
         }
@@ -249,7 +302,7 @@ struct VesselEditView: View {
 
 #Preview {
     NavigationStack {
-        VesselEditView(vessel: Vessel.samples[0])
+        VesselEditView(vessel: Vessel.samples[1])
             .environment(VesselStore())
     }
 }

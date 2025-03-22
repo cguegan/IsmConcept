@@ -71,6 +71,9 @@
 		EFBDFB7B2D80310200FB8922 /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBDFB7A2D80310200FB8922 /* DatabaseError.swift */; };
 		EFBDFB7D2D80311C00FB8922 /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBDFB7C2D80311C00FB8922 /* AuthError.swift */; };
 		EFBE304E2D8EC46D00A110BD /* VesselDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBE304D2D8EC46D00A110BD /* VesselDetailView.swift */; };
+		EFBE30502D8ECABB00A110BD /* YachtLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBE304F2D8ECABB00A110BD /* YachtLogo.swift */; };
+		EFBE30522D8ECC7100A110BD /* Vessel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBE30512D8ECC7100A110BD /* Vessel+Extensions.swift */; };
+		EFBE30542D8EE03800A110BD /* YachtImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBE30532D8EE03800A110BD /* YachtImage.swift */; };
 		EFCEB3222D8462B6006CB2DB /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCEB3212D8462B6006CB2DB /* AppManager.swift */; };
 		EFDF6A742D78F306008457CE /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A732D78F306008457CE /* PasswordField.swift */; };
 		EFDF6A762D78F32B008457CE /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A752D78F32B008457CE /* LoginManager.swift */; };
@@ -139,6 +142,9 @@
 		EFBDFB7A2D80310200FB8922 /* DatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseError.swift; sourceTree = "<group>"; };
 		EFBDFB7C2D80311C00FB8922 /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		EFBE304D2D8EC46D00A110BD /* VesselDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VesselDetailView.swift; sourceTree = "<group>"; };
+		EFBE304F2D8ECABB00A110BD /* YachtLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YachtLogo.swift; sourceTree = "<group>"; };
+		EFBE30512D8ECC7100A110BD /* Vessel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vessel+Extensions.swift"; sourceTree = "<group>"; };
+		EFBE30532D8EE03800A110BD /* YachtImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YachtImage.swift; sourceTree = "<group>"; };
 		EFCEB3212D8462B6006CB2DB /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		EFD12FBF2D785F4800DD25BC /* IsmConcept.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IsmConcept.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFDF6A732D78F306008457CE /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
@@ -223,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				EF2C23372D7D15EA0067C899 /* VesselsListView.swift */,
+				EFBE30512D8ECC7100A110BD /* Vessel+Extensions.swift */,
 				EF2C23392D7D163B0067C899 /* VesselListRow.swift */,
 				EF2C233D2D7D1AE50067C899 /* VesselAddSheet.swift */,
 				EFBE304D2D8EC46D00A110BD /* VesselDetailView.swift */,
@@ -324,6 +331,8 @@
 			isa = PBXGroup;
 			children = (
 				EF7E4D862D8587A3007CA0F0 /* Avatar.swift */,
+				EFBE30532D8EE03800A110BD /* YachtImage.swift */,
+				EFBE304F2D8ECABB00A110BD /* YachtLogo.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -632,6 +641,7 @@
 				EF18868E2D7DE7470008848D /* User+Extensions.swift in Sources */,
 				EFCEB3222D8462B6006CB2DB /* AppManager.swift in Sources */,
 				EF2C23172D7C5E600067C899 /* User+Samples.swift in Sources */,
+				EFBE30542D8EE03800A110BD /* YachtImage.swift in Sources */,
 				EFDF6A7E2D78FA89008457CE /* LoginFocusField.swift in Sources */,
 				EF9C83892D7D98AD000252CE /* VesselEditView.swift in Sources */,
 				EFA0F59C2D78651100C71E79 /* UserRole.swift in Sources */,
@@ -671,6 +681,7 @@
 				EF4ED7B52D7B4B3300DA39C1 /* UnderConstructionView.swift in Sources */,
 				EF4ED7C72D7B565100DA39C1 /* ExecutedChecklist.swift in Sources */,
 				EF7E4D812D858505007CA0F0 /* AuthState.swift in Sources */,
+				EFBE30522D8ECC7100A110BD /* Vessel+Extensions.swift in Sources */,
 				EF4ED7C82D7B565100DA39C1 /* Checkline.swift in Sources */,
 				EF0EBC0B2D8D61670062FBCE /* Constants.swift in Sources */,
 				EF4ED7C92D7B565100DA39C1 /* Checklist.swift in Sources */,
@@ -680,6 +691,7 @@
 				EF4ED7A92D7B435C00DA39C1 /* SplitView.swift in Sources */,
 				EF2C233C2D7D16DD0067C899 /* Vessel+Samples.swift in Sources */,
 				EF1DDEDB2D7F55E500DB25D6 /* Classification.swift in Sources */,
+				EFBE30502D8ECABB00A110BD /* YachtLogo.swift in Sources */,
 				EF1886902D7E11130008848D /* UserVesselPicker.swift in Sources */,
 				EFDF6A7C2D78F966008457CE /* EmailField.swift in Sources */,
 				EF4ED7AB2D7B43B900DA39C1 /* SidebarView.swift in Sources */,
