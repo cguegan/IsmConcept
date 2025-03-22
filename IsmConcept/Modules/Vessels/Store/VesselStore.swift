@@ -174,9 +174,11 @@ final class VesselStore {
         /// Get the users
         do {
             let querySnapshot = try await usersRef.whereField("vessel_id", isEqualTo: id).getDocuments()
-            let users = querySnapshot.documents.compactMap { document in
+            var users = querySnapshot.documents.compactMap { document in
                 return try? document.data(as: User.self)
             }
+            users.sort { $0.role.level < $1.role.level }
+            
             return users
         } catch {
             print("[ ERROR ] Failed to fetch users with error: \(error.localizedDescription)")

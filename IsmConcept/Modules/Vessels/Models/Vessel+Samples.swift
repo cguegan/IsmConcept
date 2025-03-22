@@ -24,6 +24,7 @@ extension Vessel {
                 crew: 24,
                 guests: 12,
                 flag: .mi,
+                classComp: .lr,
                 homePort: "Bikini",
                 location: "Monaco",
                 imageUrl: "Image 1",

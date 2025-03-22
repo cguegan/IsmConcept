@@ -25,7 +25,7 @@ struct VesselEditView: View {
         self.vessel = vessel
     }
     
-    /// Computed Properties
+    /// Formatter for decimal numbers
     let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -235,14 +235,11 @@ struct VesselEditView: View {
                 .buttonStyle(.borderedProminent)
             }
         }
-//        .onAppear {
-//            Task {
-//                if let vessel = await store.fetch(withID: vesselId) {
-//                    self.vessel = vessel
-//                    self.users = await store.fetchUsers(for: vessel)
-//                }
-//            }
-//        }
+        .onAppear {
+            Task {
+                await self.users = store.fetchUsers(for: vessel)
+            }
+        }
     }
 }
 
