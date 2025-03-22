@@ -15,27 +15,21 @@ struct LoginView: View {
     @Environment(AuthService.self) var authService
 
     /// State Properties
-    @State private var manager = SignInManager()
-    @State private var showSignupView: Bool = false
+    @State private var manager = LoginManager()
+    @State private var showErrorAlert = AppManager.shared.showErrorAlert
         
     /// Focus Fields
     @FocusState private var focusedField: LoginFocusField?
-    
+
     /// Main Body
     var body: some View {
         ZStack {
             backgroundView
             loginStackView
                 .frame(maxWidth: 370)
-                .alert(
-                    manager.errorMessage,
-                    isPresented: $manager.showAlert
-                ) {
-                    Button("OK", role: .cancel) {}
-                }
-                .fullScreenCover(isPresented: $showSignupView) {
-                    SignupView()
-                }
+                .alert( AppManager.shared.errorMessage,
+                        isPresented: $showErrorAlert
+                ) {Button("OK", role: .cancel) {} }
         }
     }
 }
@@ -113,21 +107,6 @@ extension LoginView {
         .buttonStyle(.borderedProminent)
         .padding()
         .disabled(!manager.isFormValid)
-    }
-            
-    /// Signup Button
-    ///
-    private var signupButton: some View {
-        HStack {
-            Text("Don't have an account yet?")
-                .foregroundColor(.gray)
-            
-            Button("Signup", action: {
-                showSignupView.toggle()
-            })
-        }
-        .padding(.bottom)
-        .padding(.trailing)
     }
     
     /// Background View

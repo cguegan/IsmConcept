@@ -14,9 +14,11 @@ class SignupManager {
     var password: String = ""
     var confirmPassword: String = ""
     var name: String = ""
+    
+    /// Validation
     var isButtonDisabled: Bool = true
-    var showAlert: Bool = false
-    var errorMessage: String = ""
+    var errorMessage: String?
+    var showErrorAlert: Bool = false
     
     
     // MARK: - Methods
@@ -25,26 +27,13 @@ class SignupManager {
     /// Sign up the user without a specific vessel
     ///
     func signUp(authService: AuthService) async {
-        Task {
-            do {
-                try await authService.signup(email: email, password: password, displayName: name)
-            } catch {
-                errorMessage = error.localizedDescription
-                showAlert = true
-            }
-        }
+        try? await authService.signup(email: email, password: password, displayName: name)
     }
-    
+
     /// Sign up the user with a specific vessel
     ///
     func signUpWithVessel(for vessel: Vessel, authService: AuthService) async {
-        do {
-            try await authService.signup(email: email, password: password, displayName: name, vesselId: vessel.id)
-        } catch {
-            errorMessage = error.localizedDescription
-            showAlert = true
-            return
-        }
+        try? await authService.signup(email: email, password: password, displayName: name, vesselId: vessel.id)
     }
     
     

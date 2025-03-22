@@ -13,7 +13,7 @@ struct AddUserSheet: View {
     
     /// Environment Objects
     @Environment(\.dismiss) private var dismiss
-    @Environment(VesselStore.self) private var store
+    @Environment(VesselStore.self) private var vesselStore
     @Environment(AuthService.self) private var authService
 
     /// State manager
@@ -30,8 +30,8 @@ struct AddUserSheet: View {
             loginStackView
                 .frame(maxWidth: 370)
                 .alert(
-                    manager.errorMessage,
-                    isPresented: $manager.showAlert
+                    manager.errorMessage ?? "An Error Occured",
+                    isPresented: $manager.showErrorAlert
                 ) {
                     Button("OK", role: .cancel) {}
                 }
@@ -66,7 +66,6 @@ extension AddUserSheet {
             signupButton
         }
     }
-    
     
     /// Top Text View
     ///
@@ -222,9 +221,9 @@ extension AddUserSheet {
         Task {
             // TODO: - BUG HERE !!!
             await manager.signUpWithVessel(for: vessel, authService: authService)
-            if let userId = authService.currentUser?.uid {
+            if let userId = authService.authenticatedUser?.uid {
                 vessel.users.append(userId)
-                store.update(vessel)
+                vesselStore.update(vessel)
                 dismiss()
             }
         }

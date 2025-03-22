@@ -16,7 +16,6 @@ struct UserSideView: View {
     var body: some View {
         
         let user: User = AppManager.shared.user
-        let vessel: Vessel = AppManager.shared.vessel
         
         HStack(alignment: .top) {
             Avatar(user: user, size: .small)
@@ -25,12 +24,17 @@ struct UserSideView: View {
                 Text(user.displayName)
                     .font(.headline)
                 
-                if !vessel.name.isEmpty {
-                    Text(vessel.name)
-                }
                 
-                Text(user.role.description)
-                    .foregroundColor(.secondary)
+                HStack(spacing: 4) {
+                    Text(user.role.description)
+//                        .italic()
+
+                    if let vessel = user.vesselName {
+                        Text("of")
+                        Text(vessel).bold()
+                    }
+                }
+                .foregroundColor(.secondary)
             }
         }
     }

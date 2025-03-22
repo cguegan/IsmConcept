@@ -28,8 +28,8 @@ struct SignupView: View {
             loginStackView
                 .frame(maxWidth: 370)
                 .alert(
-                    manager.errorMessage,
-                    isPresented: $manager.showAlert
+                    manager.errorMessage ?? "An Error Occured",
+                    isPresented: $manager.showErrorAlert
                 ) {
                     Button("OK", role: .cancel) {}
                 }

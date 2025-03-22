@@ -32,7 +32,7 @@ struct UserListRow: View {
             }
             
             Spacer()
-            Text(user.vessel ?? "").padding(.top, 8)
+            Text(user.vesselName ?? "").padding(.top, 8)
             
         }
         .swipeActions(edge: .trailing) {

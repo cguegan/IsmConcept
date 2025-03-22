@@ -9,30 +9,27 @@ import Foundation
 import Observation
 
 @Observable
-class SignInManager {
+class LoginManager {
     
+    /// Properties
     var email: String = ""
     var password: String = ""
-    var showAlert: Bool = false
-    var errorMessage: String = ""
-    
+
+    /// Validation
+    var isButtonDisabled: Bool = true
     
     // MARK: - Methods
     // ———————————————
 
     /// Login using Auth
+    ///
     func signIn(authService: AuthService) async {
         Task {
-            do {
-                try await authService.signIn( email: email, password: password )
-            } catch {
-                errorMessage = error.localizedDescription
-                showAlert = true
-            }
+            try? await authService.signIn( email: email, password: password )
         }
     }
     
-        
+    
     // MARK: - Form validation
     // ————————————————————————
     var isFormValid: Bool {
@@ -56,7 +53,7 @@ class SignInManager {
     // MARK: - Password Validation
     // ———————————————————————————
     
-    private var checkMinChar: Bool {
+    private var checkMinChar: Bool {            
         return password.count >= 8
     }
     private var checkLetter: Bool {

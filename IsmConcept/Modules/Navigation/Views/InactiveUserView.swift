@@ -18,9 +18,8 @@ struct InactiveUserView: View {
             TopLogoView()
                 .padding(.bottom)
             
-            Text("Hello \(authService.user?.displayName ?? "unknown")")
-                
-            Text("Your account is not yet active.\nPlease contact support.")
+            Text("Hello \(AppManager.shared.user.displayName)")
+            Text("Your account is not currently active.\nPlease contact Yachting Concept Monaco for further support.")
                 .multilineTextAlignment(.center)
             Spacer()
             Button("Sign Out", action: {

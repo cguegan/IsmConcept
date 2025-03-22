@@ -11,15 +11,17 @@ import PhotosUI
 struct UserEditView: View {
     
     /// Environment Properties
-    @Environment(\.dismiss) private var dismiss
-//    @Environment(PreferencesManager.self) private var preferences
-    @Environment(UserStore.self) private var userStore
-    @Environment(AuthService.self) private var authService
+    @Environment(\.dismiss)               private var dismiss
+    @Environment(PreferencesManager.self) private var preferences
+    @Environment(UserStore.self)          private var userStore
+    @Environment(AuthService.self)        private var authService
     
     /// Given Property
     @State private var user: User
     @State private var avatarItem: PhotosPickerItem?
     @State private var avatarImage: Image?
+    @State private var showEditVesselSheet: Bool = false
+    @State private var editableVesselId: String?
     
     init(user: User?) {
         if let user = user {
@@ -141,37 +143,28 @@ struct UserEditView: View {
             }
             
             /// Edit Yacht Information
-            if  let vessel = user.vessel,
-                let vesselId = user.vesselId,
-                user.canEditVessel(vesselId) {
-                
-                Section() {
-                    Button {
-                        print("Edit \(vessel)")
-                    } label: {
-                        Label("Edit \(vessel)", systemImage: "shippingbox")
+            if user.isCrewMember() {
+                Section("Yacht Information") {
+                    
+                    HStack {
+                        Text("Yacht Name:").foregroundStyle(.secondary)
+                        Spacer()
+                        Text("\(user.vesselName ?? "nil")")
                     }
-                }
-            }
-            
-            /// Date Information
-            Section() {
-                HStack {
-                    Text("Created At").foregroundStyle(.secondary)
-                    Spacer()
-                    Text(user.createdAt?.formatted() ?? "N/A")
-                }
-                
-                HStack {
-                    Text("Updated At").foregroundStyle(.secondary)
-                    Spacer()
-                    Text(user.updatedAt?.formatted() ?? "N/A")
-                }
-                
-                HStack {
-                    Text("Last Login").foregroundStyle(.secondary)
-                    Spacer()
-                    Text(user.lastLogin?.formatted() ?? "N/A")
+                    
+                    if  let vessel = user.vesselName,
+                        let vesselId = user.vesselId,
+                        user.canEditVessel(vesselId) {
+                        
+                        Section() {
+                            Button {
+                                editableVesselId = vesselId
+                                showEditVesselSheet.toggle()
+                            } label: {
+                                Label("Edit \(vessel)", systemImage: "shippingbox")
+                            }
+                        }
+                    }
                 }
             }
             
@@ -189,9 +182,9 @@ struct UserEditView: View {
                 
                 /// Cannot delete self
                 ///
-                if user.id != authService.user?.id {
+                if user.id != AppManager.shared.user.id {
                     Button {
-                        print("Delete User")
+                        print("Deleting User ...")
                     } label: {
                         Label("Delete User", systemImage: "trash")
                     }
@@ -203,6 +196,41 @@ struct UserEditView: View {
                     print("Change Password")
                 } label: {
                     Label("Change Password", systemImage: "key")
+                }
+            }
+            
+            /// Debug Information
+            if Constants.debugMode {
+                Section() {
+                    HStack {
+                        Text("Yacht Name:").foregroundStyle(.secondary)
+                        Spacer()
+                        Text("\(user.vesselName ?? "nil")")
+                    }
+                    
+                    HStack {
+                        Text("Yacht ID:").foregroundStyle(.secondary)
+                        Spacer()
+                        Text("\(user.vesselId ?? "nil")")
+                    }
+                    
+                    HStack {
+                        Text("Created At").foregroundStyle(.secondary)
+                        Spacer()
+                        Text(user.createdAt?.formatted() ?? "N/A")
+                    }
+                    
+                    HStack {
+                        Text("Updated At").foregroundStyle(.secondary)
+                        Spacer()
+                        Text(user.updatedAt?.formatted() ?? "N/A")
+                    }
+                    
+                    HStack {
+                        Text("Last Login").foregroundStyle(.secondary)
+                        Spacer()
+                        Text(user.lastLogin?.formatted() ?? "N/A")
+                    }
                 }
             }
             
@@ -224,9 +252,21 @@ struct UserEditView: View {
                 }
             }
         }
+        .sheet(item: $editableVesselId) {
+            editableVesselId = nil
+        } content: { editableVesselId in
+            VesselEditView(vesselId: editableVesselId)
+        }
+
     }
 }
 
+extension String: @retroactive Identifiable {
+    public typealias ID = Int
+    public var id: Int {
+        return hash
+    }
+}
 
 // MARK: - Preview
 // ———————————————

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF0EBC0B2D8D61670062FBCE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0EBC0A2D8D61670062FBCE /* Constants.swift */; };
 		EF18868E2D7DE7470008848D /* User+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18868D2D7DE7470008848D /* User+Extensions.swift */; };
 		EF1886902D7E11130008848D /* UserVesselPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18868F2D7E11130008848D /* UserVesselPicker.swift */; };
 		EF1886922D7EC8CC0008848D /* LoginStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1886912D7EC8CC0008848D /* LoginStatus.swift */; };
@@ -71,7 +72,7 @@
 		EFBDFB7D2D80311C00FB8922 /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBDFB7C2D80311C00FB8922 /* AuthError.swift */; };
 		EFCEB3222D8462B6006CB2DB /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCEB3212D8462B6006CB2DB /* AppManager.swift */; };
 		EFDF6A742D78F306008457CE /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A732D78F306008457CE /* PasswordField.swift */; };
-		EFDF6A762D78F32B008457CE /* SignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A752D78F32B008457CE /* SignInManager.swift */; };
+		EFDF6A762D78F32B008457CE /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A752D78F32B008457CE /* LoginManager.swift */; };
 		EFDF6A782D78F54E008457CE /* SignupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A772D78F54E008457CE /* SignupManager.swift */; };
 		EFDF6A7A2D78F74C008457CE /* TopLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A792D78F74C008457CE /* TopLogoView.swift */; };
 		EFDF6A7C2D78F966008457CE /* EmailField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A7B2D78F966008457CE /* EmailField.swift */; };
@@ -80,6 +81,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EF0EBC0A2D8D61670062FBCE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		EF18868D2D7DE7470008848D /* User+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+Extensions.swift"; sourceTree = "<group>"; };
 		EF18868F2D7E11130008848D /* UserVesselPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVesselPicker.swift; sourceTree = "<group>"; };
 		EF1886912D7EC8CC0008848D /* LoginStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStatus.swift; sourceTree = "<group>"; };
@@ -138,7 +140,7 @@
 		EFCEB3212D8462B6006CB2DB /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		EFD12FBF2D785F4800DD25BC /* IsmConcept.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IsmConcept.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFDF6A732D78F306008457CE /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
-		EFDF6A752D78F32B008457CE /* SignInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInManager.swift; sourceTree = "<group>"; };
+		EFDF6A752D78F32B008457CE /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		EFDF6A772D78F54E008457CE /* SignupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupManager.swift; sourceTree = "<group>"; };
 		EFDF6A792D78F74C008457CE /* TopLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLogoView.swift; sourceTree = "<group>"; };
 		EFDF6A7B2D78F966008457CE /* EmailField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailField.swift; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 		EF7E4D822D858540007CA0F0 /* Configs */ = {
 			isa = PBXGroup;
 			children = (
+				EF0EBC0A2D8D61670062FBCE /* Constants.swift */,
 				EFA0F5A92D78930300C71E79 /* GoogleService-Info.plist */,
 			);
 			path = Configs;
@@ -384,6 +387,7 @@
 			isa = PBXGroup;
 			children = (
 				EFA0F5752D7860BC00C71E79 /* IsmConceptApp.swift */,
+				EFCEB3212D8462B6006CB2DB /* AppManager.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -472,9 +476,8 @@
 		EFA0F5862D78613B00C71E79 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				EFCEB3212D8462B6006CB2DB /* AppManager.swift */,
 				EFA0F59D2D7866F700C71E79 /* AuthService.swift */,
-				EFDF6A752D78F32B008457CE /* SignInManager.swift */,
+				EFDF6A752D78F32B008457CE /* LoginManager.swift */,
 				EFDF6A772D78F54E008457CE /* SignupManager.swift */,
 			);
 			path = Managers;
@@ -655,7 +658,7 @@
 				EF2C23152D7C52FA0067C899 /* UserSideView.swift in Sources */,
 				EF4ED7BC2D7B4B7500DA39C1 /* CompanyView.swift in Sources */,
 				EF4ED7CE2D7B58A500DA39C1 /* ItemType.swift in Sources */,
-				EFDF6A762D78F32B008457CE /* SignInManager.swift in Sources */,
+				EFDF6A762D78F32B008457CE /* LoginManager.swift in Sources */,
 				EFA0F57A2D7860BC00C71E79 /* IsmConceptApp.swift in Sources */,
 				EFA0F5892D78615100C71E79 /* User.swift in Sources */,
 				EF4ED7AF2D7B470D00DA39C1 /* Scheme.swift in Sources */,
@@ -665,6 +668,7 @@
 				EF4ED7C72D7B565100DA39C1 /* ExecutedChecklist.swift in Sources */,
 				EF7E4D812D858505007CA0F0 /* AuthState.swift in Sources */,
 				EF4ED7C82D7B565100DA39C1 /* Checkline.swift in Sources */,
+				EF0EBC0B2D8D61670062FBCE /* Constants.swift in Sources */,
 				EF4ED7C92D7B565100DA39C1 /* Checklist.swift in Sources */,
 				EF2C231D2D7CC2090067C899 /* UserStore.swift in Sources */,
 				EF4ED7CA2D7B565100DA39C1 /* Checklisft+Mock.swift in Sources */,

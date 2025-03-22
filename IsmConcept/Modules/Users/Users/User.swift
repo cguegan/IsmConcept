@@ -18,7 +18,6 @@ struct User: Codable, Identifiable {
     var role:        UserRole
     var isActive:    Bool
     var vesselId:    String?
-    var vessel:      String?
     var vesselName:  String?
     var imageUrl:    String?
     var createdAt:   Date?
@@ -26,18 +25,18 @@ struct User: Codable, Identifiable {
     var lastLogin:   Date?
     
     init(
-        id: String?       = nil,
+        id: String?         = nil,
         email: String,
         displayName: String,
-        phoneNbr: String? = nil,
-        role: UserRole    = .crew,
-        isActive: Bool    = false,
-        vesselId: String? = nil,
-        vessel: String?   = nil,
-        imageUrl: String? = nil,
-        createdAt: Date?  = Date(),
-        updatedAt: Date?  = Date(),
-        lastLogin: Date?  = Date()
+        phoneNbr: String?   = nil,
+        role: UserRole      = .crew,
+        isActive: Bool      = false,
+        vesselId: String?   = nil,
+        vesselName: String? = nil,
+        imageUrl: String?   = nil,
+        createdAt: Date?    = Date(),
+        updatedAt: Date?    = Date(),
+        lastLogin: Date?    = Date()
     ) {
         self.id          = id
         self.email       = email
@@ -46,7 +45,7 @@ struct User: Codable, Identifiable {
         self.role        = role
         self.isActive    = isActive
         self.vesselId    = vesselId
-        self.vessel      = vessel
+        self.vesselName  = vesselName
         self.imageUrl    = imageUrl
         self.createdAt   = createdAt
         self.updatedAt   = updatedAt
@@ -66,7 +65,6 @@ extension User {
         case role
         case isActive    = "is_active"
         case vesselId    = "vessel_id"
-        case vessel
         case vesselName  = "vessel_name"
         case imageUrl    = "image_url"
         case createdAt   = "created_at"
