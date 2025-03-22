@@ -17,8 +17,8 @@ import PhotosUI
 final class UserStore {
 
     var users: [User] = []
-    var error: Error?
     var errorMessage: String?
+    var showErrorAlert: Bool = false
 
     /// Firestore database reference
     ///
@@ -53,7 +53,7 @@ final class UserStore {
         
         //let role = AuthManager.shared.user.role.rawValue
         
-        listener = db.collection(collectionName) //.whereField("role", isGreaterThan: role)
+        listener = Firebase.userCollection //.whereField("role", isGreaterThan: role)
             .addSnapshotListener { querySnapshot, error in
                 if let querySnapshot = querySnapshot {
                     self.users = querySnapshot.documents.compactMap { document in
@@ -72,11 +72,11 @@ final class UserStore {
     ///
     func add(_ user: User) {
         do {
-            try db.collection(collectionName).addDocument(from: user)
+            try Firebase.userCollection.addDocument(from: user)
         } catch {
             print("[ ERROR ] Failed to add user with error: \(error.localizedDescription)")
-            self.error = error
             self.errorMessage = error.localizedDescription
+            self.showErrorAlert = true
         }
     }
     
@@ -85,16 +85,22 @@ final class UserStore {
     /// - Returns: Void
     ///
     func remove(_ user: User) {
-        
-        /// Check if user has an ID
-        guard let id = user.id else { return }
-        
-        /// Delete user picture  from firebase storage
-        deleteImage(for: user)
-        
-        /// Delete the user
-        db.collection(collectionName).document(id).delete()
-        
+        Task {
+            do {
+                /// Check if user has an ID
+                guard let id = user.id else { return }
+                
+                /// Delete user picture  from firebase storage
+                try await self.deleteImage(for: user)
+                
+                /// Delete the user
+                try await Firebase.userCollection.document(id).delete()
+            } catch {
+                print("[ ERROR ] Failed to remove user with error: \(error.localizedDescription)")
+                self.errorMessage = error.localizedDescription
+                self.showErrorAlert = true
+            }
+        }
     }
     
     /// Update a user in Firestore
@@ -113,11 +119,11 @@ final class UserStore {
         
         /// Update the user
         do {
-            try db.collection(collectionName).document(id).setData(from: user)
+            try Firebase.userCollection.document(id).setData(from: user)
         } catch {
             print("[ ERROR ] Failed to update user with error: \(error.localizedDescription)")
-            self.error = error
             self.errorMessage = error.localizedDescription
+            self.showErrorAlert = true
         }
         
     }
@@ -147,6 +153,8 @@ final class UserStore {
                 }
             case .failure(let error):
                 print("[ ERROR ] While loading transferable: \(error.localizedDescription)")
+                self.errorMessage = error.localizedDescription
+                self.showErrorAlert = true
             }
         }
     }
@@ -172,6 +180,8 @@ final class UserStore {
             storagePath.putData(data, metadata: metadata) { (metadata, error) in
                 if let error = error {
                     print("[ ERROR ] Failed to upload image: \(error)")
+                    self.errorMessage = error.localizedDescription
+                    self.showErrorAlert = true
                 } else {
                     storagePath.downloadURL { (url, error) in
                         if let url = url {
@@ -190,7 +200,7 @@ final class UserStore {
     ///    - imageUrl: The URL of the image to delete
     ///    - user: The user to associate the image with
     ///
-    func deleteImage(for user: User) {
+    func deleteImage(for user: User) async throws {
         
         /// Check if the user has an image URL
         guard let url = user.imageUrl else { return }
@@ -199,14 +209,10 @@ final class UserStore {
         let storagePath = storage.reference(forURL: url)
         
         /// Delete the image
-        storagePath.delete { error in
-            if let error = error {
-                print("[ ERROR ] Failed to delete image: \(error)")
-            } else {
-                var user = user
-                user.imageUrl = nil
-                self.update(user)
-            }
+        do {
+            try await storagePath.delete()
+        } catch {
+            throw error
         }
     }
     

@@ -10,7 +10,6 @@ import SwiftUI
 struct VesselsListView: View {
     
     /// Environment Properpties
-    @Environment(UserStore.self) private var userStore
     @Environment(VesselStore.self) private var vesselStore
 
     /// State Properpties
@@ -22,8 +21,8 @@ struct VesselsListView: View {
         NavigationStack {
             List {
                 Section(header: Text("Yachts")) {
-                    ForEach(vesselStore.vessels) { vessel in
-                        NavigationLink(destination: VesselEditView(vesselId: vessel.id!)) {
+                    ForEach($vesselStore.vessels) { $vessel in
+                        NavigationLink(destination: VesselEditView(vessel: vessel)) {
                             VesselListRow(vessel: vessel)
                         }
                     }
@@ -53,8 +52,9 @@ struct VesselsListView: View {
 // ———————————————
 
 #Preview {
-    @Previewable var store = VesselStore()
-    //store.vessels = Vessel.samples
-    VesselsListView()
-        .environment(VesselStore())
+    NavigationStack {
+        VesselsListView()
+            .environment(VesselStore())
+            .environment(UserStore())
+    }
 }

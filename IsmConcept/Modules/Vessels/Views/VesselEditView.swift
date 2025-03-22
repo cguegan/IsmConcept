@@ -13,13 +13,17 @@ struct VesselEditView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(VesselStore.self) private var store
     
-    /// Given Property
-    @State var vesselId: String
-    
     /// State Properties
+    @State private var vessel: Vessel
     @State private var showAddUser: Bool = false
-    @State private var vessel: Vessel = Vessel.nullVessel
     @State private var users: [User] = []
+    @State private var edited: Bool = false
+
+    /// Initializer
+    init(vessel: Vessel) {
+        print("[ DEBUG ] Vessel Edit \(vessel.name)")
+        self.vessel = vessel
+    }
     
     /// Computed Properties
     let numberFormatter: NumberFormatter = {
@@ -28,7 +32,6 @@ struct VesselEditView: View {
         return formatter
     }()
 
-    
     /// Main Body
     var body: some View {
         Form {
@@ -218,22 +221,28 @@ struct VesselEditView: View {
         .sheet(isPresented: $showAddUser) {
             AddUserSheet(vessel: $vessel)
         }
+        .onChange(of: vessel) {
+            print("[ DEBUG ] Vessel Changed")
+            self.edited = true
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
                     store.update(vessel)
                     dismiss()
                 }
+                .disabled(!self.edited)
+                .buttonStyle(.borderedProminent)
             }
         }
-        .onAppear {
-            Task {
-                if let vessel = await store.fetch(withID: vesselId) {
-                    self.vessel = vessel
-                    self.users = await store.fetchUsers(for: vessel)
-                }
-            }
-        }
+//        .onAppear {
+//            Task {
+//                if let vessel = await store.fetch(withID: vesselId) {
+//                    self.vessel = vessel
+//                    self.users = await store.fetchUsers(for: vessel)
+//                }
+//            }
+//        }
     }
 }
 
@@ -242,6 +251,8 @@ struct VesselEditView: View {
 // ———————————————
 
 #Preview {
-    VesselEditView(vesselId: Vessel.samples[0].id!)
-        .environment(VesselStore())
+    NavigationStack {
+        VesselEditView(vessel: Vessel.samples[0])
+            .environment(VesselStore())
+    }
 }

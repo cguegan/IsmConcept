@@ -54,5 +54,6 @@ struct VesselListRow: View {
 
 #Preview {
     VesselListRow(vessel: Vessel.samples[0])
+        .environment(VesselStore())
         .environment(UserStore())
 }

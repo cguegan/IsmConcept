@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct Vessel: Identifiable, Codable {
+struct Vessel: Identifiable, Codable, Hashable {
     
     @DocumentID
     var id:         String?

@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct User: Codable, Identifiable {
+struct User: Codable, Identifiable, Hashable {
     
     @DocumentID
     var id:          String?
@@ -71,6 +71,7 @@ extension User {
         case updatedAt   = "updated_at"
         case lastLogin   = "last_login"
     }
+    
     
 }
 

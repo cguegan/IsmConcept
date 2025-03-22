@@ -22,11 +22,15 @@ struct UsersListView: View {
             List {
                 ForEach($store.users) { $user in
                     NavigationLink(destination: UserEditView(user: user)) {
-                        UserListRow(user: user).environment(store)
+                        UserListRow(user: user)
                     }
                 }
             }
             .navigationTitle("Users")
+            .alert( store.errorMessage ?? "An Error Occured",
+                    isPresented: $store.showErrorAlert) {
+                Button("OK", role: .cancel) { }
+            }
         }
     }
 }

@@ -16,12 +16,13 @@ struct UserEditView: View {
     @Environment(UserStore.self)          private var userStore
     @Environment(AuthService.self)        private var authService
     
-    /// Given Property
+    /// State Properties
     @State private var user: User
     @State private var avatarItem: PhotosPickerItem?
     @State private var avatarImage: Image?
     @State private var showEditVesselSheet: Bool = false
     @State private var editableVesselId: String?
+    @State private var edited: Bool = false
     
     init(user: User?) {
         if let user = user {
@@ -33,7 +34,7 @@ struct UserEditView: View {
     
     /// Main Body
     var body: some View {
-        List {
+        Form {
             /// Avatar and User Information
             VStack(alignment: .center) {
                 
@@ -235,6 +236,10 @@ struct UserEditView: View {
             }
             
         }
+        .onChange(of: user) {
+            print("[ DEBUG ] User Changed")
+            self.edited = true
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
@@ -248,15 +253,16 @@ struct UserEditView: View {
                         /// Dismiss the view
                         dismiss()
                     }
-                    
                 }
+                .disabled(!edited)
+                .buttonStyle(.borderedProminent)
             }
         }
-        .sheet(item: $editableVesselId) {
-            editableVesselId = nil
-        } content: { editableVesselId in
-            VesselEditView(vesselId: editableVesselId)
-        }
+//        .sheet(item: $editableVesselId) {
+//            editableVesselId = nil
+//        } content: { editableVesselId in
+//            VesselEditView(vesselId: editableVesselId)
+//        }
 
     }
 }
@@ -274,6 +280,7 @@ extension String: @retroactive Identifiable {
 #Preview {
     NavigationStack {
         UserEditView(user: User.samples[0])
+            .environment(PreferencesManager())
             .environment(UserStore())
             .environment(AuthService())
     }
