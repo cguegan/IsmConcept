@@ -73,8 +73,7 @@ extension SignupView {
     private var signupForm: some View {
         VStack {
             EmailField( email: $manager.email,
-                        isValid: manager.isEmailValid,
-                        focusedField: _focusedField )
+                        isValid: manager.isEmailValid )
                 
             // Divider
             Divider().edgesIgnoringSafeArea(.all)
@@ -82,8 +81,7 @@ extension SignupView {
             
             // Full name field
             FullNameField( name: $manager.name,
-                           isValid: manager.isNameValid,
-                           focusedField: _focusedField )
+                           isValid: manager.isNameValid )
             
             // Divider
             Divider().edgesIgnoringSafeArea(.all)
@@ -92,9 +90,7 @@ extension SignupView {
             // Password field
             PasswordField( placeholder: "Password",
                            password: $manager.password,
-                           isValid: manager.isPasswordValid,
-                           focusField: .password,
-                           focusedField: _focusedField )
+                           isValid: manager.isPasswordValid )
             
             // Divider
             Divider().edgesIgnoringSafeArea(.all)
@@ -103,9 +99,7 @@ extension SignupView {
             // Confirm Password field
             PasswordField( placeholder: "Confirm Password",
                            password: $manager.confirmPassword,
-                           isValid: manager.isConfirmPasswordValid,
-                           focusField: .confirmPassword,
-                           focusedField: _focusedField )
+                           isValid: manager.isConfirmPasswordValid )
 
         }
         .padding(.vertical,8)

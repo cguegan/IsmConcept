@@ -74,6 +74,7 @@
 		EFBE30502D8ECABB00A110BD /* YachtLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBE304F2D8ECABB00A110BD /* YachtLogo.swift */; };
 		EFBE30522D8ECC7100A110BD /* Vessel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBE30512D8ECC7100A110BD /* Vessel+Extensions.swift */; };
 		EFBE30542D8EE03800A110BD /* YachtImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBE30532D8EE03800A110BD /* YachtImage.swift */; };
+		EFBE30562D8F3B2C00A110BD /* UserAddSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBE30552D8F3B2C00A110BD /* UserAddSheet.swift */; };
 		EFCEB3222D8462B6006CB2DB /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCEB3212D8462B6006CB2DB /* AppManager.swift */; };
 		EFDF6A742D78F306008457CE /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A732D78F306008457CE /* PasswordField.swift */; };
 		EFDF6A762D78F32B008457CE /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDF6A752D78F32B008457CE /* LoginManager.swift */; };
@@ -145,6 +146,7 @@
 		EFBE304F2D8ECABB00A110BD /* YachtLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YachtLogo.swift; sourceTree = "<group>"; };
 		EFBE30512D8ECC7100A110BD /* Vessel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vessel+Extensions.swift"; sourceTree = "<group>"; };
 		EFBE30532D8EE03800A110BD /* YachtImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YachtImage.swift; sourceTree = "<group>"; };
+		EFBE30552D8F3B2C00A110BD /* UserAddSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAddSheet.swift; sourceTree = "<group>"; };
 		EFCEB3212D8462B6006CB2DB /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		EFD12FBF2D785F4800DD25BC /* IsmConcept.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IsmConcept.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFDF6A732D78F306008457CE /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				EF7E4D792D8579EC007CA0F0 /* User+Cando.swift */,
 				EF2C23162D7C5E600067C899 /* User+Samples.swift */,
 				EFA0F59B2D78651100C71E79 /* UserRole.swift */,
+				EFBE30552D8F3B2C00A110BD /* UserAddSheet.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -666,6 +669,7 @@
 				EFBDFB7D2D80311C00FB8922 /* AuthError.swift in Sources */,
 				EF2C233A2D7D163B0067C899 /* VesselListRow.swift in Sources */,
 				EFA0F58D2D7862C500C71E79 /* Flag.swift in Sources */,
+				EFBE30562D8F3B2C00A110BD /* UserAddSheet.swift in Sources */,
 				EF2C23292D7CE1080067C899 /* UserEditView.swift in Sources */,
 				EF4ED7CC2D7B584F00DA39C1 /* LoremIpsum.swift in Sources */,
 				EF4ED7BB2D7B4B7500DA39C1 /* RemoteConfigService.swift in Sources */,

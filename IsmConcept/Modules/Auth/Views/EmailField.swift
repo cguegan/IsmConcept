@@ -12,7 +12,7 @@ struct EmailField: View {
     /// Given properties
     @Binding    var email: String
                 var isValid: Bool
-    @FocusState var focusedField: LoginFocusField?
+//    @FocusState var focusedField: LoginFocusField?
     
     /// State Properties
     @State private var showPopover = false
@@ -39,10 +39,10 @@ struct EmailField: View {
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
                     .submitLabel(.next)
-                    .focused($focusedField, equals: .email)
-                    .onSubmit {
-                        focusedField = .password
-                    }
+//                    .focused($focusedField, equals: .email)
+//                    .onSubmit {
+//                        focusedField = .password
+//                    }
             }
             
             Image(systemName: "checkmark")

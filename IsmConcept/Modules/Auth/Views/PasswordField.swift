@@ -13,8 +13,8 @@ struct PasswordField: View {
     let placeholder: String
     @Binding    var password: String
                 var isValid: Bool
-                var focusField: LoginFocusField
-    @FocusState var focusedField: LoginFocusField?
+//                var focusField: LoginFocusField
+//    @FocusState var focusedField: LoginFocusField?
 
     /// State Properties
     @State private var checkMinChar = false
@@ -53,8 +53,6 @@ struct PasswordField: View {
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
                         .submitLabel(.next)
-                        .focused($focusedField, equals: focusField)
-                        .onSubmit { focusedField = nil }
                         .opacity(showPassword ? 0 : 1)
                     
                     TextField(placeholder, text: $password)
@@ -62,8 +60,6 @@ struct PasswordField: View {
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
                         .submitLabel(.next)
-                        .focused($focusedField, equals: .password)
-                        .onSubmit { focusedField = focusField }
                         .opacity(showPassword ? 1 : 0)
                 }
                 
@@ -83,7 +79,6 @@ struct PasswordField: View {
 
 #Preview {
     PasswordField( placeholder: "Password",
-                   password: .constant("123456"),
-                   isValid: false,
-                   focusField: .password )
+                   password: .constant("Password1!"),
+                   isValid: false )
 }

@@ -12,7 +12,7 @@ struct FullNameField: View {
     /// Given Property
     @Binding    var name: String
                 var isValid: Bool
-    @FocusState var focusedField: LoginFocusField?
+//    @FocusState var focusedField: LoginFocusField?
     
     /// Computed Property
     var progressColor: Color {
@@ -34,10 +34,10 @@ struct FullNameField: View {
                 TextField("Full Name", text: $name)
                     .autocorrectionDisabled()
                     .submitLabel(.next)
-                    .focused($focusedField, equals: .fullName)
-                    .onSubmit {
-                        focusedField = .fullName
-                    }
+//                    .focused($focusedField, equals: .fullName)
+//                    .onSubmit {
+//                        focusedField = .fullName
+//                    }
             }
             Image(systemName: "checkmark")
                 .padding(.trailing, 8)

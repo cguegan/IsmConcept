@@ -9,16 +9,14 @@ import SwiftUI
 import Firebase
 import FirebaseAuth
 
-struct AddUserSheet: View {
+struct UserAddSheet: View {
     
     /// Environment Objects
     @Environment(\.dismiss) private var dismiss
-    @Environment(VesselStore.self) private var vesselStore
     @Environment(AuthService.self) private var authService
 
     /// State manager
     @State private var manager = SignupManager()
-    @Binding var vessel: Vessel
         
     /// Focus Fields
     @FocusState private var focusedField: LoginFocusField?
@@ -52,7 +50,7 @@ struct AddUserSheet: View {
 // MARK: - Subviews
 // ————————————————
 
-extension AddUserSheet {
+extension UserAddSheet {
     
     /// Login Stack View
     ///
@@ -62,19 +60,25 @@ extension AddUserSheet {
             topTextView
             loginForm
             loginStrengthView
+            addUserButton
             Spacer()
-            signupButton
         }
     }
     
     /// Top Text View
     ///
     private var topTextView: some View {
-        Text("Create an a new crew user account for the vessel **\(vessel.name)**")
-            .font(.title3)
-            .multilineTextAlignment(.leading)
-            .frame(maxWidth: .infinity)
-            .padding()
+        VStack {
+            Text("Add a user Account")
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
+                .padding(.bottom, 4)
+            
+            Text("Create a user account to access the application")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+        }
     }
     
     /// Signup Form
@@ -119,14 +123,14 @@ extension AddUserSheet {
     
     /// Signup Button
     ///
-    private var signupButton: some View {
+    private var addUserButton: some View {
         Button {
             Task {
                 await manager.signUp(authService: authService)
             }
         } label: {
             HStack {
-                Text("Signup")
+                Text("Add User Button")
                 Spacer()
                 Image(systemName: "arrow.right")
             }
@@ -211,15 +215,11 @@ extension AddUserSheet {
             .edgesIgnoringSafeArea(.all)
     }
     
+    /// Create User Method
+    ///
     private func createUser() {
         Task {
-            // TODO: - BUG HERE !!!
-            await manager.signUpWithVessel(for: vessel, authService: authService)
-            if let userId = authService.authenticatedUser?.uid {
-                vessel.users.append(userId)
-                vesselStore.update(vessel)
-                dismiss()
-            }
+            
         }
     }
     
@@ -230,7 +230,6 @@ extension AddUserSheet {
 // ———————————————
 
 #Preview {
-    AddUserSheet(vessel: .constant(Vessel.samples[0]))
-        .environment(VesselStore())
+    UserAddSheet()
         .environment(AuthService())
 }

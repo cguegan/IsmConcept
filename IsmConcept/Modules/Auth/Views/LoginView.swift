@@ -69,8 +69,7 @@ extension LoginView {
         VStack {
             // Login field
             EmailField( email: $manager.email,
-                        isValid: manager.isEmailValid,
-                        focusedField: _focusedField )
+                        isValid: manager.isEmailValid )
                 
             // Divider
             Divider().edgesIgnoringSafeArea(.all)
@@ -79,9 +78,7 @@ extension LoginView {
             // Password field
             PasswordField( placeholder: "Password",
                            password: $manager.password,
-                           isValid: manager.isPasswordValid,
-                           focusField: .password,
-                           focusedField: _focusedField )
+                           isValid: manager.isPasswordValid )
         }
         .padding(.vertical, 8)
         .background(Color.formBackground)

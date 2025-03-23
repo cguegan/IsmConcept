@@ -31,6 +31,28 @@ struct UsersListView: View {
                     isPresented: $store.showErrorAlert) {
                 Button("OK", role: .cancel) { }
             }
+            .toolbar {
+                if AppManager.shared.user
+                    .canAddOrDeleteVessels() {
+                    ToolbarItem(
+                        placement: .navigationBarTrailing
+                    ) {
+                        Button(
+                            action: {
+                                showingAddUserView
+                                    .toggle()
+                            }) {
+                                Image(
+                                    systemName: "plus.circle"
+                                )
+                            }
+                    }
+                }
+            }
+            .sheet( isPresented: $showingAddUserView) {
+                UserAddSheet()
+            }
+                
         }
     }
 }
